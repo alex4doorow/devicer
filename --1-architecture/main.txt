@@ -1,0 +1,31 @@
+	core
+		utils
+servicers
+	dispatcher
+	stock
+	orders
+		
+		
+
+	web
+
+new order
+	web->orders->dispatcher
+				stock
+				orders
+
+order
+	state
+		suspend
+		aprove
+	status
+		declare
+		order
+
+
+~~~~~~~~~~~~~~~~
+swagger
+kafka
+jpa
+linquibase
+git
