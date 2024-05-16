@@ -1,7 +1,7 @@
 package com.afa.devicer.orders.controllers;
 
 import com.afa.devicer.core.bl.entities.SEOrder;
-import com.afa.devicer.orders.services.OrderService;
+import com.afa.devicer.orders.services.OrdersService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class OrderRestControllerTest {
 
     @MockBean
-    private OrderService orderService;
+    private OrdersService orderService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,7 +41,7 @@ public class OrderRestControllerTest {
 
         SEOrder order = new SEOrder();
         order.setId(id);
-        order.setOrderNo(33L);
+        order.setOrderNum(33L);
         //order.setProductCategory(new ProductCategory(1L, "test product category"));
 
 

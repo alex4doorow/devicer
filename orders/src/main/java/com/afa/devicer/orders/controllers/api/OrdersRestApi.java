@@ -1,5 +1,6 @@
 package com.afa.devicer.orders.controllers.api;
 
+import com.afa.devicer.core.errors.CoreException;
 import com.afa.devicer.core.rest.dto.DtoOrder;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "Orders", description = "the orders Api")
-public interface OrderRestApi {
+public interface OrdersRestApi {
 
 
     @Operation(summary = "Find order by ID")
@@ -26,5 +27,5 @@ public interface OrderRestApi {
             @ApiResponse(responseCode = "200", description = "Order added successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid input")
     })
-    ResponseEntity<DtoOrder> addOrder(@RequestBody String body);
+    ResponseEntity<Object> addOrder(@RequestBody String body) throws CoreException;
 }

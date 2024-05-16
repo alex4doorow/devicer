@@ -4,7 +4,6 @@ import com.afa.devicer.core.bl.entities.BaseEntity;
 import com.afa.devicer.core.bl.entities.SEOrder;
 import com.afa.devicer.core.bl.repositories.OrderRepository;
 import com.afa.devicer.core.errors.CoreException;
-import net.bytebuddy.dynamic.DynamicType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -25,14 +24,14 @@ public class OrderServiceTest {
     private OrderRepository orderRepository;
 
     @Autowired
-    private OrderService orderService;
+    private OrdersService orderService;
 
     @Test
     public void testOrderAdd() throws CoreException {
 
         SEOrder order = new SEOrder();
         order.setId(33L);
-        order.setOrderNo(33L);
+        order.setOrderNum(33L);
         order.setOrderDate(LocalDate.of(2024, 5, 16));
         order.setDateAdded(LocalDateTime.now());
         order.setDateModified(LocalDateTime.now());

@@ -4,9 +4,12 @@ import com.afa.devicer.core.utils.DateTimeUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -29,7 +32,7 @@ public class SEOrder implements BaseEntity<Long>, Serializable {
     private Long id;
 
     @Column(name = "ORDER_NO", nullable = false)
-    private Long orderNo;
+    private Long orderNum;
 
     @Column(name = "ORDER_DATE", nullable = false)
     private LocalDate orderDate;
@@ -42,11 +45,13 @@ public class SEOrder implements BaseEntity<Long>, Serializable {
     private SEUser userAdded;
 
     @Column(name = "DATE_ADDED", nullable = false)
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATE_FMT_ISO8601)
     private LocalDateTime dateAdded;
 
-    @Column(name = "DATE_MODIFIED", nullable = false)
+    @Column(name = "DATE_MODIFIED")
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATE_FMT_ISO8601)
     private LocalDateTime dateModified;

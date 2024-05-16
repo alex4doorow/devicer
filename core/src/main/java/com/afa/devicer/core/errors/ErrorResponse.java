@@ -28,6 +28,6 @@ public class ErrorResponse {
     }
 
     public String toString() {
-        return "ErrorResponse(errorCode=" + this.getErrorCode() + ", description=" + this.getDescription() + ", info=" + this.getInfo() + ")";
+        return "ErrorResponse (errorCode=" + this.getErrorCode() + ", description=" + this.getDescription() + ", info=" + this.getInfo() + ")";
     }
 }

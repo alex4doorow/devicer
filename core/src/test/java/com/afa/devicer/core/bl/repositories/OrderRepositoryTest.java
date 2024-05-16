@@ -53,7 +53,7 @@ public class OrderRepositoryTest {
 
         SEOrder order = new SEOrder();
         //order.setId(1L);
-        order.setOrderNo(1L);
+        order.setOrderNum(1L);
         order.setOrderDate(LocalDate.of(2024, 5, 15));
         order.setDateAdded(LocalDateTime.now());
         order.setDateModified(LocalDateTime.now());
@@ -65,7 +65,7 @@ public class OrderRepositoryTest {
         //Assertions.assertTrue(orderRepository.findById(2L).isPresent());
 
         orderRepository.findAll().forEach(o -> {
-            log.info("order no: {}", o.getOrderNo());
+            log.info("order no: {}", o.getOrderNum());
         });
     }
 }
