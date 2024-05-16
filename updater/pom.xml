@@ -12,11 +12,6 @@
 	<name>updater</name>
 	<description>Devicer's db updater</description>
 	<packaging>jar</packaging>
-	<properties>
-		<maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss'Z'</maven.build.timestamp.format>
-		<maven.build.timestamp>${maven.build.timestamp.format}</maven.build.timestamp>
-		<devicer.version>${project.parent.version}</devicer.version>
-	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -32,14 +27,9 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
-			<version>4.27.0</version>
+			<version>${liquibase.version}</version>
 		</dependency>
 	</dependencies>
 	<build>

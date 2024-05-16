@@ -1,7 +1,6 @@
 package com.afa.devicer.core.bl.entities;
 
 import com.afa.devicer.core.utils.DateTimeUtils;
-import com.afa.devicer.core.utils.Defaults;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,7 +9,6 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @NoArgsConstructor

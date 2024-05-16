@@ -26,6 +26,7 @@ order
 ~~~~~~~~~~~~~~~~
 swagger
 kafka
-jpa
+jpa caches 2,3
 linquibase
 git
+Ehcache

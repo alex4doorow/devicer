@@ -15,11 +15,16 @@
     <version>7.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
+        <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss'Z'</maven.build.timestamp.format>
+        <maven.build.timestamp>${maven.build.timestamp.format}</maven.build.timestamp>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
         <spring-cloud.version>2022.0.1</spring-cloud.version>
         <com.ibm.icu.icu4j.version>72.1</com.ibm.icu.icu4j.version>
+        <swagger.version>3.0.0</swagger.version>
+        <liquibase.version>4.27.0</liquibase.version>
+        <jackson.version>2.17.1</jackson.version>
     </properties>
     <dependencies>
         <dependency>
@@ -34,6 +39,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -55,6 +61,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
