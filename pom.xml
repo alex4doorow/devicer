@@ -22,20 +22,11 @@
         <java.version>17</java.version>
         <spring-cloud.version>2022.0.1</spring-cloud.version>
         <com.ibm.icu.icu4j.version>72.1</com.ibm.icu.icu4j.version>
-        <swagger.version>3.0.0</swagger.version>
+        <springdoc.version>2.0.2</springdoc.version>
         <liquibase.version>4.27.0</liquibase.version>
-        <jackson.version>2.17.1</jackson.version>
+        <jackson.version>2.15.4</jackson.version>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

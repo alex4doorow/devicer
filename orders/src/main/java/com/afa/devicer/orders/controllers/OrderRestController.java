@@ -2,6 +2,7 @@ package com.afa.devicer.orders.controllers;
 
 import com.afa.devicer.core.bl.entities.SEOrder;
 import com.afa.devicer.core.rest.dto.DtoOrder;
+import com.afa.devicer.orders.controllers.api.OrderRestApi;
 import com.afa.devicer.orders.services.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/orders/v1/orders")
 @Slf4j
-public class OrderRestController extends BaseRestController {
+public class OrderRestController extends BaseRestController implements OrderRestApi {
 
     private OrderService orderService;
 
@@ -44,7 +45,7 @@ public class OrderRestController extends BaseRestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> addOrder(@RequestBody String body) {
+    public ResponseEntity<DtoOrder> addOrder(@RequestBody String body) {
 
         DtoOrder resultDtoOrder = DtoOrder.builder()
                 .id(1L)
@@ -55,7 +56,7 @@ public class OrderRestController extends BaseRestController {
         return new ResponseEntity<>(resultDtoOrder, HttpStatus.OK);
     }
 
-    private ResponseEntity<Object> response(String msgInType, Object response, boolean isError) {
+    private ResponseEntity<Object> response(String msgInType, DtoOrder response, boolean isError) {
         log.info("[END] {} response:\n{}", msgInType, response);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
