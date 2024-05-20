@@ -31,6 +31,19 @@ public class DispatcherKafkaConsumerService {
         this.addOrderSaga = addOrderSaga;
     }
 
+    // d -> o dispatcher.orders.order.add
+    // d -> o dispatcher.orders.order.edit
+    // d -> o dispatcher.orders.order.validate
+
+    // d -> s dispatcher.stock.order-item.product.validate
+    // d -> s dispatcher.stock.order-item.product.sell
+
+    // o -> d orders.dispatcher.order.add
+
+    // stock.dispatcher
+
+
+
     @KafkaListener(topics = "dispatcher.orders", groupId = "groupId")
     public void ordersDispatcherHandleMessage(String message, @Headers Map<String, Object> headers,
                                               @Header(KafkaHeaders.OFFSET) Long offset) {

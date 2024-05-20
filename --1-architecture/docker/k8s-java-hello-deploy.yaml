@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: java-hello
+  name: java-hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: java-hello
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: java-hello
+    spec:
+      containers:
+      - image: alex4doorow/java-hello:0.1.0
+        name: java-hello
+        resources: {}
+status: {}

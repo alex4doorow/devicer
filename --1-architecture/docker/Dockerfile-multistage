@@ -1,0 +1,25 @@
+# базовый образ - OpenJDK 17 и установленный Maven
+FROM maven:3.8.4-openjdk-17 as builder
+
+# Соберем и запустим приложение в этой директории
+WORKDIR /app
+
+# Для сборки проекта Maven нужны исходные тексты программы
+# и непосредственно файл сборки pom.xml
+COPY pom.xml ./
+COPY src/ ./src/
+
+# Компиляция, сбока и упаковка приложения в архив JAR
+RUN mvn package
+
+# Минимальная версия JRE, версия 17, открытая версия OpenJDK
+FROM openjdk:17.0.1-jdk-slim
+
+# Используем такую же рабочую директорию
+WORKDIR /app
+
+# Скопируем архив JAR из первой ступени
+COPY --from=builder /app/target/test-hello-world-6.0.1-SNAPSHOT.jar ./
+
+# Запуск приложения виртуальной машиной Java из базового образа
+CMD ["java", "-jar", "test-hello-world-6.0.1-SNAPSHOT.jar"]

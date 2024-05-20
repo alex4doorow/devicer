@@ -25,6 +25,7 @@
         <springdoc.version>2.0.2</springdoc.version>
         <liquibase.version>4.27.0</liquibase.version>
         <jackson.version>2.15.4</jackson.version>
+        <ehcache.version>3.10.8</ehcache.version>
     </properties>
     <dependencies>
         <dependency>
@@ -95,5 +96,6 @@
         <module>orders</module>
         <module>dispatcher</module>
         <module>updater</module>
+        <module>statistic</module>
     </modules>
 </project>
