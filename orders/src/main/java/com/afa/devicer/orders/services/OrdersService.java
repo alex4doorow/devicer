@@ -6,6 +6,8 @@ import com.afa.devicer.core.bl.entities.SEUser;
 import com.afa.devicer.core.bl.repositories.OrderRepository;
 import com.afa.devicer.core.errors.CoreException;
 import com.afa.devicer.core.rest.dto.DtoOrder;
+import com.afa.devicer.core.rest.dto.DtoOrderMessage;
+import com.afa.devicer.core.services.JsonMapper;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +21,8 @@ import java.time.LocalDateTime;
 @Transactional
 public class OrdersService {
 
-    private OrderRepository orderRepository;
-
     @Autowired
-    public void setOrderRepository(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
-    }
+    private OrderRepository orderRepository;
 
     public SEOrder findById(Long id) throws CoreException {
         SEOrder order = orderRepository
@@ -34,13 +32,12 @@ public class OrdersService {
         return order;
     }
 
-    public Long add(DtoOrder dtoOrder, SEUser user) throws CoreException {
-        log.info("add: {}", dtoOrder);
+    public Long add(DtoOrderMessage dtoOrderMessage, SEUser user) throws CoreException {
+        log.info("add: {}", dtoOrderMessage);
 
         SEOrder order = new SEOrder();
-        order.setOrderNum(dtoOrder.getOrderNum());
-        order.setOrderDate(dtoOrder.getOrderDate());
-        //order.setDateAdded(LocalDateTime.now());
+        order.setOrderNum(dtoOrderMessage.getOrder().getOrderNum());
+        order.setOrderDate(dtoOrderMessage.getOrder().getOrderDate());
         order.setRecStatus(BaseEntity.ACTIVE);
         order.setUserAdded(user);
 

@@ -8,7 +8,6 @@ import com.afa.devicer.core.rest.dto.DtoOrderMessage;
 import com.afa.devicer.core.services.JsonMapper;
 import com.afa.devicer.core.services.UserService;
 import com.afa.devicer.orders.controllers.api.OrdersRestApi;
-import com.afa.devicer.orders.services.OrdersKafkaProducerService;
 import com.afa.devicer.orders.services.OrdersService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +17,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-
-@RestController
-@RequestMapping("/orders/v1/orders")
+//@RestController
+//@RequestMapping("/orders/v1/orders")
 @Slf4j
 public class OrdersRestController extends BaseRestController implements OrdersRestApi {
 
     private UserService userService;
     private OrdersService orderService;
-    private OrdersKafkaProducerService ordersKafkaProducerService;
     private JsonMapper jsonMapper;
 
     @Autowired
@@ -41,16 +37,11 @@ public class OrdersRestController extends BaseRestController implements OrdersRe
     }
 
     @Autowired
-    public void setOrdersKafkaProducerService(OrdersKafkaProducerService ordersKafkaProducerService) {
-        this.ordersKafkaProducerService = ordersKafkaProducerService;
-    }
-
-    @Autowired
     public void setJsonMapper(JsonMapper jsonMapper) {
         this.jsonMapper = jsonMapper;
     }
 
-    @GetMapping("/{id}")
+    //@GetMapping("/{id}")
     public ResponseEntity<Object> findOrderById(@PathVariable Long id) {
         log.info("[START] {} request: {}", "FIND", id);
 
@@ -68,19 +59,17 @@ public class OrdersRestController extends BaseRestController implements OrdersRe
         }
     }
 
-    @PostMapping("/add")
+    //@PostMapping("/add")
     public ResponseEntity<Object> addOrder(@RequestBody String message) {
 
         try {
             DtoOrderMessage dtoOrderMessage = jsonMapper.fromJSON(message, DtoOrderMessage.class);
-            Long id = orderService.add(dtoOrderMessage.getOrder(), userService.getCurrentUser());
+            Long id = orderService.add(dtoOrderMessage, userService.getCurrentUser());
 
             dtoOrderMessage.getOrder().setId(id);
             dtoOrderMessage.getState().setStatus("SUSPEND");
 
             String kafkaMessage = jsonMapper.toJSON(dtoOrderMessage, CoreException.THROWS);
-
-            ordersKafkaProducerService.sendMessage("dispatcher.orders", kafkaMessage);
 
             return response("add", dtoOrderMessage, false);
         } catch (CoreException e) {

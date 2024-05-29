@@ -1,5 +1,9 @@
 package com.afa.devicer.orders.services;
 
+import com.afa.devicer.core.errors.CoreException;
+import com.afa.devicer.core.rest.dto.DtoOrderMessage;
+import com.afa.devicer.core.services.JsonMapper;
+import com.afa.devicer.core.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -18,13 +22,25 @@ public class OrdersKafkaConsumerService {
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
+    @Autowired
+    private JsonMapper jsonMapper;
+    @Autowired
+    private OrdersService ordersService;
+    @Autowired
+    private UserService userService;
 
     //@KafkaListener(topics = "dispatcher.orders", groupId = "groupId")
-    public void ordersListener(String message) {
-        log.info("ORDERS Received Message in group groupId: {}", message);
+    /*
+    public void ordersListener(@Payload String message,
+                               @Header(KafkaHeaders.OFFSET) Long offset) {
+        log.info("[offset={}], message: {}", offset, message);
+        log.info("ORDERS received message: {}", message);
+
     }
+    */
 
     //@KafkaListener(id = "transactions-async", topics = "dispatcher.orders", groupId = "groupId")
+    /*
     public void dispatcherOrdersHandleMessage1(@Payload String message,
                                                @Header(KafkaHeaders.OFFSET) Long offset,
                                                @Header(KafkaHeaders.RECEIVED_PARTITION) int partition) {
@@ -32,12 +48,24 @@ public class OrdersKafkaConsumerService {
         kafkaTemplate.send("orders.dispatcher", message, "Response message with offset: " + offset);
         //executorService.submit(() -> processor.process(order));
     }
+    */
 
-    @KafkaListener(topics = "dispatcher.orders", groupId = "groupId")
-    public void dispatcherOrdersHandleMessage(String message, @Headers Map<String, Object> headers) {
+    @KafkaListener(topics = "dispatcher.orders", groupId = "orders")
+    public void dispatcherOrdersHandleMessage(String message, @Header(KafkaHeaders.OFFSET) Long offset) {
 
-        log.info("Received message: {}", message);
-        log.info("Headers:");
-        headers.forEach((key, value) -> log.info("{}:{}", key, value));
+        log.info("[offset={}], message: {}", offset, message);
+
+        try {
+            DtoOrderMessage dtoOrderMessage = jsonMapper.fromJSON(message, DtoOrderMessage.class);
+            dtoOrderMessage.setOffset(offset);
+            if (dtoOrderMessage.getState().getAction().equals("CREATE")) {
+                Long orderId = ordersService.add(dtoOrderMessage, userService.getCurrentUser());
+                dtoOrderMessage.getOrder().setId(orderId);
+                log.info("dtoOrderMessage ORDER CREATE: {}", jsonMapper.toJSON(dtoOrderMessage, true));
+            }
+        } catch (CoreException e) {
+            log.error("", e);
+            throw new RuntimeException(e);
+        }
     }
 }

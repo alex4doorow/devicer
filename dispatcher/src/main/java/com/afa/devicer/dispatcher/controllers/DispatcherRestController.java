@@ -1,7 +1,11 @@
 package com.afa.devicer.dispatcher.controllers;
 
+import com.afa.devicer.core.errors.CoreException;
 import com.afa.devicer.core.rest.controllers.BaseRestController;
+import com.afa.devicer.core.rest.dto.DtoOrderMessage;
+import com.afa.devicer.core.services.JsonMapper;
 import com.afa.devicer.dispatcher.services.DispatcherKafkaProducerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/dispatcher/v1")
 @RestController
+@Slf4j
 public class DispatcherRestController extends BaseRestController {
+
+    @Autowired
+    private JsonMapper jsonMapper;
 
 /*
     src
@@ -41,21 +49,28 @@ public class DispatcherRestController extends BaseRestController {
 
     @PostMapping("/orders/send-message")
     public String sendMessageToKafka(@RequestBody String message) {
-        //kafkaProducerService.sendMessage("topicName", message);
         kafkaProducerService.sendMessage("dispatcher.orders", message);
-        //kafkaProducerService.sendMessage("dispatcher", message);
 
-        return "Message sent to Kafka: " + message;
+        String responseMessage = "{}";
+        return responseMessage;
     }
 
-    /*
+
     @PostMapping("/orders/add")
     public String addOrder(@RequestBody String message) {
-        //kafkaProducerService.sendMessage("topicName", message);
-        kafkaProducerService.sendMessage("orders.dispatcher", message);
-        kafkaProducerService.sendMessage("dispatcher", message);
 
-        return "Message sent to Kafka: " + message;
+        String responseMessage = "";
+        try {
+            DtoOrderMessage dtoOrderMessage = jsonMapper.fromJSON(message, DtoOrderMessage.class);
+
+            dtoOrderMessage.getState().setAction("CREATE");
+            dtoOrderMessage.getState().setStatus("PENDING");
+            responseMessage = jsonMapper.toJSON(dtoOrderMessage, true);
+
+            kafkaProducerService.sendMessage("dispatcher.orders", responseMessage);
+        } catch (CoreException e) {
+            log.error("", e);
+        }
+        return responseMessage;
     }
-    */
 }
