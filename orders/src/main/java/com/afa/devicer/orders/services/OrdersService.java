@@ -1,20 +1,17 @@
 package com.afa.devicer.orders.services;
 
-import com.afa.devicer.core.bl.entities.BaseEntity;
 import com.afa.devicer.core.bl.entities.SEOrder;
 import com.afa.devicer.core.bl.entities.SEUser;
 import com.afa.devicer.core.bl.repositories.OrderRepository;
 import com.afa.devicer.core.errors.CoreException;
-import com.afa.devicer.core.rest.dto.DtoOrder;
+import com.afa.devicer.core.model.types.MessageStatuses;
 import com.afa.devicer.core.rest.dto.DtoOrderMessage;
 import com.afa.devicer.core.services.JsonMapper;
+import com.afa.devicer.core.services.converters.in.InDtoOrderConverter;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Service
 @Slf4j
@@ -23,6 +20,8 @@ public class OrdersService {
 
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private InDtoOrderConverter orderConverter;
     @Autowired
     private JsonMapper jsonMapper;
 
@@ -40,16 +39,13 @@ public class OrdersService {
     public Long add(DtoOrderMessage dtoOrderMessage, SEUser user) throws CoreException {
         log.info("add: {}", dtoOrderMessage);
 
-        SEOrder order = new SEOrder();
-        order.setOrderNum(dtoOrderMessage.getOrder().getOrderNum());
-        order.setOrderDate(dtoOrderMessage.getOrder().getOrderDate());
-        order.setRecStatus(BaseEntity.ACTIVE);
+        SEOrder order = orderConverter.convertTo(dtoOrderMessage.getOrder());
         order.setUserAdded(user);
 
         try {
             SEOrder resultOrder = orderRepository.save(order);
             dtoOrderMessage.getOrder().setId(resultOrder.getId());
-            dtoOrderMessage.getState().setStatus("CREATED");
+            dtoOrderMessage.getState().setStatus(MessageStatuses.CREATED);
 
             jsonMapper.toJSON(dtoOrderMessage, CoreException.THROWS);
 

@@ -1,6 +1,8 @@
 package com.afa.devicer.core.rest.dto;
 
 import com.afa.devicer.core.errors.ErrorResponse;
+import com.afa.devicer.core.model.types.MessageActions;
+import com.afa.devicer.core.model.types.MessageStatuses;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DtoState {
-    private String action;
-    private String status;
+    private MessageActions action = MessageActions.UNKNOWN;
+    private MessageStatuses status = MessageStatuses.UNKNOWN;
     private ErrorResponse error;
 }

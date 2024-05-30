@@ -20,7 +20,7 @@ public class WebKafkaConsumerService {
     @KafkaListener(topics = "dispatcher.web", groupId = "orders")
     public void dispatcherOrdersHandleMessage(String message, @Header(KafkaHeaders.OFFSET) Long offset) {
 
-        log.info("[offset={}], message: {}", offset, message);
-        webSocketSender.sendOrderUpdate(message);
+        log.info("dispatcher.web, offset={}, message: {}", offset, message);
+        //webSocketSender.sendOrderUpdate(message);
     }
 }

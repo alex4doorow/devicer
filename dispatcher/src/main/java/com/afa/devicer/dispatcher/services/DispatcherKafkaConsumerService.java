@@ -1,7 +1,5 @@
 package com.afa.devicer.dispatcher.services;
 
-import com.afa.devicer.core.errors.CoreException;
-import com.afa.devicer.core.rest.dto.DtoOrderMessage;
 import com.afa.devicer.core.services.JsonMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,7 @@ public class DispatcherKafkaConsumerService {
     @KafkaListener(topics = "orders.dispatcher", groupId = "orders")
     public void ordersDispatcherHandleMessage(String message, @Header(KafkaHeaders.OFFSET) Long offset) {
 
-        log.info("[offset={}], message: {}", offset, message);
+        log.info("orders.dispatcher, offset={}, message: {}", offset, message);
 
         try {
             kafkaProducerService.sendMessage("dispatcher.web", message);
