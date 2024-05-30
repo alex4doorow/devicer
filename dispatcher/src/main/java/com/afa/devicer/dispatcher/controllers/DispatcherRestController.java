@@ -3,6 +3,7 @@ package com.afa.devicer.dispatcher.controllers;
 import com.afa.devicer.core.errors.CoreException;
 import com.afa.devicer.core.rest.controllers.BaseRestController;
 import com.afa.devicer.core.rest.dto.DtoOrderMessage;
+import com.afa.devicer.core.rest.dto.DtoState;
 import com.afa.devicer.core.services.JsonMapper;
 import com.afa.devicer.dispatcher.services.DispatcherKafkaProducerService;
 import lombok.extern.slf4j.Slf4j;
@@ -63,9 +64,8 @@ public class DispatcherRestController extends BaseRestController {
         try {
             DtoOrderMessage dtoOrderMessage = jsonMapper.fromJSON(message, DtoOrderMessage.class);
 
-            dtoOrderMessage.getState().setAction("CREATE");
-            dtoOrderMessage.getState().setStatus("PENDING");
-            responseMessage = jsonMapper.toJSON(dtoOrderMessage, true);
+            dtoOrderMessage.setState(new DtoState("CREATE", "PENDING", null));
+            responseMessage = jsonMapper.toJSON(dtoOrderMessage, CoreException.THROWS);
 
             kafkaProducerService.sendMessage("dispatcher.orders", responseMessage);
         } catch (CoreException e) {

@@ -23,6 +23,11 @@ public class OrdersService {
 
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private JsonMapper jsonMapper;
+
+    @Autowired
+    private OrdersKafkaProducerService ordersKafkaProducerService;
 
     public SEOrder findById(Long id) throws CoreException {
         SEOrder order = orderRepository
@@ -43,6 +48,13 @@ public class OrdersService {
 
         try {
             SEOrder resultOrder = orderRepository.save(order);
+            dtoOrderMessage.getOrder().setId(resultOrder.getId());
+            dtoOrderMessage.getState().setStatus("CREATED");
+
+            jsonMapper.toJSON(dtoOrderMessage, CoreException.THROWS);
+
+            ordersKafkaProducerService.sendMessage("orders.dispatcher", jsonMapper.toJSON(dtoOrderMessage, CoreException.THROWS));
+
             return resultOrder.getId();
         } catch (Exception e) {
             log.error(e.getMessage(), e);

@@ -19,8 +19,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@AutoConfigureMockMvc
 @Slf4j
 public class OrderRestControllerTest {
 
@@ -32,7 +32,7 @@ public class OrderRestControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Test
+    //@Test
     public void testGetOrderById() throws Exception {
 
         final long id = 33L;

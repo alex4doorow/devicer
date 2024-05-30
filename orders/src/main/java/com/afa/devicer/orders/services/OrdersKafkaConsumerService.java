@@ -61,7 +61,7 @@ public class OrdersKafkaConsumerService {
             if (dtoOrderMessage.getState().getAction().equals("CREATE")) {
                 Long orderId = ordersService.add(dtoOrderMessage, userService.getCurrentUser());
                 dtoOrderMessage.getOrder().setId(orderId);
-                log.info("dtoOrderMessage ORDER CREATE: {}", jsonMapper.toJSON(dtoOrderMessage, true));
+                log.info("dtoOrderMessage ORDER CREATE: {}", jsonMapper.toJSON(dtoOrderMessage, CoreException.THROWS));
             }
         } catch (CoreException e) {
             log.error("", e);

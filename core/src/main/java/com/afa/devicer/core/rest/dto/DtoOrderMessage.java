@@ -8,12 +8,16 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class DtoOrderMessage implements DtoAnyMessage<DtoOrder> {
 
     private Long offset;
-    private DtoOrder order = new DtoOrder();
-    private DtoState state = new DtoState();
+    private DtoOrder order;
+    private DtoState state;
+
+    public DtoOrderMessage() {
+        order = new DtoOrder();
+        state = new DtoState();
+    }
 
     @Override
     public DtoOrder getBody() {
