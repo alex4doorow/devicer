@@ -1,26 +1,30 @@
 package com.afa.devicer.web.controllers;
 
+import com.afa.devicer.core.errors.CoreException;
+import com.afa.devicer.core.model.types.OrderAmountTypes;
+import com.afa.devicer.core.model.types.ReportPeriodTypes;
 import com.afa.devicer.core.rest.dto.DtoOrder;
 import com.afa.devicer.core.rest.dto.DtoOrderMessage;
 import com.afa.devicer.core.services.JsonMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.env.Environment;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import com.afa.devicer.core.errors.CoreException;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.net.URI;
-import java.util.Arrays;
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.*;
 
 @Controller
 @RequestMapping("/web/v1/orders")
@@ -56,6 +60,117 @@ public class OrdersWebController extends BaseController {
         serviceDispatcherUrl = environment.getProperty("url.service.dispatcher");
     }
 
+    @GetMapping("/")
+    public String findOrdersByRequest(Model model) {
+        log.info("[START] {} request", "FIND_ORDERS_BY_REQUEST");
+/*
+        OrderConditions orderConditions = configService.loadOrderConditions(getCurrentUser());
+
+        Collection<Order> orders = orderService.findAll(orderConditions);
+        Collection<DtoOrder> dtoOrders = outDtoOrderConverter.convertTo(orders);
+
+        Map<OrderAmountTypes, BigDecimal> totalAmounts = orderService.calcTotalOrdersAmountsByConditions(orders,
+                orderConditions.getPeriod());
+
+ */
+        BigDecimal billAmount = BigDecimal.ZERO;
+        BigDecimal supplierAmount = BigDecimal.ZERO;
+        BigDecimal marginWithoutAdvertAmount = BigDecimal.ZERO;
+
+        Map<OrderAmountTypes, BigDecimal> totalAmounts = new HashMap<>();
+        totalAmounts.put(OrderAmountTypes.BILL, billAmount);
+        totalAmounts.put(OrderAmountTypes.SUPPLIER, supplierAmount);
+        totalAmounts.put(OrderAmountTypes.ADVERT_BUDGET, BigDecimal.ZERO);
+        totalAmounts.put(OrderAmountTypes.MARGIN, marginWithoutAdvertAmount);
+        totalAmounts.put(OrderAmountTypes.POSTPAY, BigDecimal.ZERO);
+        totalAmounts.put(OrderAmountTypes.COUNT_REAL_ORDERS, BigDecimal.ZERO);
+
+        List<DtoOrder> dtoOrders = new ArrayList<>();
+
+        populateDefaultModel(model);
+        model.addAttribute("orders", dtoOrders);
+        model.addAttribute("totalAmounts", totalAmounts);
+        model.addAttribute("reportPeriodType", ReportPeriodTypes.CURRENT_MONTH);
+        model.addAttribute("listType", "orders");
+        return "orders/list";
+    }
+
+    @GetMapping("/add/{listType}")
+    public String addOrder(@PathVariable("listType") String listType, Model model) throws CoreException {
+        log.info("[START] {} request", "ORDER_ADD");
+
+
+
+        DtoOrder dtoOrder = new DtoOrder();
+        dtoOrder.setOrderDate(LocalDate.of(2024, 5, 31));
+        /*
+        DtoCustomer customer = new DtoCustomer(CustomerTypes.CUSTOMER);
+        DtoPerson person = new DtoPerson();
+        customer.setPerson(person);
+        dtoOrder.setCustomer(customer);
+        dtoOrder.setOrderNo(orderService.nextOrderNo());
+        dtoOrder.setOrderDate(LocalDate.now());
+        //dtoOrder.setProductCategory(wikiProductService.getCategoryById(0L));
+        dtoOrder.getItems().add(new DtoOrderItem());
+        */
+        populateDefaultModel(model);
+        String orderHeader = getMessageSource().getMessage("order.form.new.headers.h1", null, LocaleContextHolder.getLocale());
+        String customerHeader = getMessageSource().getMessage("order.form.new.headers.h2", null, LocaleContextHolder.getLocale());
+
+        model.addAttribute("orderHeader", orderHeader);
+        model.addAttribute("customerHeader", customerHeader);
+
+        model.addAttribute("order", dtoOrder);
+        model.addAttribute("listType", listType);
+        return "orders/edit";
+    }
+
+    @PostMapping("/add")
+    public String saveAddOrder(Model model, @ModelAttribute("order") @Validated DtoOrder dtoOrder) throws CoreException {
+        log.info("[START] {} request", "ORDER_ADD_SAVE");
+
+        try {
+            DtoOrderMessage request = DtoOrderMessage.builder().order(dtoOrder).build();
+            /*
+            DtoOrderMessage responseOrderMessage = webClient.post()
+                    .uri(new URI(serviceDispatcherUrl + "/v1/orders/add"))
+                    //.header(HttpHeaders.AUTHORIZATION, access.getSecret())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(request)
+                    .retrieve()
+                    .bodyToMono(DtoOrderMessage.class)
+                    .log()
+                    .block();
+            log.debug("result: {}", responseOrderMessage);
+            */
+        } catch (Exception e) {
+            log.error("result:", e);
+        }
+        return "redirect:/web/v1/orders/";
+    }
+
+    @GetMapping("/{id}/change-status/{listType}")
+    public String changeStatusOrder(@PathVariable("id") Long id, @PathVariable("listType") String listType, Model model) throws CoreException {
+        log.info("[START] {} request: {}", "CHANGE_STATUS", id);
+        /*
+        Order order = orderService.findById(id);
+        DtoOrder dtoOrder = outDtoOrderConverter.convertTo(order);
+
+        model.addAttribute("order", dtoOrder);
+        model.addAttribute("listType", listType);
+        populateDefaultModel(model);
+
+        */
+        return "orders/change-status";
+    }
+
+    @Override
+    protected void populateDefaultModel(Model model) {
+        super.populateDefaultModel(model);
+    }
+
+
+
     @GetMapping("/demo/orders/add")
     public String showForm(Model model) {
         DtoOrder order = new DtoOrder();
@@ -85,89 +200,6 @@ public class OrdersWebController extends BaseController {
         */
         return "orders/show";
     }
-
-    @GetMapping("/add/{listType}")
-    public String addOrder(@PathVariable("listType") String listType, Model model) throws CoreException {
-        log.info("[START] {} request", "ADD");
-
-        DtoOrder orderForm = new DtoOrder();
-        /*
-        DtoCustomer customer = new DtoCustomer(CustomerTypes.CUSTOMER);
-        DtoPerson person = new DtoPerson();
-        customer.setPerson(person);
-        dtoOrder.setCustomer(customer);
-        dtoOrder.setOrderNo(orderService.nextOrderNo());
-        dtoOrder.setOrderDate(LocalDate.now());
-        //dtoOrder.setProductCategory(wikiProductService.getCategoryById(0L));
-        dtoOrder.getItems().add(new DtoOrderItem());
-        */
-        model.addAttribute("order", orderForm);
-        model.addAttribute("listType", listType);
-        model.addAttribute("orderForm", orderForm);
-        return "orders/edit-test";
-    }
-
-    @PostMapping("/add")
-    public String saveAddOrder(Model model, @ModelAttribute("orderForm") @Validated DtoOrder orderForm) throws CoreException {
-        log.info("[START] {} request", "SAVE_ADD");
-
-        try {
-            DtoOrderMessage request = DtoOrderMessage.builder().order(orderForm).build();
-            /*
-            DtoOrderMessage responseOrderMessage = webClient.post()
-                    .uri(new URI(serviceDispatcherUrl + "/v1/orders/add"))
-                    //.header(HttpHeaders.AUTHORIZATION, access.getSecret())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .bodyValue(request)
-                    .retrieve()
-                    .bodyToMono(DtoOrderMessage.class)
-                    .log()
-                    .block();
-            log.debug("result: {}", responseOrderMessage);
-            */
-        } catch (Exception e) {
-            log.error("result:", e);
-        }
-        return "orders/list";
-    }
-
-    @GetMapping("/{id}/change-status/{listType}")
-    public String changeStatusOrder(@PathVariable("id") Long id, @PathVariable("listType") String listType, Model model) throws CoreException {
-        log.info("[START] {} request: {}", "CHANGE_STATUS", id);
-        /*
-        Order order = orderService.findById(id);
-        DtoOrder dtoOrder = outDtoOrderConverter.convertTo(order);
-
-        model.addAttribute("order", dtoOrder);
-        model.addAttribute("listType", listType);
-        populateDefaultModel(model);
-
-        */
-        return "orders/change-status";
-    }
-
-    @GetMapping("/")
-    public String findAll(Model model) {
-        log.info("[START] {} request", "FIND_ALL");
-/*
-        OrderConditions orderConditions = configService.loadOrderConditions(getCurrentUser());
-
-        Collection<Order> orders = orderService.findAll(orderConditions);
-        Collection<DtoOrder> dtoOrders = outDtoOrderConverter.convertTo(orders);
-
-        Map<OrderAmountTypes, BigDecimal> totalAmounts = orderService.calcTotalOrdersAmountsByConditions(orders,
-                orderConditions.getPeriod());
-        populateDefaultModel(model);
-        model.addAttribute("orders", dtoOrders);
-        model.addAttribute("totalAmounts", totalAmounts);
-        model.addAttribute("reportPeriodType", ReportPeriodTypes.CURRENT_MONTH);
-        model.addAttribute("listType", "orders");
- */
-        return "orders/list";
-    }
-
-    @Override
-    protected void populateDefaultModel(Model model) {
-        super.populateDefaultModel(model);
-    }
 }
+
+

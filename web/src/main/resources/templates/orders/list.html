@@ -19,7 +19,6 @@
             </div>
             <button id="button-conditions" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown" data-action="no-action" aria-haspopup="true" aria-expanded="false">
               <span data-feather="calendar"></span>&nbsp;Текущий месяц
-
             </button>
             <div class="dropdown-menu" aria-labelledby="button-conditions">
               <a href="/web/v1/orders/conditions/period/current-month" id="button-conditions-current-month" class="dropdown-item">Текущий месяц</a>
@@ -55,7 +54,7 @@
             <i class="bi bi-cash-stack text-dark"></i>
           </button>
 
-          <button id="button-add" type="button" class="btn btn-sm btn-light" onclick="onClickAddOrder()">Добавить</button>
+          <button id="button-add" type="button" class="btn btn-sm btn-light" th:text="#{main.btn.add}" onclick="onClickAddOrder()"></button>
           <button id="button-update" type="button" class="btn btn-sm btn-light" disabled="" onclick="onClickUpdateOrder()">Изменить</button>
           <button id="button-erase" type="button" class="btn btn-sm btn-danger" disabled="" onclick="onClickEraseOrder()">Удалить</button>
           <div class="btn-group" role="group">
@@ -96,7 +95,6 @@
 
               <div class="dropdown-divider"></div>
               <a id="button-report-return-form" class="dropdown-item">Бланк возврата</a>
-
             </div>
           </div>
 
@@ -105,9 +103,8 @@
               Экспорт
             </button>
             <div class="dropdown-menu" aria-labelledby="button-exportes">
-              <a id="button-export-excel-cdek" class="dropdown-item" href="/web/orders/0/export/excel-cdek">Выгрузка заказов в СДЭК (excel)</a>
-              <a id="button-export-api-cdek" class="dropdown-item" href="/web/orders/0/export/api-cdek">Выгрузка заказов в СДЭК (интеграция)</a>
-              <a id="button-export-api-ozon-rocket" class="dropdown-item" href="web/orders/0/export/api-ozon-rocket">Выгрузка заказов в OZON.Rocket</a>
+              <a id="button-export-excel-cdek" class="dropdown-item" href="/web/v1/orders/export/excel-cdek">Выгрузка заказов в СДЭК (excel)</a>
+              <a id="button-export-api-cdek" class="dropdown-item" href="/web/v1/orders/export/api-cdek">Выгрузка заказов в СДЭК (интеграция)</a>              
             </div>
           </div>
         </div>
@@ -163,7 +160,7 @@
                   data-container="body"
                   data-toggle="tooltip"
                   data-placement="bottom"
-                  th:text="${#numbers.formatCurrency(order.amounts.get(T(com.sir.richard.boss.model.types.OrderAmountTypes).TOTAL_WITH_DELIVERY))}"></td>
+                  th:text="${#numbers.formatCurrency(order.amounts.get(T(com.afa.devicer.core.model.types.OrderAmountTypes).TOTAL_WITH_DELIVERY))}"></td>
               <td th:text="${order.delivery.trackCode}"></td>
               <!--
               <tr class="table-${order.viewStatus.union}">
@@ -195,23 +192,23 @@
           <ul class="list-group-flush">
             <li class="list-group-item text-right">
               <span th:text="#{orders.table.footers.amount.bill}"></span>&nbsp;
-              <strong th:text="${#numbers.formatCurrency(totalAmounts.get(T(com.sir.richard.boss.model.types.OrderAmountTypes).BILL))}"></strong>
+              <strong th:text="${#numbers.formatCurrency(totalAmounts.get(T(com.afa.devicer.core.model.types.OrderAmountTypes).BILL))}"></strong>
             </li>
             <li class="list-group-item text-right">
               <span th:text="#{orders.table.footers.amount.supplier}"></span>&nbsp;
-              <strong th:text="${#numbers.formatCurrency(totalAmounts.get(T(com.sir.richard.boss.model.types.OrderAmountTypes).SUPPLIER))}"></strong>
+              <strong th:text="${#numbers.formatCurrency(totalAmounts.get(T(com.afa.devicer.core.model.types.OrderAmountTypes).SUPPLIER))}"></strong>
             </li>
             <li class="list-group-item text-right">
               <span th:text="#{orders.table.footers.amount.advert}"></span>&nbsp;
-              <strong th:text="${#numbers.formatCurrency(totalAmounts.get(T(com.sir.richard.boss.model.types.OrderAmountTypes).ADVERT_BUDGET))}"></strong>
+              <strong th:text="${#numbers.formatCurrency(totalAmounts.get(T(com.afa.devicer.core.model.types.OrderAmountTypes).ADVERT_BUDGET))}"></strong>
             </li>
             <li class="list-group-item text-right">
               <span th:text="#{orders.table.footers.amount.margin}"></span>&nbsp;
-              <strong th:text="${#numbers.formatCurrency(totalAmounts.get(T(com.sir.richard.boss.model.types.OrderAmountTypes).MARGIN))}"></strong>
+              <strong th:text="${#numbers.formatCurrency(totalAmounts.get(T(com.afa.devicer.core.model.types.OrderAmountTypes).MARGIN))}"></strong>
             </li>
             <li class="list-group-item text-right">
               <span th:text="#{orders.table.footers.amount.postpay}"></span>&nbsp;
-              <strong th:text="${#numbers.formatCurrency(totalAmounts.get(T(com.sir.richard.boss.model.types.OrderAmountTypes).POSTPAY))}"
+              <strong th:text="${#numbers.formatCurrency(totalAmounts.get(T(com.afa.devicer.core.model.types.OrderAmountTypes).POSTPAY))}"
                       data-container="body" data-toggle="tooltip" data-placement="bottom" title=""
                       data-original-title="Наложенный платеж СДЭК: 15 660,00 ₽,
 				         							 Наложенный платеж Почта России: 0,00 ₽,
@@ -227,7 +224,7 @@
             </li>
             <li class="list-group-item text-right">
               <span th:text="#{orders.table.footers.count.real}"></span>&nbsp;
-              <span th:text="${#numbers.formatInteger(totalAmounts.get(T(com.sir.richard.boss.model.types.OrderAmountTypes).COUNT_REAL_ORDERS), 1)}"></span>
+              <span th:text="${#numbers.formatInteger(totalAmounts.get(T(com.afa.devicer.core.model.types.OrderAmountTypes).COUNT_REAL_ORDERS), 1)}"></span>
             </li>
             <li class="list-group-item text-right">
               <strong data-container="body"
@@ -246,6 +243,11 @@
     <script>
         $('#nav-link-orders').addClass('active');
         $('#nav-link-orders i').removeClass('text-dark').addClass('text-info');
+
+
+        function onClickAddOrder() {
+          window.location = '/web/v1/orders/add/orders';
+        }
 
         function onClickCrmLoad() {
             window.location = '${urlOrders}/import-crm';
@@ -270,10 +272,7 @@
         function onClickConditionsFilter() {
             window.location = '${urlOrders}/conditions/filter';
         }
-        function onClickAddOrder() {
-            console.log('${urlOrders}/add');
-            window.location = 'add/orders';
-        }
+
         function onClickUpdateOrder() {
             console.log('onClickUpdateOrder: ' + $('#button-update').attr('href'));
             window.location = $('#button-update').attr("href");

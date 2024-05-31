@@ -1,0 +1,2842 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="pribormaster.ru описание">
+    <meta name="keywords" content="pribormaster.ru ключевые слова"/>
+    <meta name="author" content="Aleksey Fedorov">
+    <link rel="icon" href="resources/51.ico">
+    <!-- Bootstrap core CSS -->
+    <link href="resources/css/bootstrap.css" rel="stylesheet">
+    <link href="resources/css/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Custom styles for this template -->
+    <link href="resources/css/dashboard.css" rel="stylesheet">
+    <link href="resources/css/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="resources/css/datatables.css" rel="stylesheet"/>
+
+<title>SIR RICHARD BOSS | Создание заказа</title>
+
+</head>
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" target="_blank" href="http://sir-richard.ru/admin">SIR RICHARD BOSS</a>
+            	
+      <input id="input-search-by-order-conditions" class="search-by-order-no form-control form-control-dark w-100" type="text" placeholder='Введите данные для поиска заказа' aria-label='Введите данные для поиска заказа'>	       
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a id="link-search-by-order-no" class="search-by-order-no nav-link" href="#"> Поиск </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a id="nav-link-home" class="nav-menus-item nav-link active" href="/sir-richard-boss-web/">
+                  <i class="bi bi-house-door text-dark"></i>	              
+                  Главная <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a id="nav-link-orders" class="nav-menus-item nav-link" href="/sir-richard-boss-web/orders">                  
+                  <i class="bi bi-files text-dark"></i>
+                  Заказы
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a id="nav-link-customers" class="nav-menus-item nav-link" href="#">                  
+                  <i class="bi bi-people text-dark"></i>
+                  Покупатели
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a id="nav-link-alarm" class="nav-menus-item nav-link" href="/sir-richard-boss-web/alarm/car">                  
+                  <i class="bi bi-alarm text-dark"></i>
+                  Сигнализация
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a id="nav-link-alarm" class="nav-menus-item nav-link" href="/sir-richard-boss-web/vacancies">                  
+                  <i class="bi bi-person-plus text-dark"></i>
+                  Вакансии
+                </a>
+              </li>  
+                            
+            </ul>        
+            
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Wiki</span>              
+            </h6>
+            <ul class="nav flex-column mb-2">
+             <li class="nav-item">
+                <a id="nav-link-products" class="nav-menus-item nav-link" href="/sir-richard-boss-web/wiki/products/-1">
+                  <i class="bi bi-cart-check text-dark"></i>                  
+                  Товары
+                </a>
+              </li>
+              <li class="nav-item">
+                <a id="nav-link-wiki-stock" class="nav-link" href="/sir-richard-boss-web/wiki/stock-products">
+                  <i class="bi bi-shop-window text-dark"></i>
+                  Склад
+                </a>
+              </li>
+              <!-- 
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Categories
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Delivery types
+                </a>
+              </li>
+              -->
+            </ul>
+            
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Интеграция</span>              
+            </h6>
+            <ul class="nav flex-column mb-2">
+             <li class="nav-item">
+                <a id="nav-link-ym-products" class="nav-menus-item nav-link" href="/sir-richard-boss-web/wiki/products/ym">
+                  <i class="bi bi-cart-check text-dark"></i>
+                  Товары на "Яндекс-Маркет"
+                </a>
+              </li>
+              
+              <li class="nav-item">
+                <a id="nav-link-ozon-products" class="nav-menus-item nav-link" href="/sir-richard-boss-web/wiki/products/ozon">
+				  <i class="bi bi-cart-check text-dark"></i>
+                  Товары на "Озон"
+                </a>
+              </li>
+              
+            </ul>
+            
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Отчеты</span>              
+            </h6>
+            
+            <div class="sidebar-sticky">  
+                <ul class="nav flex-column">
+	                <li class="nav-item">	                
+		                <a id="nav-link-report-product-sales" class="nav-link" href="/sir-richard-boss-web/reports/product-sales">
+                  		  <i class="bi bi-printer text-dark"></i>
+		                  Отчет по товарам (за период)
+		                </a>
+	                </li>
+
+                    <li class="nav-item">
+                        <a id="nav-link-report-complex-aggregate-product-sales" class="nav-link" href="/sir-richard-boss-web/reports/complex-aggregate-product-sales">
+                            <i class="bi bi-printer text-dark"></i>
+                            Агрегированный отчет по товарам
+                        </a>
+                    </li>
+
+	                <li class="nav-item">	                
+		                <a id="nav-link-report-product-sales-by-query" class="nav-link" href="/sir-richard-boss-web/reports/product-sales-by-query">
+                          <i class="bi bi-printer text-dark"></i>
+		                  Отчет по товарам (по запросу)
+		                </a>
+	                </li>
+	                
+	                <li class="nav-item">	                
+		                <a id="nav-link-report-product-sales-by-query-name" class="nav-link" href="/sir-richard-boss-web/reports/product-sales-by-query-name">
+                          <i class="bi bi-printer text-dark"></i>
+		                  Отчет по товарам (по условию)
+		                </a>
+	                </li>
+	                
+	                <li class="nav-item">	                
+		                <a id="nav-link-report-sales-funnel" class="nav-link" href="/sir-richard-boss-web/reports/sales-funnel">
+                          <i class="bi bi-printer text-dark"></i>
+		                  Отчет "Воронка продаж"
+		                </a>
+	                </li>
+	                
+                </ul>
+	        </div>            
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        	
+        
+      
+<!-- <h1 class="h2">Главная</h1>  -->
+<div class="d-flex justify-content-start flex-wrap flex-md-nowrap align-items-start">
+			<h1 class="h4">Создать заказ</h1>
+</div>
+<div class="d-flex justify-content-start flex-wrap flex-md-nowrap align-items-start border-bottom- mb-2">
+			<h2 id="header-customer-longName" class="h5">Новый покупатель</h2>
+</div>
+
+<br />
+
+<div class="row">
+
+	<div class="col-md-4 order-md-2 mb-4"></div>
+
+	<div class="col-md-8 order-md-1">
+		
+		<form id="orderForm" class="needs-validation" action="/sir-richard-boss-web/orders/0/save/orders" method="post">
+
+			<input id="id" name="id" type="hidden" value="0"/>
+
+
+
+			<div class="form-row">
+				
+				
+					<div class="form-group col-md-2">
+						<label for="input-order-no">Номер заказа *</label>
+						<input id="input-order-no" name="no" placeholder="Номер заказа" type="text" class=" form-control form-control-sm form-control-required" value="14602"/>
+						
+						<div class="invalid-feedback">
+							Укажите номер заказа
+						</div>
+					</div>
+				
+				<div class="form-group col-md-1">
+					<label for="input-order-subno">Расширение</label>
+					<input id="input-order-subno" name="subNo" min="0" max="5" type="number" class="form-control form-control-sm" value="0"/>
+				</div>
+					<div class="form-group col-md-2">
+						<label for="input-order-orderDate">Дата заказа *</label>
+
+
+						<div class="input-group">
+
+
+							<input id="input-order-orderDate" name="orderDate" placeholder="Дата заказа" type="text" class=" form-control form-control-sm form-control-required datepicker" value="31.05.2024" maxlength="10"/>							
+							<div class="input-group-append">
+								<button class="btn btn-sm btn-light btn-outline-secondary" onclick="$('#input-order-orderDate').datepicker('show');" type="button">
+									<i class="bi bi-calendar2-date text-dark"></i>									
+								</button>
+							</div>
+
+							<div class="invalid-feedback">
+								Укажите дату заказа
+							</div>
+						</div>
+					</div>
+				
+				
+				<div class="form-group col-md-2">					
+					<label for="select-store">Сайт</label>
+					<select id="select-store" name="store" class="form-control form-control-sm">
+						<option value="SR">sir-richard.ru</option><option value="PM" selected="selected">pribormaster.ru</option>
+					</select>
+				</div>
+
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-3">
+					<label for="select-order-type">Тип</label>
+					<select id="select-order-type" name="orderType" class="form-control form-control-sm">
+						<option value="UNKNOWN">неопределен</option><option value="ORDER" selected="selected">заказ</option><option value="BILL">счет на оплату</option><option value="KP">коммерческое предложение</option><option value="CONSULTATION">консультация</option><option value="CHANGE">замена</option><option value="REFUND">возврат</option><option value="GIFT">подарок</option><option value="TEST_DIVE">тест-драйв</option><option value="REPAIR">ремонт</option>
+					</select>
+
+				</div>
+				<div class="form-group col-md-2">
+					<label for="select-source-type">Источник</label>
+					<select id="select-source-type" name="sourceType" class="form-control form-control-sm">
+						<option value="UNKNOWN">неопределен</option><option value="CALL">звонок</option><option value="CHAT">чат</option><option value="EMAIL">письмо</option><option value="LID" selected="selected">лид</option><option value="FAST_LID">быстрый заказ</option><option value="CALL_BACK">обратный звонок</option><option value="TENDER">тендер</option>
+					</select>
+				</div>
+
+				<div class="form-group col-md-2">
+					<label for="select-advert-type">Канал привлечения</label>
+
+					<select id="select-advert-type" name="advertType" class="form-control form-control-sm">
+						<option value="UNKNOWN">неопределен</option><option value="ADVERT" selected="selected">реклама</option><option value="CONTEXT">поиск</option><option value="YOUTUBE">youTube</option><option value="LOYALTY">сарафанное радио</option><option value="REPEAT_CALL">повторное обращение</option><option value="COLD_CALL">холодный звонок</option><option value="TENDER">тендер</option><option value="YANDEX_MARKET">яндекс.маркет</option><option value="CDEK_MARKET">сдэк.маркет</option><option value="OZON">озон</option>
+					</select>
+				</div>
+				<div class="form-group col-md-4">
+					<label for="select-product-category">Категория</label>
+					<select id="select-product-category" name="productCategory.id" class="form-control form-control-sm">
+						<option value="201">gsm розетки и реле</option><option value="202">gsm сигнализации</option><option value="903">автокормушки и автопоилки</option><option value="203">автономные извещатели</option><option value="301">алкотестеры</option><option value="601">антижучки</option><option value="204">видеоглазки и видеодомофоны</option><option value="205">видеонаблюдение</option><option value="503">видеоняни</option><option value="702">возвращатели</option><option value="304">гаджеты</option><option value="303">гибкие камеры</option><option value="1105">для охоты</option><option value="1104">для рыбалки</option><option value="502">домашние планетарии</option><option value="401">изотермика</option><option value="1111">инкубаторы</option><option value="1102">инструменты</option><option value="802">колонки</option><option value="504">конструкторы</option><option value="501">микроскопы USB</option><option value="703">мини электростанции</option><option value="403">мобильный душ</option><option value="801">наушники</option><option value="206">ножеточки</option><option value="602">обнаружители видеокамер</option><option value="104">отпугиватели грызунов</option><option value="102">отпугиватели змей</option><option value="110">отпугиватели клещей</option><option value="105">отпугиватели комаров</option><option value="101">отпугиватели кротов</option><option value="107">отпугиватели ос</option><option value="103">отпугиватели птиц</option><option value="108">отпугиватели собак</option><option value="603">подавители диктофонов</option><option value="604">подавители сотовых телефонов</option><option value="1103">подарки</option><option value="302">пуско-зарядные устройства</option><option value="210">роботы для уборки</option><option value="208">светильники</option><option value="404">системы полива</option><option value="211">средства защиты</option><option value="701">стельки с подогревом</option><option value="209">столики для ноутбука</option><option value="405">термосы</option><option value="109">уничтожители насекомых</option><option value="1106">фонари</option><option value="901">фурминатор для кошек</option><option value="902">фурминатор для собак</option><option value="207">эконаборы</option><option value="904">электронные ошейники</option><option value="1101">элементы питания</option><option value="0" selected="selected">не определена</option>
+					</select>
+				</div>
+				
+				<div class="form-group col-md-1">
+					<label for="input-order-offer-count-day">
+						31.05.2024
+					</label>					
+					<input id="input-order-offer-count-day" name="offer.countDay" min="0" max="90" type="number" class="form-control form-control-sm" value="0"/>
+				</div>
+				
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md">
+					<label for="input-payment-annotation">Дополнительно</label>
+					<textarea id="input-payment-annotation" name="annotation" maxlength="255" class="form-control form-control-sm" rows="2">
+</textarea>
+
+				</div>
+			</div>
+			<h4 id="header-group-customer" class="mb-4">
+				Покупатель
+			</h4>
+			<hr class="mb-4">
+
+			<input id="formCustomer.id" name="formCustomer.id" type="hidden" value="0"/>
+			<input id="formCustomer.personId" name="formCustomer.personId" type="hidden" value="0"/>
+			<input id="formCustomer.mainAddress.id" name="formCustomer.mainAddress.id" type="hidden" value="0"/>
+			
+			<div class="form-row">
+						
+				
+									
+						<div class="form-group col-md-6">			
+							<div class="form-check">
+							  <input class="form-check-input radio-customer-type" type="radio" name="gridRadiosCustomerType" id="customer-types-CUSTOMER" value="CUSTOMER">
+							  <label class="form-check-label" for="customer-types-customer">физическое лицо</label>
+							</div>	
+						</div>			
+								
+				
+						
+				
+									
+						<div class="form-group col-md-6">			
+							<div class="form-check">
+							  <input class="form-check-input radio-customer-type" type="radio" name="gridRadiosCustomerType" id="customer-types-COMPANY" value="COMPANY">
+							  <label class="form-check-label" for="customer-types-customer">юридическое лицо</label>
+							</div>	
+						</div>			
+								
+				
+						
+				
+									
+						<div class="form-group col-md-6">			
+							<div class="form-check">
+							  <input class="form-check-input radio-customer-type" type="radio" name="gridRadiosCustomerType" id="customer-types-BUSINESSMAN" value="BUSINESSMAN">
+							  <label class="form-check-label" for="customer-types-customer">индивидуальный предприниматель</label>
+							</div>	
+						</div>			
+								
+				
+						
+				
+									
+						<div class="form-group col-md-6">			
+							<div class="form-check">
+							  <input class="form-check-input radio-customer-type" type="radio" name="gridRadiosCustomerType" id="customer-types-FOREIGNER_CUSTOMER" value="FOREIGNER_CUSTOMER">
+							  <label class="form-check-label" for="customer-types-customer">нерезидент, физическое лицо</label>
+							</div>	
+						</div>			
+								
+				
+						
+				
+									
+						<div class="form-group col-md-6">			
+							<div class="form-check">
+							  <input class="form-check-input radio-customer-type" type="radio" name="gridRadiosCustomerType" id="customer-types-FOREIGNER_COMPANY" value="FOREIGNER_COMPANY">
+							  <label class="form-check-label" for="customer-types-customer">нерезидент, юридическое лицо</label>
+							</div>	
+						</div>			
+								
+				
+						
+				
+								
+				
+			
+			</div>
+		
+			<div class="form-row form-row-select-customer-types">
+				<div class="form-group col-md-6">
+					<label for="select-customer-type">Покупатель</label>
+					<select id="select-customer-type" name="formCustomer.customerType" class="form-control form-control-sm">
+						<option value="CUSTOMER" selected="selected">физическое лицо</option><option value="COMPANY">юридическое лицо</option><option value="BUSINESSMAN">индивидуальный предприниматель</option><option value="FOREIGNER_CUSTOMER">нерезидент, физическое лицо</option><option value="FOREIGNER_COMPANY">нерезидент, юридическое лицо</option><option value="UNKNOWN">нечто</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-row">	
+				<div class="form-group col-md-6">
+					<label for="select-customer-country">Страна</label>
+					<select id="select-customer-country" name="formCustomer.country" class="form-control form-control-sm">
+						<option value="RUSSIA" selected="selected">Российская Федерация</option><option value="BELARUS">Республика Беларусь</option><option value="KAZAKHSTAN">Республика Казахстан</option><option value="UZBEKISTAN">Республика Узбекистан</option><option value="ARMENIA">Республика Армения</option><option value="AZERBAIJAN">Азербайджанская республика</option><option value="UKRAINE">Украина</option><option value="ESTONIA">Эстония</option><option value="LATVIA">Латвия</option><option value="LITVA">Литва</option><option value="UNKNOWN">Имя ее неизвестно</option>
+					</select>
+				</div>
+			</div>
+
+			<!--  CUSTOMER -->
+			<div class="form-group-customer">
+
+				<div class="form-row">							
+						
+					
+						<div class="form-group col-md-3">
+							<label for="input-customer-phone">Телефон *</label>							
+							<div class="input-group">
+								<input id="input-customer-phone" name="formCustomer.phoneNumber" placeholder="Для SMS и подтверждения" type="text" class=" form-control form-control-sm phone input-mask-phone form-control-customer-find" value="" maxlength="15"/>									
+								<div class="input-group-append">
+									<button id="btn-find-customer-phone"
+										class="btn btn-sm btn-light btn-outline-secondary"
+										type="button">
+										<i class="bi bi-search text-dark"></i>
+									</button>
+								</div>
+								
+							</div>
+							<div class="invalid-feedback">
+								Укажите номер телефона покупателя
+							</div>
+						</div>
+					
+
+					<div class="form-group col-md-4">
+						<label for="input-customer-email">Email</label>
+						<input id="input-customer-email" name="formCustomer.email" type="text" class="form-control form-control-sm form-control-customer-find" value="" maxlength="30"/>
+					</div>
+					
+					<div class="form-group col-md-5">					
+						<label for="input-customer-orders">&nbsp;</label>
+						<div class="dropdown">
+						  <button id="btn-find-customer-orders" class="btn btn-sm btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    История заказов&nbsp;<span class="badge badge-secondary">0</span>
+						  </button>
+						  <div class="dropdown-menu dropdown-menu-customer-orders" aria-labelledby="dropdownMenuButton">
+						  	<!-- 
+						    <a class="dropdown-item dropdown-menu-customer-order" href="#">Action</a>
+						    <a class="dropdown-item dropdown-menu-customer-order" href="#">Another action</a>
+						    <a class="dropdown-item dropdown-menu-customer-order" href="#">Something else here</a>
+						     -->
+						  </div>
+						</div>
+					</div>	
+				</div>
+
+				<div class="form-row">
+					
+					
+						<div class="form-group col-md-3">
+							<label for="input-customer-first-name">Имя *</label>							
+							<input id="input-customer-first-name" name="formCustomer.firstName" placeholder="Имя покупателя" type="text" class=" form-control form-control-sm" value=""/>
+									
+							<div class="invalid-feedback">
+								Укажите имя покупателя
+							</div>
+
+						</div>
+					
+					<div class="form-group col-md-4">
+						<label for="input-customer-middle-name">Отчество</label>
+						<input id="input-customer-middle-name" name="formCustomer.middleName" type="text" class="form-control form-control-sm" value=""/>
+					</div>
+					<div class="form-group col-md-5">
+						<label for="input-customer-last-name">Фамилия</label>
+						<input id="input-customer-last-name" name="formCustomer.lastName" type="text" class="form-control form-control-sm" value=""/>
+					</div>
+				</div>
+
+			</div>
+			<!--  COMPANY -->
+			<div class="form-group-company">				
+				<div class="form-row">
+					<div class="form-group col-md-2">
+						<label for="input-customer-inn">ИНН</label>
+						
+						<input id="input-customer-inn" name="formCustomer.inn" placeholder="ИНН" type="text" class="form-control form-control-sm form-control-customer-find" value="" maxlength="12"/>
+						<div class="invalid-feedback">
+							Укажите ИНН
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group col-md-3">
+						<label for="input-customer-short-name">Краткое наименование *</label>						
+						<input id="input-customer-short-name" name="formCustomer.shortName" placeholder="Краткое наименование" type="text" class=" form-control form-control-sm form-control-customer-find" value=""/>
+									
+						<div class="invalid-feedback">
+							Укажите краткое наименование
+						</div>
+					</div>
+					
+					<div class="form-group col-md-7">
+						<label for="input-customer-long-name">Полное наименование</label>
+						
+						<input id="input-customer-long-name" name="formCustomer.longName" placeholder="Полное наименование" type="text" class="form-control form-control-sm" value=""/>
+						<div class="invalid-feedback"> 
+							Укажите полное наименование
+						</div>
+					</div>
+				</div>
+
+				<h5 class="mb-4">
+					Контактное лицо
+				</h5>
+				<div class="form-row">
+					<input id="formCustomer.mainContact.id" name="formCustomer.mainContact.id" type="hidden" value="0"/>
+					<input id="formCustomer.mainContact.personId" name="formCustomer.mainContact.personId" type="hidden" value="0"/>
+					<input id="formCustomer.mainContact.country" name="formCustomer.mainContact.country" type="hidden" value="RUSSIA"/>
+					
+					
+					
+					<div class="form-group col-md-3">
+						<label for="input-customer-contact-first-name">Имя *</label>						
+						<input id="input-customer-contact-first-name" name="formCustomer.mainContact.firstName" placeholder="Имя контактного лица" type="text" class=" form-control form-control-sm" value=""/>
+						
+						<div class="invalid-feedback">
+							Укажите имя контактного лица
+						</div>
+					</div>
+					
+					<div class="form-group col-md-4">
+						<label for="input-customer-contact-middle-name">Отчество</label>
+						
+						<input id="input-customer-contact-middle-name" name="formCustomer.mainContact.middleName" placeholder="Отчество контактного лица" type="text" class="form-control form-control-sm" value=""/>
+						<div class="invalid-feedback">
+							Укажите отчество контактного лица
+						</div>
+					</div>
+					<div class="form-group col-md-5">
+						<label for="input-customer-contact-last-name">Фамилия</label>
+						
+						<input id="input-customer-contact-last-name" name="formCustomer.mainContact.lastName" placeholder="Фамилия контактного лица" type="text" class="form-control form-control-sm" value=""/>
+						<div class="invalid-feedback">
+							Укажите фамилию контактного лица
+						</div>
+					</div>
+
+				</div>
+
+				<div class="form-row">
+					
+					
+						<div class="form-group col-md-3">
+							<label for="input-customer-contact-phone">Телефон *</label>							
+							<div class="input-group">
+								<input id="input-customer-contact-phone" name="formCustomer.mainContact.phoneNumber" placeholder="Телефон контактного лица" type="text" class=" form-control form-control-sm phone input-mask-phone form-control-customer-find" value="" maxlength="15"/>								
+								<div class="input-group-append">
+									<button id="btn-find-customer-contact-phone"
+										class="btn btn-sm btn-light btn-outline-secondary"
+										type="button">
+										<i class="bi bi-search text-dark"></i>
+									</button>
+								</div>
+								
+							</div>
+							<div class="invalid-feedback">
+								Укажите телефон контактного лица
+							</div>
+						</div>
+					
+					
+					
+						<div class="form-group col-md-9">
+							<label for="input-customer-contact-email">Email *</label>
+							<input id="input-customer-contact-email" name="formCustomer.mainContact.email" type="text" class=" form-control form-control-sm form-control-customer-find" value=""/>
+								
+						</div>
+					
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="form-group col-md">
+					<label for="input-customer-address">Адрес фактический</label>
+					<textarea id="input-customer-address" name="formCustomer.mainAddress.address" maxlength="255" class="form-control form-control-sm" rows="2">
+</textarea>
+				</div>
+			</div>
+			
+			<h4 class="mb-3">
+				Доставка и оплата
+			</h4>
+			<hr class="mb-4">
+			<input id="delivery.id" name="delivery.id" type="hidden" value="0"/>
+			<div class="form-row">
+				<div class="form-group col-md-2">
+					<label for="select-payment-types">Вариант оплаты</label>
+					<select id="select-payment-type" name="paymentType" class="form-control form-control-sm">
+						<option value="PREPAYMENT">предоплата</option><option value="POSTPAY" selected="selected">постоплата</option><option value="PAYMENT_COURIER">наличными курьеру</option><option value="YANDEX_PAY">банковской картой</option><option value="APPLE_PAY">Apple Pay</option><option value="GOOGLE_PAY">Google Pay</option><option value="CREDIT">в кредит</option>
+					</select>
+				</div>
+				
+				<div class="form-group col-md-2">
+					<label for="select-payment-delivery-types">Оплачивает доставку</label>
+					<select id="select-payment-delivery-type" name="delivery.paymentDeliveryType" class="form-control form-control-sm input-calc-amounts">
+						<option value="CUSTOMER" selected="selected">покупатель</option><option value="SELLER">продавец</option>
+					</select>
+				</div>
+
+				<div class="form-group col-md-3">
+					<label for="select-delivery-type">Способ доставки</label>
+					<select id="select-delivery-type" name="delivery.deliveryType" class="form-control form-control-sm">
+						<option value="UNKNOWN">неопределено</option><option value="CDEK_PVZ_TYPICAL" selected="selected">СДЭК, ПВЗ</option><option value="CDEK_PVZ_ECONOMY">СДЭК, ЭКОНОМ ПВЗ</option><option value="CDEK_COURIER">СДЭК, курьер</option><option value="CDEK_COURIER_ECONOMY">СДЭК, ЭКОНОМ курьер</option><option value="DELLIN">Деловые Линии</option><option value="COURIER_MOSCOW_TYPICAL">курьер, 1-2 дня</option><option value="COURIER_MOSCOW_FAST">курьер, сегодня</option><option value="COURIER_MO_TYPICAL">МО, курьер</option><option value="POST_TYPICAL">ПОЧТА, обычное</option><option value="POST_I_CLASS">ПОЧТА, 1-й класс</option><option value="POST_EMS">ПОЧТА, EMS</option><option value="PICKUP">самовывоз</option><option value="YANDEX_MARKET_FBS">до склада Яндекс-Маркет</option><option value="OZON_FBS">до склада OZON</option><option value="YANDEX_GO">Яндекс-Логистика</option><option value="OZON_ROCKET_PICKPOINT">OZON Rocket ПВЗ</option><option value="OZON_ROCKET_POSTAMAT">OZON Rocket постамат</option><option value="OZON_ROCKET_COURIER">OZON Rocket курьер</option>
+					</select>
+				</div>
+				
+				
+				<div class="form-group col-md-2">
+				
+					<label for="select-delivery-price-type">Тариф</label>
+					<select id="select-delivery-price-type" name="delivery.deliveryPrice" class="form-control form-control-sm">						
+					</select>
+		
+				</div>
+								
+				<div class="form-group col-md-3">
+					<label for="select-delivery-address-country">Страна</label>
+					<select id="select-delivery-address-country" name="delivery.address.country" class="form-control form-control-sm">
+						<option value="RUSSIA" selected="selected">Российская Федерация</option><option value="BELARUS">Республика Беларусь</option><option value="KAZAKHSTAN">Республика Казахстан</option><option value="UZBEKISTAN">Республика Узбекистан</option><option value="ARMENIA">Республика Армения</option><option value="AZERBAIJAN">Азербайджанская республика</option><option value="UKRAINE">Украина</option><option value="ESTONIA">Эстония</option><option value="LATVIA">Латвия</option><option value="LITVA">Литва</option><option value="UNKNOWN">Имя ее неизвестно</option>
+					</select>
+				</div>
+			</div>
+
+			<input id="delivery.address.id" name="delivery.address.id" type="hidden" value="0"/>
+			<div class="form-row">
+				<div class="form-group col-md">
+					<label for="input-delivery-address">Адрес доставки</label>
+					<textarea id="input-delivery-address" name="delivery.address.address" maxlength="255" class="form-control form-control-sm" rows="2">
+</textarea>
+					
+					<!-- HIDEN BEGIN -->
+					<input id="input-delivery-address-carrierPvz-cityId" name="delivery.address.carrierInfo.cityId" type="text" class="form-control form-control-sm delivery-address-carrierPvz" value="0"/>
+					<input id="input-delivery-address-carrierPvz-city" name="delivery.address.carrierInfo.cityContext" type="text" class="form-control form-control-sm delivery-address-carrierPvz" value=""/>
+					<input id="input-delivery-address-carrierPvz-code" name="delivery.address.carrierInfo.pvz" type="text" class="form-control form-control-sm delivery-address-carrierPvz" value=""/>								
+					<input id="input-delivery-address-carrierPvz-street" name="delivery.address.carrierInfo.street" type="text" class="form-control form-control-sm delivery-address-carrierPvz" value=""/>
+					<input id="input-delivery-address-carrierPvz-house" name="delivery.address.carrierInfo.house" type="text" class="form-control form-control-sm delivery-address-carrierPvz" value=""/>
+					<input id="input-delivery-address-carrierPvz-flat" name="delivery.address.carrierInfo.flat" type="text" class="form-control form-control-sm delivery-address-carrierPvz" value=""/>
+										
+					<input id="input-delivery-address-carrierPvz-deviveryVariantId" name="delivery.address.carrierInfo.deliveryVariantId" type="text" class="form-control form-control-sm delivery-address-carrierPvz" value=""/>											
+					<!-- HIDEN END -->														
+				</div>
+			</div>
+			
+			<input id="delivery.recipient.personId" name="delivery.recipient.personId" type="hidden" value="0"/>
+  			<div class="form-row">
+  			</div>
+  			<div class="custom-control custom-checkbox">	
+    			<input id="check-delivery-customer-equals-recipient" name="customerEqualsRecipient" class="custom-control-input" type="checkbox" value="true" checked="checked"/><input type="hidden" name="_customerEqualsRecipient" value="on"/>
+    			<label for="check-delivery-customer-equals-recipient" class="custom-control-label">Заказчик и получатель являются одним лицом</label>
+  			</div>
+						
+			<div class="form-row">
+					<div class="form-group col-md-3">
+						<label for="input-customer-contact-first-name">Имя</label>						
+						<input id="input-delivery-recipient-first-name" name="delivery.recipient.firstName" type="text" class="form-control form-control-sm input-delivery-recipient" value=""/>
+					</div>
+					<div class="form-group col-md-3">
+						<label for="input-customer-contact-middle-name">Отчество</label>						
+						<input id="input-delivery-recipient-middle-name" name="delivery.recipient.middleName" type="text" class="form-control form-control-sm input-delivery-recipient" value=""/>
+					</div>
+					<div class="form-group col-md-3">
+						<label for="input-customer-contact-last-name">Фамилия</label>						
+						<input id="input-delivery-recipient-last-name" name="delivery.recipient.lastName" type="text" class="form-control form-control-sm input-delivery-recipient" value=""/>
+					</div>					
+					<div class="form-group col-md-3">
+						<label for="input-customer-contact-phone-number">Телефон</label>						
+						<input id="input-delivery-recipient-phone-number" name="delivery.recipient.phoneNumber" type="text" class="form-control form-control-sm input-delivery-recipient" value=""/>
+					</div>
+				
+			</div>
+			
+			<div class="form-row">
+				<div class="form-group col-md-3">
+					<label for="input-delivery-price">Стоимость доставки</label>
+										
+					<div class="input-group">
+						<input id="input-delivery-price" name="delivery.price" type="text" class="form-control form-control-sm input-calc-amounts-" value="0,00"/>
+					
+						<div class="input-group-append">
+									<button id="btn-calc-parcel-delivery-amounts-1" 
+											class="btn btn-sm btn-light btn-outline-secondary btn-calc-parcel-delivery-amounts" 
+											type="button">
+											<i class="bi bi-truck text-dark"></i>
+										
+									</button>
+									
+									<button id="btn-cdek-widjet-1" 
+											class="btn btn-sm btn-light btn-outline-secondary btn-cdek-widjet" 
+											type="button">
+											<i class="bi bi-map text-dark"></i>
+										
+									</button>
+									
+									<button id="btn-cdek-pvzs" 
+											class="btn btn-sm btn-light btn-outline-secondary" 
+											type="button">
+										<i class="bi bi-list text-dark"></i>
+									</button>							
+																		
+						</div>
+					</div>
+					
+				</div>
+				<input id="input-delivery-seller-price" name="delivery.factSellerPrice" type="hidden" value="0,00"/>
+				<input id="input-delivery-customer-price" name="delivery.factCustomerPrice" type="hidden" value="0,00"/>
+				
+				<div class="form-group col-md-2">
+					<label for="input-delivery-courier-date">Дата доставки</label>
+					<div class="input-group">
+						<input id="input-delivery-courier-date" name="delivery.address.carrierInfo.courierInfo.deliveryDate" type="text" class="form-control form-control-sm datepicker" value=""/>
+						<div class="input-group-append">
+							<button class="btn btn-sm btn-light btn-outline-secondary"
+								onclick="$('#input-delivery-courier-date').datepicker('show');"	type="button">
+								<i class="bi bi-calendar2-date text-dark"></i>								
+							</button>							
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group col-md-1">
+					<label for="input-delivery-courier-period-start">Временной</label>
+
+					<input id="input-delivery-courier-period-start" name="delivery.address.carrierInfo.courierInfo.startTime" type="text" class="form-control form-control-sm input-mask-time" value=""/>
+
+
+				</div>
+				<div class="form-group col-md-1">
+					<label for="input-delivery-courier-period-end">интервал</label>
+
+					<input id="input-delivery-courier-period-end" name="delivery.address.carrierInfo.courierInfo.endTime" type="text" class="form-control form-control-sm input-mask-time" value=""/>
+				</div>
+				
+				<div class="form-group col-md-3">
+							<label for="input-amounts-postpay">Постоплата</label>							
+							<div class="input-group">
+								<input id="input-amounts-postpay" name="amounts.postpay" type="text" class="form-control form-control-sm" value="0,00" maxlength="12"/>									
+								<div class="input-group-append">
+									
+									<button id="btn-calc-parcel-delivery-amounts-info" 
+											class="btn btn-sm btn-light btn-outline-secondary" 
+											type="button" 
+											data-toggle="popover" title="СДЭК, ПВЗ" data-trigger="focus" data-placement="right" data-content="">
+											<i class="bi bi-cash-coin text-dark"></i>
+									</button>
+									
+								</div>
+							</div>
+							<div class="invalid-feedback">
+								Укажите номер телефона покупателя
+							</div>
+				</div>
+
+				<div class="form-group col-md-2">
+					<label for="input-delivery-trackCode">Трэккод</label>
+					<input id="input-delivery-trackCode" name="delivery.trackCode" type="text" class="form-control form-control-sm" value=""/>
+				</div>
+
+			</div>
+
+
+			<div class="form-row">
+				<div class="form-group col-md">
+					<label for="input-delivery-courier-annotation">Дополнительная информация по доставке</label>
+					<input id="input-delivery-courier-annotation" name="delivery.annotation" type="text" class="form-control form-control-sm" value=""/>
+				</div>
+			</div>
+
+			<h4 class="mb-3">
+				Детализация
+			</h4>
+			<hr class="mb-4">
+
+			<div class="row">
+				<div class="col-sm-3">
+					Наименование товара
+				</div>
+				<div class="col-sm-1">
+					Кол-во
+				</div>
+				<div class="col-sm-2">
+					Цена
+				</div>
+				<div class="col-sm-2">
+					Опт
+				</div>
+				<div class="col-sm-1">
+					Скидка
+				</div>
+				<div class="col-sm-2">
+					Сумма
+				</div>
+				<div class="col-sm-1"></div>
+			</div>
+
+
+			<!-- items start -->
+			
+			
+
+
+				<div id="details-item-row-0" class="row">
+					<input id="input-details-item-id-0" name="items[0].id" type="hidden" value="0"/>
+					<input id="input-details-item-no-0" name="items[0].no" type="hidden" value="1"/>
+					<input id="input-details-item-product-id-0" name="items[0].product.id" type="hidden" value="0"/>
+					<!-- 1 1  -->
+					<div class="col-sm-3">
+						<div class="input-group">
+							<input id="input-details-item-product-0" name="items[0].product.name" type="text" list="datalist-product-name-0" class="form-control form-control-sm input-details-item-product input-calc-amounts" value=""/>
+							<datalist id="datalist-product-name-0"></datalist>	
+
+							<div class="input-group-append">
+								<button id="btn-find-details-item-product-0"
+									class="btn btn-sm btn-light btn-outline-secondary btn-find-details-item-product"
+									type="button">
+									<i class="bi bi-search text-dark"></i>
+								</button>
+							</div>
+						</div>
+						<span id="span-details-item-product-sku-info-0" class="badge badge-light">
+							
+						</span>
+					</div>
+					<div class="col-sm-1">
+						<div class="input-group">
+							<input id="input-details-item-quantity-0" name="items[0].quantity" type="text" class="form-control form-control-sm input-details-item-quantity input-calc-amounts" value="1"/>
+							<!--  
+							<input id="input-details-item-quantity-0" type="text"							 
+								class="form-control form-control-sm input-details-item-quantity" name="items[0].quantity" value="1">
+						-->
+						</div>
+						<span id="span-details-item-quantity-stock-info-0" class="badge badge-light">
+							
+						</span>
+					</div>
+					<div class="col-sm-2">
+						<div class="input-group">
+							<input id="input-details-item-price-0" name="items[0].price" type="text" class="form-control form-control-sm input-details-item-price input-calc-amounts" value="0,00"/>
+							<!-- 
+							<input id="input-details-item-price-0" type="text" 
+								class="form-control form-control-sm input-details-item-price" name="items[0].price" value="0">
+						 	-->
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="input-group">
+							<input id="input-details-item-supplier-amount-0" name="items[0].supplierAmount" type="text" class="form-control form-control-sm input-details-item-supplier-amount input-calc-amounts" value="0,00"/>
+
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<div class="input-group">
+							<input id="input-details-item-discount-rate-0" name="items[0].discountRate" type="text" class="form-control form-control-sm input-details-item-discount-rate input-calc-amounts" value="0,00"/>
+							<!--
+							<input id="input-details-item-discount-rate-0" type="text" 
+								class="form-control form-control-sm input-details-item-discount-rate" name="items[0].discountRate" value="0">
+						  	-->
+						</div>
+					</div>
+					
+					<div class="col-sm-2">
+						<div class="input-group">
+							<input id="input-details-item-amount-0" name="items[0].amount" type="text" class="form-control form-control-sm input-details-item-amount input-calc-amounts" value="0,00"/>
+						</div>
+					</div>
+					
+					<div class="col-sm-1">
+						<button id="btn-details-item-delete-0" type="button"
+							class="btn btn-sm btn-light btn-details-item-delete">
+							<i class="bi bi-dash text-dark"></i>
+							
+						</button>
+					</div>
+				</div>
+				
+				
+<script>
+	var currentStatusIndex = 1;
+</script>
+
+
+
+			<div id="details-item-row-hidden" class="row" hidden>
+
+				<input id="input-details-item-id-hidden" name="items[7].id" value="-1" type="hidden" value="0"/>
+				<input id="input-details-item-no-hidden" name="items[7].no" value="-1" type="hidden" value="1"/>
+				<input id="input-details-item-product-id-hidden" name="items[7].product.id" type="hidden" value="0"/>
+				<!--    -->
+				<div class="col-sm-3">
+					<div class="input-group">
+						<input id="input-details-item-product-hidden" name="items[7].product.name" type="text" list="datalist-product-name-hidden" class="form-control form-control-sm input-details-item-product input-calc-amounts" value=""/>						
+						<datalist id="datalist-product-name-hidden"></datalist>
+							
+						<div class="input-group-append">
+							<button
+								class="btn btn-sm btn-light btn-outline-secondary btn-find-details-item-product"
+								type="button" id="btn-find-details-item-product-hidden">
+								<i class="bi bi-search text-dark"></i>
+								
+							</button>
+						</div>
+					</div>
+					<span id="span-details-item-product-sku-info-hidden" class="badge badge-light"></span>
+				</div>
+				<div class="col-sm-1">
+					<div class="input-group">
+						<input id="input-details-item-quantity-hidden" name="items[7].quantity" type="text" class="form-control form-control-sm input-details-item-quantity input-calc-amounts" value="1"/>
+					</div>
+					<span id="span-details-item-quantity-stock-info-hidden" class="badge badge-light"></span>
+				</div>
+				<div class="col-sm-2">
+					<div class="input-group">
+						<input id="input-details-item-price-hidden" name="items[7].price" type="text" class="form-control form-control-sm input-details-item-price input-calc-amounts" value="0,00"/>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<div class="input-group">
+						<input id="input-details-item-supplier-amount-hidden" name="items[7].supplierAmount" type="text" class="form-control form-control-sm input-details-item-supplier-amount input-calc-amounts" value="0,00"/>
+					</div>
+				</div>
+				<div class="col-sm-1">
+					<div class="input-group">
+						<input id="input-details-item-discount-rate-hidden" name="items[7].discountRate" type="text" class="form-control form-control-sm input-details-item-discount-rate input-calc-amounts" value="0,00"/>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<div class="input-group">
+						<input id="input-details-item-amount-hidden" name="items[7].amount" type="text" class="form-control form-control-sm input-details-item-amount input-calc-amounts" value="0,00"/>
+					</div>
+				</div>
+				<div class="col-sm-1">
+					<button type="button"
+						class="btn btn-sm btn-light btn-details-item-delete"
+						id="btn-details-item-delete-hidden">
+						<i class="bi bi-dash text-dark"></i>
+						
+					</button>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-7 mb-4">			
+					<button id="btn-details-item-add" type="button"
+						class="btn btn-sm btn-light">						
+						<i class="bi bi-plus text-dark"></i>&nbsp;
+						Строка
+					</button>
+				</div>				
+				<div class="col-sm-2">
+					Итого:
+				</div>
+				<div id="details-items-amounts-total" class="col-sm-2 text-right">--</div>
+				<div class="col-sm-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-7"></div>
+				<div class="col-sm-2">
+					Доставка:
+				</div>
+				<div id="details-items-amounts-delivery" class="col-sm-2 text-right">--</div>
+				<div class="col-sm-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-7"></div>
+				<div class="col-sm-2">
+					<p>
+						<strong> Итого к оплате:
+						</strong>
+					</p>
+				</div>
+				<div id="details-items-amounts-total-with-delivery"	class="col-sm-2 text-right">--</div>
+				<div class="col-sm-1"></div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-7"></div>
+				<div class="col-sm-2">
+					Доход:
+				</div>
+				<div id="details-items-amounts-bill" class="col-sm-2 text-right">--</div>
+				<div class="col-sm-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-7"></div>
+				<div class="col-sm-2">
+					Закупка:
+				</div>
+				<div id="details-items-amounts-supplier" class="col-sm-2 text-right">--</div>
+				<div class="col-sm-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-7"></div>
+				<div class="col-sm-2">
+					Прибыль:
+				</div>
+				<div id="details-items-amounts-margin" class="col-sm-2 text-right">--</div>
+				<div class="col-sm-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-7"></div>
+				<div class="col-sm-2">
+					<p>
+						<strong>Постоплата:</strong>
+					</p>
+				</div>
+				<div id="details-items-amounts-postpay" class="col-sm-2 text-right">--</div>
+				<div class="col-sm-1"></div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-7"></div>
+				<div class="col-sm-2">
+					Доставка продавца:
+				</div>
+				<div id="details-items-amounts-delivery-seller-summary" class="col-sm-2 text-right"></div>
+				<div class="col-sm-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-7"></div>
+				<div class="col-sm-2">
+					Доставка покупателя:
+				</div>
+				<div id="details-items-amounts-delivery-customer-summary" class="col-sm-2 text-right"></div>
+				<div class="col-sm-1"></div>
+			</div>
+						
+			
+			<div class="row">
+				<div class="col-sm-12"></div>
+			</div>
+			<!-- items end -->
+			<hr class="mb-4">
+			<button id="btn-submit-order" type="submit" class="btn btn-primary">
+				Сохранить
+			</button>
+		</form>
+
+
+	</div>
+</div>
+
+<!-- Modal -->
+<!-- delivery-cdek-modal -->
+<div class="modal fade" id="delivery-cdek-modal" tabindex="-1" role="dialog" aria-labelledby="delivery-cdek-modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="delivery-cdek-modal-title">Расчет доставки</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">      
+	    <form>	    
+		  <div class="input-group mb-3">
+			<input type="text" id="input-delivery-cdek-city-search" class="form-control form-control-sm" placeholder='Город получателя' aria-label='Город получателя' aria-describedby="basic-addon2">
+			<div class="input-group-append">
+			    <button id="btn-find-delivery-cdek-city" class="btn btn-light btn-sm btn-outline-secondary" type="button">
+			    <i class="bi bi-search text-dark"></i>
+			    </button>
+			</div>
+		  </div>
+          <div class="form-group">
+            <label for="select-delivery-cdek-city" class="col-form-label">Куда</label>            
+            <select id="select-delivery-cdek-city" class="form-control form-control-sm"></select>
+          </div>          
+          <div class="form-group">
+            <label for="select-delivery-cdek-pvz" class="col-form-label">Пункт выдачи</label>
+            <select multiple id="select-delivery-cdek-pvz" class="form-control form-control-sm"></select>
+          </div>
+          
+          <div class="form-row">         
+	          <div class="form-group col-md-8">
+	            <label for="select-delivery-cdek-street" class="col-form-label">Улица</label>
+	            <input type="text" class="form-control form-control-sm input-delivery-cdek-address-part" id="input-delivery-cdek-street">
+	          </div>	          
+	          <div class="form-group col-md-2">
+	            <label for="select-delivery-cdek-house" class="col-form-label">Дом</label>
+	            <input type="text" class="form-control form-control-sm input-delivery-cdek-address-part" id="input-delivery-cdek-house">
+	          </div>	          
+	          <div class="form-group col-md-2">
+	            <label for="select-delivery-cdek-flat" class="col-form-label">Квартира</label>
+	            <input type="text" class="form-control form-control-sm input-delivery-cdek-address-part" id="input-delivery-cdek-flat">
+	          </div> 
+	      </div>     
+          
+          <div class="form-group">
+            <label for="input-delivery-cdek-city-address" class="col-form-label">Адрес</label>
+            <input type="text" class="form-control form-control-sm" id="input-delivery-cdek-city-address">
+          </div>
+        </form>        
+      </div>
+      <div class="modal-footer">
+        <button id="button-modal-delivery-cdek-cancel" type="button" class="btn btn-light" data-dismiss="modal">Отмена</button>
+        <button id="button-modal-delivery-cdek-ok" type="button" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- pvzs-cdek-modal -->
+<div class="modal fade" id="pvzs-cdek-modal" tabindex="-1" role="dialog" aria-labelledby="pvzs-cdek-modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pvzs-cdek-modal-title">Список ПВЗ СДЭК</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      
+	    <form>	    
+		  <div class="input-group mb-3">
+			<input type="text" id="input-pvzs-cdek-city-search" class="form-control form-control-sm" placeholder='Город получателя' aria-label='Город получателя' aria-describedby="basic-addon2">
+			<div class="input-group-append">
+			    <button id="btn-find-pvzs-cdek-city" class="btn btn-light btn-sm btn-outline-secondary" type="button">
+			    	<i class="bi bi-search text-dark"></i>
+			    </button>
+			</div>
+		  </div>
+          <div class="form-group">
+            <label for="select-pvzs-cdek-city" class="col-form-label">Куда</label>            
+            <select id="select-pvzs-cdek-city" class="form-control form-control-sm"></select>
+          </div>          
+          <div class="form-group">
+            <label for="textarea-pvzs-cdek" class="col-form-label">Пункты выдачи</label>
+            <textarea id="textarea-pvzs-cdek" class="form-control form-control-sm" rows="10"></textarea>
+          </div>
+          
+        </form>        
+      </div>
+      <div class="modal-footer">
+        <button id="button-modal-pvzs-cdek-cancel" type="button" class="btn btn-light" data-dismiss="modal">Отмена</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- cdek-widjet-modal -->
+<div class="modal fade" id="cdek-widjet-modal" tabindex="-1" role="dialog" aria-labelledby="cdek-widjet-modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cdek-widjet-modal-title">Выбор пункта выдачи</h5> 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">      
+		<div id="forpvz" style="width: 1060px; height: 600px;"></div>
+      </div>
+      <div class="modal-footer">
+        <button id="button-modal-delivery-cdek-cancel" type="button" class="btn btn-light" data-dismiss="modal">Отмена</button>        
+      </div>
+    </div>
+  </div>
+</div>
+
+<br />
+<div id="feedback"></div>
+<div id="feedback-product"></div>
+
+
+ </main>
+      </div>
+    </div>    
+    
+   
+
+<!-- alert block ets -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!--  
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="/sir-richard-boss-web/resources/client/assets/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+    -->
+	<script src="resources/assets/js/vendor/jquery-3.3.1.min.js" ></script>
+	<script src="resources/assets/js/vendor/popper.min.js"></script>
+	<script src="resources/js/bootstrap.min.js"></script>
+
+	<script src="resources/js/bootstrap-datepicker.min.js"></script>
+<!--	<script src="resources/js/locales/bootstrap-datepicker.ru.min.js"></script>-->
+	<script src="resources/js/datatables.js"></script>
+
+	<script src="resources/js/jquery.mask.min.js"></script>
+
+    <!-- CDEK -->    
+    <script type="text/javascript" src="https://www.cdek.ru/website/edostavka/template/js/widjet.js" id="ISDEKscript" ></script>
+    
+    <script>     
+      //feather.replace();
+	  String.prototype.replaceAll = function(search, replace) {
+		  return this.split(search).join(replace);
+	  }
+	  String.prototype.toNumber = function() {
+		  return Number(this.replace(',00', '').replace(',', '.').replace(new RegExp('[^0-9,\.]'), ''));
+		  
+	  }	  
+	  String.prototype.toFloat = function() {
+		  return parseFloat(this.replace(',00', '').replace(',', '.'));
+	  }
+	  String.prototype.cleanTrashString = function() {
+		    var output = "";
+		    for (var i = 0; i < this.length; i++) {
+		        if (this.charCodeAt(i) <= 127) {
+		            output += this.charAt(i);
+		        }
+		    }
+		    return output;
+	  }
+	  
+	  Number.prototype.formatMoney = function(c, d, t) {
+		    var n = this, 
+		    c = isNaN(c = Math.abs(c)) ? 2 : c, 
+		    d = d == undefined ? "." : d, 
+		    t = t == undefined ? "," : t, 
+		    s = n < 0 ? "-" : "", 
+		    i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), 
+		    j = (j = i.length) > 3 ? j % 3 : 0;
+		    
+		    if (n > 100000) {
+		    	return n;
+		    }		    
+		   return s + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, ' 1' + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '');
+	  }
+	  
+	  function searchOrderByConditions() {
+		  var searchOrderNo = $('#input-search-by-order-conditions').val();
+		  var searchHref = '/sir-richard-boss-web/orders/show/by-conditions/' + searchOrderNo;
+		  document.location.href = searchHref;	
+	  }
+	  
+      $(function () {
+			$('[data-toggle="tooltip"]').tooltip();			
+			$('[data-toggle="popover"]').popover();		
+			
+			$('.input-mask-time').mask('00:00');
+			//$('.input-mask-phone').mask('(000) 000-00-00');
+
+			$(".datepicker").datepicker({
+				format: "dd.mm.yyyy",
+			    weekStart: 1,
+			    todayBtn: "linked",
+			    orientation: "auto",
+			    autoclose: true,
+			    todayHighlight: true
+			});
+		});
+      $(".nav-menus-item").removeClass('active');
+  	  $('.needs-validation').attr('novalidate', '');
+	  $('.form-control-required').attr('required', '');
+	  	  
+	  
+	  $('.search-by-order-no').on('keypress',function(e) {
+		  if(e.which == 13) {
+			  searchOrderByConditions();
+		  }
+		});
+	  
+	  $('#link-search-by-order-no').click(function() {
+		  searchOrderByConditions();
+	  });
+	  
+
+    </script>    
+
+<!-- local java script -->
+<script>
+
+$(document).on('change', 'input', function() {	
+    var options = $('datalist')[0].options;
+    var val = $(this).val();
+    for (var i = 0; i < options.length; i++) {
+       if (options[i].value === val) {
+    	  console.log($(options[i]).attr('key') + ", " + $(options[i]).attr('sku') + ", " + $(options[i]).attr('name'));   	      
+          break;
+       }
+    }
+});
+
+	$('#btn-cdek-pvzs').click(function() {		
+		openCdekPvzs();
+	});
+		
+	$('.btn-cdek-widjet').click(function() {		
+		openCdekWidjet();
+	});
+	
+	$('#btn-save-order').click(function() {		
+		$('#btn-submit-order').click();
+	});
+	
+	function openCdekPvzs(element) {
+		
+		if ($('#input-delivery-address-carrierPvz-city').val().trim() == '') {
+			$('#input-pvzs-cdek-city-search').val($('#input-delivery-address').val().trim());
+		} else {
+			$('#input-pvzs-cdek-city-search').val($('#input-delivery-address-carrierPvz-city').val());
+		}	
+		
+		$('#pvzs-cdek-modal').modal({keyboard: false});
+	}
+	
+	function openCdekWidjet(element) {
+		if ($('#select-delivery-type').val() == 'CDEK_PVZ_TYPICAL' || $('#select-delivery-type').val() == 'CDEK_PVZ_ECONOMY') {
+			$('#btn-calc-parcel-delivery-amounts-info').popover('hide');
+			
+			//widjet.open();
+			var cityCheck = $('#input-delivery-address-carrierPvz-city').val();			
+			if (cityCheck == "" || cityCheck == null) {
+				cityCheck = 'Москва';
+			}
+			
+			var widjet = new ISDEKWidjet({
+			    path: 'https://pribormaster.ru/catalog/view/theme/zemez808/js/cdek-pvzwidget/scripts/',
+			    servicepath: 'https://pribormaster.ru/catalog/controller/extension/shipping/cdek/service.php',
+			    choose: true,
+			    country: 'Россия',
+			    defaultCity: cityCheck, 
+			    cityFrom: 'Москва',
+			    link: 'forpvz',
+			    //link: false,
+			    popup: true,
+			    hidedress: true,
+			    hidecash: true,
+			    hidedelt: false,
+			    detailAddress: true,
+			    onReady: onCdekWidjetReady,
+			    onChoose: onCdekWidjetChoose,
+			    onChooseProfile: onCdekWidjetChooseProfile,
+			    onCalculate: onCdekWidjetCalculate
+			});	
+			$('#cdek-widjet-modal').modal({keyboard: false});			
+		}		
+	}
+	
+	function onCdekWidjetReady() {
+	   //alert('widjet loaded');
+	}
+	
+	function onCdekWidjetChoose(wat) {
+
+	    $('#input-delivery-address-carrierPvz-city').val(wat.cityName);
+	    $('#input-delivery-address-carrierPvz-cityId').val(wat.city);
+	    $('#input-delivery-address').val(wat.cityName + ", " + wat.PVZ.Address);
+	    $('#input-delivery-address-carrierPvz-code').val(wat.id);
+	    $('#input-delivery-address-carrierPvz-street').val(wat.PVZ.Address);
+		$('#input-delivery-address-carrierPvz-house').val("");
+		$('#input-delivery-address-carrierPvz-flat').val("");
+		
+		var data = {}, 
+		orderItems = [], 
+		orderItem;
+		$('.input-details-item-product').each(function() {
+			
+			var indexItem = $(this).attr('id');
+			if (indexItem != 'input-details-item-product-hidden') {				
+				indexItem = indexItem.substr('input-details-item-product'.length + 1, 2);	
+				orderItem = {
+						product: {
+							id: $('#input-details-item-product-id-' + indexItem).val().toNumber(), 
+							name: $('#input-details-item-product-' + indexItem).val()
+						},
+						quantity: $('#input-details-item-quantity-' + indexItem).val().toNumber(),
+						price: $('#input-details-item-price-' + indexItem).val().toNumber(),
+						supplierAmount: $('#input-details-item-supplier-amount-' + indexItem).val().toNumber(),
+						amount: $('#input-details-item-amount-' + indexItem).val().toNumber()}
+				orderItems.push(orderItem);				
+			}
+	
+		});
+				
+		var orderContainer = {
+				orderType: $('#select-order-type').val(),
+				paymentType: $('#select-payment-type').val(),
+				delivery: {
+					price: $('#input-delivery-price').val().toNumber(),
+					factCustomerPrice: $('#input-delivery-price').val().toNumber(),
+					deliveryType: $('#select-delivery-type').val(),
+					deliveryPrice: $('#select-delivery-price-type').val(),
+					paymentDeliveryType: $('#select-payment-delivery-type').val(),
+					address: {
+						cdekInfo: {
+							cityContext: wat.cityName,
+							cityId: wat.city,							
+							pvz: wat.id							
+						},
+						address: $('#input-delivery-address').val()
+					}
+				},
+				amounts: {
+					postpay: $('#input-amounts-postpay').val().toNumber()
+				},
+    			items: orderItems
+    	}
+		
+		
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/sir-richard-boss-web/ajax/orders/calc/parcel-delivery-amounts',
+			data : JSON.stringify(orderContainer),
+			dataType: 'json',
+			timeout: 100000,
+			success: function(data) {
+				console.log('SUCCESS: ', data);
+				display(data);
+				$('#input-amounts-postpay').val(data.result.deliveryServiceResult.postpayAmount);
+				$('#input-delivery-price').val(data.result.deliveryServiceResult.deliveryFullPrice);
+				$('#input-delivery-customer-price').val(data.result.deliveryServiceResult.deliveryCustomerSummary);
+				$('#input-delivery-seller-price').val(data.result.deliveryServiceResult.deliverySellerSummary);
+				
+				$('#details-items-amounts-delivery-seller-summary').text(data.result.deliveryServiceResult.deliverySellerSummary.formatMoney(2));
+				$('#details-items-amounts-delivery-customer-summary').text(data.result.deliveryServiceResult.deliveryCustomerSummary.formatMoney(2));
+												
+				$('#btn-calc-parcel-delivery-amounts-info').attr('data-original-title', data.result.deliveryServiceResult.parcelType);
+				$('#btn-calc-parcel-delivery-amounts-info').attr('data-content', data.result.deliveryServiceResult.info);				
+				$('#btn-calc-parcel-delivery-amounts-info').popover('show');
+				
+				$('#input-delivery-price').focusout();
+				
+			},
+			error: function(e) {
+				console.log('ERROR: ', e);
+				display(e);
+			},
+			done: function(e) {
+				console.log('DONE');
+			}
+		});			
+
+	    $('#cdek-widjet-modal').modal('hide');	
+	}
+	
+	function onCdekWidjetChooseProfile(wat) {
+		/*
+	    alert(
+	        'Set courier in city ' + wat.cityName + ', city code ' + wat.city + "\n" +
+	        'price ' + wat.price + "\n" +
+	        'term ' + wat.term + ' Ð´Ð½.'
+	    );
+		*/
+		//$('#cdek-widjet-modal').modal('hide');
+	}
+	
+	function onCdekWidjetCalculate(wat) {
+	    //alert('calc delivery finished');
+	}
+	$('#nav-link-orders').addClass('active');
+	
+
+		
+	var isNew = true;	
+	
+	
+	
+	
+	if ($('#check-delivery-customer-equals-recipient').prop('checked')) {
+		 $('.input-delivery-recipient').prop('disabled', true);	
+	} else {
+		$('.input-delivery-recipient').prop('disabled', false);
+	}		
+	
+	var customerType = $('#select-customer-type').val();
+	$('.radio-customer-type').prop('checked', false);
+	$('#customer-types-' + customerType).prop('checked', true);	
+	$('.form-row-select-customer-types').prop('hidden', true);
+	
+	$('.delivery-address-carrierPvz').attr('type', 'hidden');
+	
+	selectCustomerTypeOnChange();		
+	
+	$('.radio-customer-type').change(function() {
+		selectCustomerTypeOnChange();
+	});
+	
+	$('.input-delivery-cdek-address-part').change(function() {
+		inputDeliveryCdekChange();
+	});
+	
+	$('#select-order-type').change(function() {
+		var orderType = $('#select-order-type').val();
+		if (orderType == 'BILL') {
+			$('#select-payment-type').val('PREPAYMENT');			
+		} else if (orderType == 'ORDER') {
+			$('#select-payment-type').val('POSTPAY');			
+		} 		
+	});		
+	
+	$('#check-delivery-customer-equals-recipient').change(function() {		
+		var check = $('#check-delivery-customer-equals-recipient').prop('checked');
+		if (check) {
+			 $('.input-delivery-recipient').prop('disabled', true);
+			
+		} else {
+			$('.input-delivery-recipient').prop('disabled', false);
+		}		
+	});	
+
+	$('#select-payment-type').change(function() {
+		var paymentType = $('#select-payment-type').val();
+		if (paymentType == 'POSTPAY') {
+			$('#select-delivery-type').val('CDEK_PVZ_TYPICAL');
+			$('#input-delivery-trackCode').prop('disabled', false);
+			$('#input-amounts-postpay').prop('disabled', false);
+		} else if (paymentType == 'PREPAYMENT') {
+			$('#select-delivery-type').val('CDEK_PVZ_TYPICAL');		
+			$('#input-delivery-trackCode').prop('disabled', false);
+			$('#input-amounts-postpay').prop('disabled', true);
+		} else if (paymentType == 'PAYMENT_COURIER') {
+			$('#select-delivery-type').val('COURIER_MOSCOW_TYPICAL');
+			$('#input-delivery-trackCode').prop('disabled', true);
+			$('#input-amounts-postpay').prop('disabled', true);
+		} 
+	});		
+	
+	$('#select-delivery-type').change(function() {		
+		var deliveryType = $('#select-delivery-type').val();
+		
+		$('#input-delivery-address').prop('disabled', false);
+		$('.btn-cdek-widjet').prop('disabled', true);
+		$('#btn-cdek-pvzs').prop('disabled', true);
+		
+		if (deliveryType == 'CDEK_PVZ_TYPICAL' || deliveryType == 'CDEK_PVZ_ECONOMY') {
+			$('.btn-cdek-widjet').prop('disabled', false);	
+			$('#btn-cdek-pvzs').prop('disabled', false);
+		} 				
+		if (deliveryType == 'CDEK_PVZ_TYPICAL' || deliveryType == 'CDEK_PVZ_ECONOMY' || deliveryType == 'CDEK_COURIER' || deliveryType == 'CDEK_COURIER_ECONOMY') {
+			$('#input-delivery-trackCode').prop('disabled', false);			
+			if ($('#select-payment-type').val() == 'PAYMENT_COURIER') {
+				$('#select-payment-type').val('POSTPAY');
+			}						
+		} else if (deliveryType == 'OZON_ROCKET_PICKPOINT' || deliveryType == 'OZON_ROCKET_POSTAMAT') {			
+			$('btn-calc-parcel-delivery-amounts').prop('disabled', false);
+			$('#input-delivery-trackCode').prop('disabled', false);				
+		} else if (deliveryType == 'OZON_ROCKET_COURIER') {			
+			$('btn-calc-parcel-delivery-amounts').prop('disabled', true);
+			$('#input-delivery-trackCode').prop('disabled', false);			
+		} else if (deliveryType == 'DELLIN') {
+			$('#input-delivery-trackCode').prop('disabled', false);
+			if ($('#select-payment-type').val() == 'PAYMENT_COURIER') {
+				$('#select-payment-type').val('POSTPAY');
+			}
+		} else if (deliveryType == 'COURIER_MOSCOW_TYPICAL' || deliveryType == 'COURIER_MOSCOW_FAST' || deliveryType == 'COURIER_MO_TYPICAL') {
+			$('#input-delivery-trackCode').prop('disabled', true);
+			//$('#select-payment-type').val('PAYMENT_COURIER');
+		} else if (deliveryType == 'POST_TYPICAL' || deliveryType == 'POST_I_CLASS' || deliveryType == 'POST_EMS') {
+			$('#input-delivery-trackCode').prop('disabled', false);
+			if ($('#select-payment-type').val() == 'PAYMENT_COURIER') {
+				$('#select-payment-type').val('POSTPAY');
+			}
+		} else if (deliveryType == 'PICKUP') {
+			$('#input-delivery-trackCode').prop('disabled', false);	
+			$('#input-delivery-address').prop('disabled', true);
+			$('#input-delivery-address').val('');
+			if ($('#select-payment-type').val() == 'PAYMENT_COURIER') {
+				$('#select-payment-type').val('POSTPAY');
+			}
+		}
+		findDeliveryPricesByDeliveryType(deliveryType);
+	});	
+	
+	$('#select-delivery-price-type').change(function() {		
+		var price = $('#select-delivery-price-type option:selected').attr('price');
+		$('#input-delivery-price').val(price);
+	});
+	
+	$('#select-delivery-cdek-city').change(function() {		
+		findDeliveryCdekPvz(this);
+	});	
+	
+	$('#select-pvzs-cdek-city').change(function() {		
+		findPvzsCdekPvzs(this);
+	});	
+
+	$('#btn-show-order').click(function() {
+		window.location.href = '/sir-richard-boss-web/orders//orders';
+	});
+	$('#btn-update-order').click(function() {
+		window.location.href = '/sir-richard-boss-web/orders//update';
+	});	
+	$('#btn-status-order').click(function() {
+		window.location.href = '/sir-richard-boss-web/orders//change-status/orders';
+	});
+	$('#btn-clone-order').click(function() {
+		window.location.href = '/sir-richard-boss-web/orders//clone';
+	});	
+	$('#btn-calc-total-amounts').click(function() {
+		calcTotalAmounts(this);
+	});	
+	
+	$('#btn-find-customer-phone').click(function() {
+		findCustomerByFields();
+	});	
+	
+	$('.btn-calc-parcel-delivery-amounts').click(function() {
+		$('#btn-calc-parcel-delivery-amounts-info').popover('hide');
+		calcParcelDeliveryAmounts();
+	});
+			
+	$('.form-control-customer-find').focusout(function() {
+		findCustomerByFields();
+	});	
+	
+	$('#input-delivery-price').focusout(function() {
+		console.log('#input-delivery-price focusout: 1001');
+		
+		if ($('#select-payment-delivery-type').val() == 'CUSTOMER') {
+			$('#input-delivery-customer-price').val($('#input-delivery-price').val());
+			if ($('#select-delivery-type').val() == 'CDEK_PVZ_TYPICAL' || $('#select-delivery-type').val() == 'CDEK_PVZ_ECONOMY' || $('#select-delivery-type').val() == 'CDEK_COURIER' || $('#select-delivery-type').val() == 'CDEK_COURIER_ECONOMY') {
+				// ...
+			} else {				
+				$('#input-delivery-seller-price').val($('#input-delivery-price').val());				
+			}			
+			
+		} else {
+			$('#input-delivery-customer-price').val('0');
+			$('#input-delivery-seller-price').val($('#input-delivery-price').val());
+			
+		}		
+		$('#details-items-amounts-delivery-seller-summary').text($('#input-delivery-seller-price').val().toNumber().formatMoney(2));
+		$('#details-items-amounts-delivery-customer-summary').text($('#input-delivery-customer-price').val().toNumber().formatMoney(2));
+		
+		calcTotalAmounts($('#input-delivery-price'));			
+	});
+	
+	$('#btn-find-delivery-cdek-city').click(function() {
+		findDeliveryCdekCities(this);
+	});
+	
+	$('#btn-find-pvzs-cdek-city').click(function() {
+		findPvzsCdekCities(this);
+	});
+	
+	$('#button-modal-delivery-cdek-ok').click(function() {
+		
+		var cityContext = $('#input-delivery-cdek-city-search').val(),
+			cityId = $('#select-delivery-cdek-city').find('option:selected').attr('city-id'),
+			pvz = $('#select-delivery-cdek-pvz').find('option:selected').attr('pvz-code'),
+			street = $('#input-delivery-cdek-street').val(),
+			house = $('#input-delivery-cdek-house').val(),
+			flat = $('#input-delivery-cdek-flat').val(),
+			address = $('#input-delivery-cdek-city-address').val();
+		
+		$('#input-delivery-address-carrierPvz-city').val(cityContext);
+		$('#input-delivery-address-carrierPvz-cityId').val(cityId);		
+		$('#input-delivery-address-carrierPvz-code').val(pvz);		
+		$('#input-delivery-address-carrierPvz-street').val(street);
+		$('#input-delivery-address-carrierPvz-house').val(house);
+		$('#input-delivery-address-carrierPvz-flat').val(flat);
+			
+		if (($('#select-delivery-type').val() == 'CDEK_COURIER' || $('#select-delivery-type').val() == 'CDEK_COURIER_ECONOMY') && address != '') {
+			$('#input-delivery-address').val(address);
+		} else if ($('#select-delivery-type').val() == 'CDEK_PVZ_TYPICAL' || $('#select-delivery-type').val() == 'CDEK_PVZ_ECONOMY') {
+			$('#input-delivery-address').val($('#select-delivery-cdek-pvz').find('option:selected').attr('pvz-name'));
+		}		
+		
+		var data = {}, 
+		orderItems = [], 
+		orderItem;
+		$('.input-details-item-product').each(function() {
+			
+			var indexItem = $(this).attr('id');
+			if (indexItem != 'input-details-item-product-hidden') {				
+				indexItem = indexItem.substr('input-details-item-product'.length + 1, 2);	
+				//console.log(indexItem);
+				orderItem = {
+						product: {
+							id: $('#input-details-item-product-id-' + indexItem).val().toNumber(), 
+							name: $('#input-details-item-product-' + indexItem).val()
+						},
+						quantity: $('#input-details-item-quantity-' + indexItem).val().toNumber(),
+						price: $('#input-details-item-price-' + indexItem).val().toNumber(),
+						supplierAmount: $('#input-details-item-supplier-amount-' + indexItem).val().toNumber(),
+						amount: $('#input-details-item-amount-' + indexItem).val().toNumber()}
+				orderItems.push(orderItem);				
+			}
+	
+		});
+		
+		var orderContainer = {
+				orderType: $('#select-order-type').val(),
+				paymentType: $('#select-payment-type').val(),
+				delivery: {
+					price: $('#input-delivery-price').val().toNumber(),
+					factCustomerPrice: $('#input-delivery-price').val().toNumber(),
+					deliveryType: $('#select-delivery-type').val(),
+					deliveryPrice: $('#select-delivery-price-type').val(),
+					paymentDeliveryType: $('#select-payment-delivery-type').val(),
+					address: {
+						carrierInfo: {
+							cityContext: cityContext,
+							cityId: cityId,							
+							pvz: pvz							
+						},
+						address: $('#input-delivery-address').val()
+					}
+				},
+				amounts: {
+					postpay: $('#input-amounts-postpay').val().toNumber()
+				},
+    			items: orderItems
+    	}
+		
+		
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/sir-richard-boss-web/ajax/orders/calc/parcel-delivery-amounts',
+			data : JSON.stringify(orderContainer),
+			dataType: 'json',
+			timeout: 100000,
+			success: function(data) {
+				console.log('SUCCESS: ', data);
+				display(data);
+				$('#input-amounts-postpay').val(data.result.deliveryServiceResult.postpayAmount);
+				$('#input-delivery-price').val(data.result.deliveryServiceResult.deliveryFullPrice);
+				$('#input-delivery-customer-price').val(data.result.deliveryServiceResult.deliveryCustomerSummary);
+				$('#input-delivery-seller-price').val(data.result.deliveryServiceResult.deliverySellerSummary);
+				
+				$('#details-items-amounts-delivery-seller-summary').text(data.result.deliveryServiceResult.deliverySellerSummary.formatMoney(2));
+				$('#details-items-amounts-delivery-customer-summary').text(data.result.deliveryServiceResult.deliveryCustomerSummary.formatMoney(2));
+												
+				$('#btn-calc-parcel-delivery-amounts-info').attr('data-original-title', data.result.deliveryServiceResult.parcelType);
+				$('#btn-calc-parcel-delivery-amounts-info').attr('data-content', data.result.deliveryServiceResult.info);				
+				$('#btn-calc-parcel-delivery-amounts-info').popover('show');
+				
+				$('#input-delivery-price').focusout();
+				
+			},
+			error: function(e) {
+				console.log('ERROR: ', e);
+				display(e);
+			},
+			done: function(e) {
+				console.log('DONE');
+			}
+		});		
+		
+		$('#delivery-cdek-modal').modal('hide');							
+	});
+		
+	$('#button-modal-delivery-ozon-rocket-ok').click(function() {
+
+		var cityContext = $('#input-delivery-address-carrierPvz-city').val(),
+			cityId = 0,
+			pvz = 0,
+			street = "",
+			house = "",
+			flat = "",
+			address = $('#input-ozon-rocket-delivery-variant-address').val();
+				 
+		var deliveryVariantId = 0;
+		if ($('#select-delivery-type').val() != 'OZON_ROCKET_COURIER') {
+			deliveryVariantId = $('#input-ozon-rocket-delivery-variant-id').val();
+		}		 
+				 				
+		$('#input-delivery-address-carrierPvz-city').val(cityContext);
+		$('#input-delivery-address-carrierPvz-cityId').val(cityId);		
+		$('#input-delivery-address-carrierPvz-code').val(pvz);		
+		$('#input-delivery-address-carrierPvz-street').val(street);
+		$('#input-delivery-address-carrierPvz-house').val(house);
+		$('#input-delivery-address-carrierPvz-flat').val(flat);
+		$('#input-delivery-address-carrierPvz-deliveryVariantId').val(deliveryVariantId);
+		
+		$('#input-delivery-address').val(address);
+		
+		var data = {}, 
+		orderItems = [], 
+		orderItem;
+		$('.input-details-item-product').each(function() {			
+			var indexItem = $(this).attr('id');
+			if (indexItem != 'input-details-item-product-hidden') {				
+				indexItem = indexItem.substr('input-details-item-product'.length + 1, 2);	
+				//console.log(indexItem);
+				orderItem = {
+						product: {
+							id: $('#input-details-item-product-id-' + indexItem).val().toNumber(), 
+							name: $('#input-details-item-product-' + indexItem).val()
+						},
+						quantity: $('#input-details-item-quantity-' + indexItem).val().toNumber(),
+						price: $('#input-details-item-price-' + indexItem).val().toNumber(),
+						supplierAmount: $('#input-details-item-supplier-amount-' + indexItem).val().toNumber(),
+						amount: $('#input-details-item-amount-' + indexItem).val().toNumber()}
+				orderItems.push(orderItem);				
+			}
+	
+		});
+		
+		var orderContainer = {
+
+				orderType: $('#select-order-type').val(),
+				paymentType: $('#select-payment-type').val(),
+				delivery: {
+					price: $('#input-delivery-price').val().toNumber(),
+					factCustomerPrice: $('#input-delivery-price').val().toNumber(),
+					deliveryType: $('#select-delivery-type').val(),
+					deliveryPrice: $('#select-delivery-price-type').val(),
+					paymentDeliveryType: $('#select-payment-delivery-type').val(),
+					address: {
+						carrierInfo: {
+							cityContext: cityContext,
+							cityId: cityId,							
+							pvz: pvz,
+							deliveryVariantId: deliveryVariantId
+						},
+						address: $('#input-delivery-address').val()
+					}
+				},
+				amounts: {
+					postpay: $('#input-amounts-postpay').val().toNumber()
+				},
+    			items: orderItems
+    	}		
+		
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/sir-richard-boss-web/ajax/orders/calc/parcel-delivery-amounts',
+			data : JSON.stringify(orderContainer),
+			dataType: 'json',
+			timeout: 100000,
+			success: function(data) {
+				console.log('SUCCESS: ', data);
+				display(data);
+				
+				for (var key in data.result.deliveryServiceResult.addresses) {
+		
+					$('#input-delivery-address-carrierPvz-city').val(data.result.deliveryServiceResult.addresses[key].carrierInfo.cityContext);
+					$('#input-delivery-address-carrierPvz-cityId').val(data.result.deliveryServiceResult.addresses[key].carrierInfo.cityId);		
+					$('#input-delivery-address-carrierPvz-code').val("");		
+					$('#input-delivery-address-carrierPvz-street').val(data.result.deliveryServiceResult.addresses[key].carrierInfo.street);
+					$('#input-delivery-address-carrierPvz-house').val(data.result.deliveryServiceResult.addresses[key].carrierInfo.house);
+					$('#input-delivery-address-carrierPvz-flat').val(data.result.deliveryServiceResult.addresses[key].carrierInfo.flat);
+									
+					$('#input-delivery-address').val(data.result.deliveryServiceResult.addresses[key].address);
+				
+				}				
+				
+				$('#input-amounts-postpay').val(data.result.deliveryServiceResult.postpayAmount);
+				$('#input-delivery-price').val(data.result.deliveryServiceResult.deliveryFullPrice);
+				$('#input-delivery-customer-price').val(data.result.deliveryServiceResult.deliveryCustomerSummary);
+				$('#input-delivery-seller-price').val(data.result.deliveryServiceResult.deliverySellerSummary);
+				
+				$('#details-items-amounts-delivery-seller-summary').text(data.result.deliveryServiceResult.deliverySellerSummary.formatMoney(2));
+				$('#details-items-amounts-delivery-customer-summary').text(data.result.deliveryServiceResult.deliveryCustomerSummary.formatMoney(2));
+												
+				$('#btn-calc-parcel-delivery-amounts-info').attr('data-original-title', data.result.deliveryServiceResult.parcelType);
+				$('#btn-calc-parcel-delivery-amounts-info').attr('data-content', data.result.deliveryServiceResult.info);				
+				$('#btn-calc-parcel-delivery-amounts-info').popover('show');
+				
+				$('#input-delivery-price').focusout();
+
+				
+			},
+			error: function(e) {
+				console.log('ERROR: ', e);
+				display(e);
+			},
+			done: function(e) {
+				console.log('DONE');
+			}
+		});					
+		$('#delivery-ozon-rocket-modal').modal('hide');
+	});
+	
+	$('.btn-find-details-item-product').on('click', {selector: this}, btnDetailsItemProductOnClick);
+
+	
+	$('.input-details-item-price').on('change', {selector: this}, inputItemPriceChange);
+	$('.input-details-item-quantity').on('change', {selector: this}, inputItemPriceChange);
+	$('.input-details-item-discount-rate').on('change', {selector: this}, inputItemPriceChange);
+	
+	$('.input-calc-amounts').on('focusout', {selector: this}, calcTotalAmounts);
+	
+
+		
+		$('.radio-customer-type').prop('disabled', false);
+	
+	
+		
+
+	function selectCustomerTypeOnChange() {		
+		var customerType = $('.radio-customer-type:checked').val();
+				
+		$('#select-customer-type').val(customerType);		
+		if (customerType == 'CUSTOMER') {
+			$('#header-group-customer').text('Физическое лицо');
+			
+			$('.form-group-customer').prop('hidden', false);
+			$('.form-group-company').prop('hidden', true);
+			$('#select-customer-country').attr('disabled', true);
+			$('#select-customer-country').val('RUSSIA');
+			
+			$('#select-delivery-address-country').attr('disabled', true);
+			$('#select-delivery-address-country').val('RUSSIA');
+			$('.input-mask-phone').mask('(000) 000-00-00');
+			
+		} else if (customerType == 'COMPANY') {
+			$('#header-group-customer').text('Юридическое лицо');			
+			$('.form-group-customer').prop('hidden', true);
+			$('.form-group-company').prop('hidden', false);			
+			$('#select-customer-country').attr('disabled', true);
+			$('#select-customer-country').val('RUSSIA');
+			
+			$('#select-delivery-address-country').attr('disabled', true);
+			$('#select-delivery-address-country').val('RUSSIA');
+			$('.input-mask-phone').mask('(000) 000-00-00');
+			
+		} else if (customerType == 'BUSINESSMAN') {
+			$('#header-group-customer').text('Индивидуальный предприниматель');
+			
+			$('.form-group-customer').prop('hidden', true);
+			$('.form-group-company').prop('hidden', false);			
+			$('#select-customer-country').attr('disabled', true);
+			$('#select-customer-country').val('RUSSIA');
+			
+			$('#select-delivery-address-country').attr('disabled', true);
+			$('#select-delivery-address-country').val('RUSSIA');
+			$('.input-mask-phone').mask('(000) 000-00-00');
+			
+		} else if (customerType == 'FOREIGNER_CUSTOMER') {
+			$('#header-group-customer').text('Нерезидент, физическое лицо');
+			
+			$('.form-group-customer').prop('hidden', false);
+			$('.form-group-company').prop('hidden', true);
+			
+			$('#select-customer-country').attr('disabled', false);
+			$('#input-customer-phone').unmask();
+			
+			if (isNew) {
+				$('#select-customer-country').val('KAZAKHSTAN');
+				$('#select-delivery-address-country').attr('disabled', false);
+				$('#select-delivery-address-country').val('KAZAKHSTAN');
+			} else {
+				
+			}			
+		} else if (customerType == 'FOREIGNER_COMPANY') {
+			$('#header-group-customer').text('Нерезидент, юридическое лицо');			
+			$('.form-group-customer').prop('hidden', true);
+			$('.form-group-company').prop('hidden', false);			
+			$('#select-customer-country').attr('disabled', false);
+			$('#input-customer-contact-phone').unmask();
+			if (isNew) {
+				$('#select-customer-country').val('KAZAKHSTAN');				
+				$('#select-delivery-address-country').attr('disabled', false);
+				$('#select-delivery-address-country').val('KAZAKHSTAN');				
+			} else {
+				
+			}			
+		} 
+		nextPhoneNumber(customerType);
+	}
+	
+	function btnDetailsItemDeleteOnClick(event) {
+		var id = $(this).attr('id');
+		
+		if (typeof(id) == "string") {
+			id = id.substr('btn-details-item-delete-'.length, id.length);	
+		} else {
+			id = $(event).attr('id');
+			id = id.substr('btn-details-item-delete-'.length, id.length);	
+		}		
+		console.log(id);
+		$('#details-item-row-' + id).remove();		
+	}
+	
+	
+	function nextPhoneNumber(customerType) {		
+		if (customerType == 'CUSTOMER') {			
+			return;
+		} else if (customerType == 'COMPANY') {
+			if ($('#input-customer-contact-phone').val() != '') {
+				return;
+			}			
+		} else if (customerType == 'BUSINESSMAN') {
+			if ($('#input-customer-contact-phone').val() != '') {
+				return;
+			}			
+		} else if (customerType == 'FOREIGNER_CUSTOMER') {
+			if ($('#input-customer-phone').val() != '') {
+				return;
+			}							
+		} else if (customerType == 'FOREIGNER_COMPANY') {
+			if ($('#input-customer-contact-phone').val() != '') {
+				return;
+			}
+		}
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/sir-richard-boss-web/ajax/customer/search/next-phone-number',
+			data: JSON.stringify(""),
+			dataType: 'json',
+			timeout: 100000,
+			success: function(data) {
+				console.log('SUCCESS: ', data);
+				display(data);
+				
+				if (customerType == 'FOREIGNER_CUSTOMER') {
+					$('#input-customer-phone').val(data.msg);
+				} else {
+					$('#input-customer-contact-phone').val(data.msg);
+				}
+			},
+			error: function(e) {
+				console.log('ERROR: ', e);
+				display(e);
+
+			},
+			done: function(e) {
+				console.log('DONE');				
+			}
+		});			
+	}
+	
+	function findDeliveryPricesByDeliveryType(deliveryType) {
+		
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/sir-richard-boss-web/ajax/wiki/search/find-price-by-delivery-types',
+			data: JSON.stringify(deliveryType),
+			dataType: 'json',
+			timeout: 100000,
+			success: function(data) {
+				console.log('SUCCESS: ', data);
+				display(data);
+				if (data.code == '200') {
+					$('#select-delivery-price-type option').remove();
+					for (var key in data.result.deliveryPrices) {						
+						$('#select-delivery-price-type').append('<option value=' + data.result.deliveryPrices[key].code + ' price=' + data.result.deliveryPrices[key].price + ' id="option-delivery-price-type-' + data.result.deliveryPrices[key].code + '">' + data.result.deliveryPrices[key].annotation + '</option>');
+					}
+					if (data.result.deliveryPrices.length > 0) {
+						$("#select-delivery-price-type").val($("#select-delivery-price-type option:first").val());
+						$('#input-delivery-price').val(data.result.deliveryPrices[0].price);
+					} else {
+						//$('#input-delivery-price').val('0');
+					}
+				}				
+			},
+			error: function(e) {
+				console.log('ERROR: ', e);
+				display(e);
+
+			},
+			done: function(e) {
+				console.log('DONE');
+				
+			}
+		});			
+	}
+	
+	function findCustomerByFields() {
+		
+		var customerConditions = {
+				customerType: $('#select-customer-type').val(),
+				personPhoneNumber: $('#input-customer-phone').val(),
+				personEmail: $('#input-customer-email').val(),
+				personLastName: $('#input-customer-first-name').val(),
+				companyInn: $('#input-customer-inn').val(), 
+				companyShortName: $('#input-customer-short-name').val(),
+				companyMainContactPhoneNumber: $('#input-customer-contact-phone').val(),
+				companyMainContactEmail: $('#input-customer-contact-email').val()
+    	}	
+		
+		if ((customerConditions.personPhoneNumber == null || customerConditions.personPhoneNumber.trim() == '') &&
+			(customerConditions.personEmail == null || customerConditions.personEmail.trim() == '') &&
+			(customerConditions.companyInn == null || customerConditions.companyInn.trim() == '') &&
+			(customerConditions.companyMainContactPhoneNumber == null || customerConditions.companyMainContactPhoneNumber.trim() == '') &&
+			(customerConditions.companyMainContactEmail == null || customerConditions.companyMainContactEmail.trim() == '')) {
+			return;
+		}
+		
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/sir-richard-boss-web/ajax/cusomer/search/find-customer-by-conditions',
+			data: JSON.stringify(customerConditions),
+			dataType: 'json',
+			timeout: 100000,
+			success: function(data) {
+				console.log('SUCCESS: ', data);
+				display(data);
+				if (data.code == '200') {
+					$('#formCustomer.id').val(data.result.formCustomer.id);
+					
+					// CUSTOMER
+					
+					setDefaultValue('#input-customer-first-name', data.result.formCustomer.firstName);
+					setDefaultValue('#input-customer-middle-name', data.result.formCustomer.middleName);
+					setDefaultValue('#input-customer-last-name', data.result.formCustomer.lastName);
+					setDefaultValue('#input-customer-address', data.result.formCustomer.mainAddress.address);
+					setDefaultValue('#input-customer-email', data.result.formCustomer.email);			
+					setDefaultValue('#customer.id', data.result.formCustomer.id);
+					
+					// COMPANY
+					setDefaultValue('#input-customer-inn', data.result.formCustomer.inn); 
+					setDefaultValue('#input-customer-short-name', data.result.formCustomer.shortName);
+					setDefaultValue('#input-customer-long-name', data.result.formCustomer.longName);
+					setDefaultValue('#input-customer-contact-first-name', data.result.formCustomer.mainContact.firstName);
+					setDefaultValue('#input-customer-contact-middle-name', data.result.formCustomer.mainContact.middleName);
+					setDefaultValue('#input-customer-contact-last-name', data.result.formCustomer.mainContact.lastName);
+					setDefaultValue('#input-customer-contact-phone', data.result.formCustomer.mainContact.phoneNumber);
+					setDefaultValue('#input-customer-contact-email', data.result.formCustomer.mainContact.email);
+
+					$('#header-customer-longName').html(data.result.formCustomer.viewLongName + '&nbsp;' + '<span class="badge badge-secondary">' + data.result.formCustomer.id + '</span>');
+					
+					$('.dropdown-menu-customer-order').remove();										
+					for(var order in data.result.formShortInfoOrders) {
+						console.log(order, data.result.formShortInfoOrders[order]);
+						$('.dropdown-menu-customer-orders').append('<a class="dropdown-item dropdown-menu-customer-order" target="_blank" href="/sir-richard-boss-web/orders/' + data.result.formShortInfoOrders[order].id + '/orders">' + data.result.formShortInfoOrders[order].name + '</a>');
+					}
+					$('#btn-find-customer-orders').html('История заказов&nbsp;<span class="badge badge-secondary">' + data.result.formShortInfoOrders.length + '</span>');
+					
+				
+										
+					if (data.result.formShortInfoOrders.length >= 1) {
+						$('#select-advert-type').val('REPEAT_CALL');
+					}						
+					
+					
+					
+				
+				}				
+			},
+			error: function(e) {
+				console.log('ERROR: ', e);
+				display(e);
+
+			},
+			done: function(e) {
+				console.log('DONE');
+				
+			}
+		});		
+		
+	}
+	
+	function setDefaultValue(selectorName, defaultValue) {
+		if ($(selectorName).val() == '') {
+			$(selectorName).val(defaultValue);	
+		}		
+	}
+	
+	function btnDetailsItemProductOnClick(element) {
+		
+		var inputProductId = $(this).attr('id');
+		if (typeof inputProductId === 'object') {
+			return;
+		}
+		var itemId = inputProductId.substr('btn-find-details-item-product-'.length, inputProductId.length);
+				
+		var stringContext = $('#input-details-item-product-' + itemId).val();				
+		if (stringContext == null || stringContext.trim() == '') {
+			return;
+		}
+		
+		var data = {};
+		
+		btnSearchProductsDisabled(true);
+		
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/sir-richard-boss-web/ajax/wiki/search/find-products-by-context',
+			data: stringContext,
+			dataType: 'json',
+			timeout: 100000,
+			success: function(data) {
+				console.log('SUCCESS: ', data);
+				displayProducts(data);
+				
+				if (data.code == '200') {
+					if (data.result.products.length > 0) {
+						$('#input-details-item-product-' + itemId).val(data.result.products[0].name);
+						$('#input-details-item-product-id-' + itemId).val(data.result.products[0].id);
+						$('#input-details-item-price-' + itemId).val(data.result.products[0].price);
+						$('#input-details-item-supplier-amount-' + itemId).val(data.result.products[0].supplierPrice);
+						if (itemId == 0 && data.result.products[0].category.id > 0 && $('#select-product-category').val() == 0) {
+							$('#select-product-category').val(data.result.products[0].category.id);
+						}											
+						$('#datalist-product-name-' + itemId + ' option').remove();
+						for (var key in data.result.products) {	
+							if (data.result.products[key].sku.trim() == '') {
+								$('#datalist-product-name-' + itemId).append('<option>' + data.result.products[key].name + '</option>');
+							} else {
+								$('#datalist-product-name-' + itemId).append('<option class="datalist-product-option" name="' + data.result.products[key].name + '" sku="' + data.result.products[key].sku + '" key="' + data.result.products[key].id + '" id="' + itemId + "-" + data.result.products[key].sku + '">' + data.result.products[key].sku + ' : ' + data.result.products[key].name + '</option>');	
+							}
+						}						
+						$('#span-details-item-product-sku-info-' + itemId).text(data.result.products[0].sku);
+						
+						$('#span-details-item-quantity-stock-info-' + itemId).text(data.result.products[0].viewStockQuantityText);						
+						$('#span-details-item-quantity-stock-info-' + itemId).removeClass('badge-danger badge-warning badge-light').addClass('badge-' + data.result.products[0].viewStockQuantityClass);
+						
+						calcAmount(itemId);	
+					}					
+				} 
+				btnSearchProductsDisabled(false);
+
+			},
+			error: function(e) {
+				console.log('ERROR: ', e);
+				displayProducts(e);
+				btnSearchProductsDisabled(false);
+			},
+			done: function(e) {
+				console.log('DONE');
+				btnSearchProductsDisabled(false);
+			}
+		});			
+	}	
+			
+	function findDeliveryCdekCities(element) {
+		
+		var contextString = $('#input-delivery-cdek-city-search').val().trim();
+		if (contextString == '') {
+			return;
+		}
+		
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/sir-richard-boss-web/ajax/orders/calc/parcel-delivery-cdek-cities',
+			data : JSON.stringify(contextString),
+			dataType: 'json',
+			timeout: 100000,
+			success: function(data) {
+				console.log('SUCCESS: ', data);
+				display(data);
+				
+				$('#select-delivery-cdek-city').find('option').remove();
+				for (var key in data.result.deliveryServiceResult.addresses) {						
+					$('#select-delivery-cdek-city').append('<option value=' + data.result.deliveryServiceResult.addresses[key].carrierInfo.cityContext + ' city-id=' + data.result.deliveryServiceResult.addresses[key].carrierInfo.cityId + ' id="option-delivery-cdek-city-' + data.result.deliveryServiceResult.addresses[key].carrierInfo.cityId + '">' + data.result.deliveryServiceResult.addresses[key].address + '</option>');
+				}
+				$('#select-delivery-cdek-city').change();
+				
+			},
+			error: function(e) {
+				console.log('ERROR: ', e);
+				display(e);
+			},
+			done: function(e) {
+				console.log('DONE');
+			}
+		});		
+	}
+	
+    function findPvzsCdekCities(element) {
+		
+		var contextString = $('#input-pvzs-cdek-city-search').val().trim();
+		if (contextString == '') {
+			return;
+		}
+		
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/sir-richard-boss-web/ajax/orders/calc/parcel-delivery-cdek-cities',
+			data : JSON.stringify(contextString),
+			dataType: 'json',
+			timeout: 100000,
+			success: function(data) {
+				console.log('SUCCESS: ', data);
+				display(data);
+				
+				$('#select-pvzs-cdek-city').find('option').remove();
+				for (var key in data.result.deliveryServiceResult.addresses) {						
+					$('#select-pvzs-cdek-city').append('<option value=' + data.result.deliveryServiceResult.addresses[key].carrierInfo.cityContext + ' city-id=' + data.result.deliveryServiceResult.addresses[key].carrierInfo.cityId + ' id="option-delivery-cdek-city-' + data.result.deliveryServiceResult.addresses[key].carrierInfo.cityId + '">' + data.result.deliveryServiceResult.addresses[key].address + '</option>');
+				}
+				$('#select-pvzs-cdek-city').change();
+				
+			},
+			error: function(e) {
+				console.log('ERROR: ', e);
+				display(e);
+			},
+			done: function(e) {
+				console.log('DONE');
+			}
+		});		
+	}
+	
+	$("#select-delivery-cdek-pvz").change(function() {
+		
+		var address = $('#select-delivery-cdek-pvz').find('option:selected').attr('pvz-name');
+		$('#input-delivery-cdek-city-address').val(address);
+	});
+	
+	function findDeliveryCdekPvz(element) {
+		
+		var contextId = $('#select-delivery-cdek-city').find('option:selected').attr('city-id');
+		if (contextId == '') {
+			return;
+		}
+		
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/sir-richard-boss-web/ajax/orders/calc/parcel-delivery-cdek-pvzs',
+			data : JSON.stringify(contextId),
+			dataType: 'json',
+			timeout: 100000,
+			success: function(data) {
+				console.log('SUCCESS: ', data);
+				display(data);
+				
+				$('#select-delivery-cdek-pvz').find('option').remove();
+				for (var key in data.result.deliveryServiceResult.addresses) {
+					$('#select-delivery-cdek-pvz').append('<option value="' + data.result.deliveryServiceResult.addresses[key].carrierInfo.pvz + '" pvz-name="' + data.result.deliveryServiceResult.addresses[key].carrierInfo.cityContext + ', ' + data.result.deliveryServiceResult.addresses[key].carrierInfo.shortAddress +'" pvz-code="' + data.result.deliveryServiceResult.addresses[key].carrierInfo.pvz + '" id="option-delivery-cdek-pvz-' + data.result.deliveryServiceResult.addresses[key].carrierInfo.pvz + '">' + '[' + data.result.deliveryServiceResult.addresses[key].carrierInfo.pvz + '] ' + data.result.deliveryServiceResult.addresses[key].carrierInfo.fullAddress + '</option>');
+				}
+				
+			},
+			error: function(e) {
+				console.log('ERROR: ', e);
+				display(e);
+			},
+			done: function(e) {
+				console.log('DONE');
+			}
+		});		
+	}
+	
+	function findPvzsCdekPvzs(element) {
+		
+		var contextId = $('#select-pvzs-cdek-city').find('option:selected').attr('city-id');
+		if (contextId == '') {
+			return;
+		}
+		
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/sir-richard-boss-web/ajax/orders/calc/parcel-delivery-cdek-pvzs',
+			data : JSON.stringify(contextId),
+			dataType: 'json',
+			timeout: 100000,
+			success: function(data) {
+				console.log('SUCCESS: ', data);
+				display(data);
+
+				var pvzs = "";
+				for (var key in data.result.deliveryServiceResult.addresses) {
+					var pvzInfo = "";
+					
+					if (data.result.deliveryServiceResult.addresses[key].carrierInfo.metroStation.trim() != "") {
+						pvzInfo = pvzInfo + data.result.deliveryServiceResult.addresses[key].carrierInfo.metroStation.trim();
+					}
+					if (data.result.deliveryServiceResult.addresses[key].carrierInfo.nearestStation.trim() != "") {
+						if (pvzInfo == "") {
+							pvzInfo = data.result.deliveryServiceResult.addresses[key].carrierInfo.nearestStation.trim();
+						} else {
+							pvzInfo = pvzInfo + ", " + data.result.deliveryServiceResult.addresses[key].carrierInfo.nearestStation.trim();
+						}
+					}		
+					if (data.result.deliveryServiceResult.addresses[key].carrierInfo.pvzType == "POSTAMAT") {
+						if (pvzInfo == "") {
+							pvzInfo = data.result.deliveryServiceResult.addresses[key].carrierInfo.pvzType;
+						} else {
+							pvzInfo = pvzInfo + ", " + data.result.deliveryServiceResult.addresses[key].carrierInfo.pvzType;
+						}
+						
+					}					
+					if (data.result.deliveryServiceResult.addresses[key].carrierInfo.phone.trim() != "") {
+						if (pvzInfo == "") {
+							pvzInfo = data.result.deliveryServiceResult.addresses[key].carrierInfo.phone.trim();
+						} else {
+							pvzInfo = pvzInfo + ", " + data.result.deliveryServiceResult.addresses[key].carrierInfo.phone.trim();
+						}
+					}
+					if (data.result.deliveryServiceResult.addresses[key].carrierInfo.weightMax && data.result.deliveryServiceResult.addresses[key].carrierInfo.weightMax != "") {
+						if (pvzInfo == "") {
+							pvzInfo = data.result.deliveryServiceResult.addresses[key].carrierInfo.weightMax.trim();
+						} else {
+							pvzInfo = pvzInfo + ", " + data.result.deliveryServiceResult.addresses[key].carrierInfo.weightMax.trim();
+						}
+					}
+					if (pvzInfo != "") {
+						pvzInfo = ", (" + pvzInfo.trim() + ")";
+					}
+			
+					pvzs += '[' + data.result.deliveryServiceResult.addresses[key].carrierInfo.pvz + '] ' + data.result.deliveryServiceResult.addresses[key].carrierInfo.shortAddress + pvzInfo + '\r\n';
+				}
+				$('#textarea-pvzs-cdek').val(pvzs);
+				
+			},
+			error: function(e) {
+				console.log('ERROR: ', e);
+				display(e);
+			},
+			done: function(e) {
+				console.log('DONE');
+			}
+		});		
+	}
+		
+	function calcParcelDeliveryAmounts(element) {
+		
+		var data = {}, 
+		orderItems = [], 
+		orderItem;
+		$('.input-details-item-product').each(function() {
+			
+			var indexItem = $(this).attr('id');
+			if (indexItem != 'input-details-item-product-hidden') {				
+				indexItem = indexItem.substr('input-details-item-product'.length + 1, 2);	
+				orderItem = {
+						product: {
+							id: $('#input-details-item-product-id-' + indexItem).val().toNumber(), 
+							name: $('#input-details-item-product-' + indexItem).val()
+						},
+						quantity: $('#input-details-item-quantity-' + indexItem).val().toNumber(),
+						price: $('#input-details-item-price-' + indexItem).val().toNumber(),
+						supplierAmount: $('#input-details-item-supplier-amount-' + indexItem).val().toNumber(),
+						amount: $('#input-details-item-amount-' + indexItem).val().toNumber()}
+				orderItems.push(orderItem);				
+			}
+	
+		});
+		
+		var orderContainer = {
+				orderType: $('#select-order-type').val(),
+				paymentType: $('#select-payment-type').val(),
+				delivery: {
+					price: $('#input-delivery-price').val().toNumber(),
+					deliveryType: $('#select-delivery-type').val(),
+					deliveryPrice: $('#select-delivery-price-type').val(),
+					paymentDeliveryType: $('#select-payment-delivery-type').val(),
+					address: {
+						address: $('#input-delivery-address').val()
+					}
+				},
+				amounts: {
+					postpay: $('#input-amounts-postpay').val().toNumber()
+				},
+    			items: orderItems
+    	}
+		
+		if ($('#select-delivery-type').val() == 'CDEK_PVZ_TYPICAL' || $('#select-delivery-type').val() == 'CDEK_PVZ_ECONOMY' || $('#select-delivery-type').val() == 'CDEK_COURIER' || $('#select-delivery-type').val() == 'CDEK_COURIER_ECONOMY') {
+			// cdek
+			
+			$('#delivery-cdek-modal-title').text('Расчет доставки' + ' [' + $('#select-delivery-type').find('option:selected').text() + ']');
+			
+			if ($('#input-delivery-address-carrierPvz-city').val().trim() == '') {
+				$('#input-delivery-cdek-city-search').val($('#input-delivery-address').val().trim());
+			} else {
+				$('#input-delivery-cdek-city-search').val($('#input-delivery-address-carrierPvz-city').val());
+			}		
+			$('#input-delivery-cdek-street').val($('#input-delivery-address-carrierPvz-street').val());
+			$('#input-delivery-cdek-house').val($('#input-delivery-address-carrierPvz-house').val());
+			$('#input-delivery-cdek-flat').val($('#input-delivery-address-carrierPvz-flat').val());
+			
+			$('#input-delivery-cdek-city-address').val($('#input-delivery-address').val());
+		
+			$('#delivery-cdek-modal').modal({keyboard: false});
+			
+		} else if ($('#select-delivery-type').val() == 'OZON_ROCKET_COURIER') {
+			// ozon.rocket courier
+			
+			var cityContext = $('#input-delivery-address-carrierPvz-city').val(),
+			cityId = 0,
+			pvz = 0,
+			street = "",
+			house = "",
+			flat = "",
+			address = $('#input-delivery-address').val();
+				 
+			var deliveryVariantId = 0;
+					 				
+			$('#input-delivery-address-carrierPvz-city').val(cityContext);
+			$('#input-delivery-address-carrierPvz-cityId').val(cityId);		
+			$('#input-delivery-address-carrierPvz-code').val(pvz);		
+			$('#input-delivery-address-carrierPvz-street').val(street);
+			$('#input-delivery-address-carrierPvz-house').val(house);
+			$('#input-delivery-address-carrierPvz-flat').val(flat);
+			$('#input-delivery-address-carrierPvz-deliveryVariantId').val(deliveryVariantId);
+			
+	
+			var data = {}, 
+			orderItems = [], 
+			orderItem;
+			$('.input-details-item-product').each(function() {			
+				var indexItem = $(this).attr('id');
+				if (indexItem != 'input-details-item-product-hidden') {				
+					indexItem = indexItem.substr('input-details-item-product'.length + 1, 2);	
+
+					orderItem = {
+							product: {
+								id: $('#input-details-item-product-id-' + indexItem).val().toNumber(), 
+								name: $('#input-details-item-product-' + indexItem).val()
+							},
+							quantity: $('#input-details-item-quantity-' + indexItem).val().toNumber(),
+							price: $('#input-details-item-price-' + indexItem).val().toNumber(),
+							supplierAmount: $('#input-details-item-supplier-amount-' + indexItem).val().toNumber(),
+							amount: $('#input-details-item-amount-' + indexItem).val().toNumber()}
+					orderItems.push(orderItem);				
+				}
+		
+			});
+			
+			var orderContainer = {
+
+					orderType: $('#select-order-type').val(),
+					paymentType: $('#select-payment-type').val(),
+					delivery: {
+						price: $('#input-delivery-price').val().toNumber(),
+						factCustomerPrice: $('#input-delivery-price').val().toNumber(),
+						deliveryType: $('#select-delivery-type').val(),
+						deliveryPrice: $('#select-delivery-price-type').val(),
+						paymentDeliveryType: $('#select-payment-delivery-type').val(),
+						address: {
+							carrierInfo: {
+								cityContext: cityContext,
+								cityId: cityId,							
+								pvz: pvz,
+								deliveryVariantId: deliveryVariantId
+							},
+							address: $('#input-delivery-address').val()
+						}
+					},
+					amounts: {
+						postpay: $('#input-amounts-postpay').val().toNumber()
+					},
+	    			items: orderItems
+	    	}		
+			
+			$.ajax({
+				type: 'POST',
+				contentType: 'application/json',
+				url: '/sir-richard-boss-web/ajax/orders/calc/parcel-delivery-amounts',
+				data : JSON.stringify(orderContainer),
+				dataType: 'json',
+				timeout: 100000,
+				success: function(data) {
+					console.log('SUCCESS: ', data);
+					display(data);
+									
+					$('#input-amounts-postpay').val(data.result.deliveryServiceResult.postpayAmount);
+					$('#input-delivery-price').val(data.result.deliveryServiceResult.deliveryFullPrice);
+					$('#input-delivery-customer-price').val(data.result.deliveryServiceResult.deliveryCustomerSummary);
+					$('#input-delivery-seller-price').val(data.result.deliveryServiceResult.deliverySellerSummary);
+					
+					$('#details-items-amounts-delivery-seller-summary').text(data.result.deliveryServiceResult.deliverySellerSummary.formatMoney(2));
+					$('#details-items-amounts-delivery-customer-summary').text(data.result.deliveryServiceResult.deliveryCustomerSummary.formatMoney(2));
+													
+					$('#btn-calc-parcel-delivery-amounts-info').attr('data-original-title', data.result.deliveryServiceResult.parcelType);
+					$('#btn-calc-parcel-delivery-amounts-info').attr('data-content', data.result.deliveryServiceResult.info);				
+					$('#btn-calc-parcel-delivery-amounts-info').popover('show');
+					
+					$('#input-delivery-price').focusout();
+					
+				},
+				error: function(e) {
+					console.log('ERROR: ', e);
+					display(e);
+				},
+				done: function(e) {
+					console.log('DONE');
+				}
+			});			
+			
+		} else if ($('#select-delivery-type').val() == 'OZON_ROCKET_PICKPOINT' || $('#select-delivery-type').val() == 'OZON_ROCKET_POSTAMAT') {
+			// ozon.rocket pocket point
+						
+			$('#delivery-ozon-rocket-modal-title').text('Расчет доставки' + ' [' + $('#select-delivery-type').find('option:selected').text() + ']');
+				
+			var ozonRocketDeliveryCity = "";
+			if ($('#input-delivery-address-carrierPvz-city').val().trim() == '') {
+				ozonRocketDeliveryCity = $('#input-delivery-address').val().trim();
+			} else {
+				ozonRocketDeliveryCity = $('#input-delivery-address-carrierPvz-city').val().trim();				
+			}
+			var showPaymentText = ""
+			if ($('#select-payment-type').val() == 'POSTPAY') {
+				// postpayment
+				showPaymentText = "&showPostpaymentOnly=true";
+			} else {
+				// prepayment
+			}
+			// https://rocket.ozon.ru/lk/widget?token=XQoStt3Pr8TFIJfRTw7txw%3D%3D&showPostpaymentOnly=true.
+			var ozonWidgetSrc = "https://rocket.ozon.ru/lk/widget?token=WJSvphyEiaY3sEyWk2jNOA%3D%3D&showdeliveryprice=false&showdeliverytime=false&defaultcity=" + ozonRocketDeliveryCity + showPaymentText;
+			$('#iframe-ozon-widget').attr('src', ozonWidgetSrc);
+			$('#delivery-ozon-rocket-modal').modal({keyboard: false});
+			
+		} else {
+			// post office, courier, pickup			
+			$.ajax({
+				type: 'POST',
+				contentType: 'application/json',
+				url: '/sir-richard-boss-web/ajax/orders/calc/parcel-delivery-amounts',
+				data : JSON.stringify(orderContainer),
+				dataType: 'json',
+				timeout: 100000,
+				success: function(data) {
+					console.log('SUCCESS: ', data);
+					display(data);
+					$('#input-amounts-postpay').val(data.result.deliveryServiceResult.postpayAmount);
+					
+					$('#input-delivery-price').val(data.result.deliveryServiceResult.deliveryCustomerSummary);
+					$('#input-delivery-seller-price').val(data.result.deliveryServiceResult.deliverySellerSummary);
+					
+					$('#details-items-amounts-delivery-seller-summary').text(data.result.deliveryServiceResult.deliverySellerSummary.formatMoney(2));
+					$('#details-items-amounts-delivery-customer-summary').text(data.result.deliveryServiceResult.deliveryCustomerSummary.formatMoney(2));
+		
+					
+					$('#btn-calc-parcel-delivery-amounts-info').attr('data-original-title', data.result.deliveryServiceResult.parcelType);
+					$('#btn-calc-parcel-delivery-amounts-info').attr('data-content', data.result.deliveryServiceResult.info);				
+					$('#btn-calc-parcel-delivery-amounts-info').popover('show');
+					$('#input-delivery-price').focusout();
+					
+				},
+				error: function(e) {
+					console.log('ERROR: ', e);
+					display(e);
+				},
+				done: function(e) {
+					console.log('DONE');					
+				}
+			});
+		}		
+	}
+	
+	function inputDeliveryCdekChange() {
+		
+		var city = $('#select-delivery-cdek-city').find('option:selected').text(), 
+			street = $('#input-delivery-cdek-street').val(),
+			house = $('#input-delivery-cdek-house').val(),
+			flat = $('#input-delivery-cdek-flat').val();
+		
+		$('#input-delivery-cdek-city-address').val('г. ' + city + ', ' + street + ' ул., дом ' + house + ', кв. ' + flat);
+		
+	}
+	
+	function calcTotalAmounts(element) {		
+				
+		var data = {}, 
+			orderItems = [], 
+			orderItem;
+		$('.input-details-item-product').each(function() {
+			
+			var indexItem = $(this).attr('id');
+			if (indexItem != 'input-details-item-product-hidden') {				
+				indexItem = indexItem.substr('input-details-item-product'.length + 1, 2);	
+				orderItem = {
+						quantity: $('#input-details-item-quantity-' + indexItem).val().toNumber(),
+						price: $('#input-details-item-price-' + indexItem).val().toNumber(),
+						supplierAmount: $('#input-details-item-supplier-amount-' + indexItem).val().toNumber(),
+						amount: $('#input-details-item-amount-' + indexItem).val().toNumber()}
+				console.log(orderItem);
+				orderItems.push(orderItem);				
+			}
+
+		});
+				
+		var orderContainer = {
+				orderType: $('#select-order-type').val(),
+				paymentType: $('#select-payment-type').val(),
+				delivery: {
+					paymentDeliveryType: $('#select-payment-delivery-type').val(),
+					price: $('#input-delivery-price').val().toNumber(),
+					factCustomerPrice: $('#input-delivery-customer-price').val().toNumber(),
+					factSellerPrice: $('#input-delivery-seller-price').val().toNumber(),					
+					deliveryType: $('#select-delivery-type').val()					
+				},
+				amounts: {
+					postpay: $('#input-amounts-postpay').val().toNumber()
+				},
+    			items: orderItems
+    	}
+
+		$.ajax({
+			type: 'POST',
+			contentType: 'application/json',
+			url: '/sir-richard-boss-web/ajax/orders/calc/total-amounts',
+			data : JSON.stringify(orderContainer),
+			dataType: 'json',
+			timeout: 100000,
+			success: function(data) {
+				console.log('SUCCESS: ', data);
+				display(data);	
+				$('#details-items-amounts-total').text(data.result.amounts.total.formatMoney(2));
+				$('#details-items-amounts-total-with-delivery').html('<p><strong>' + data.result.amounts.totalWithDelivery.formatMoney(2) + '</strong></p>');
+				$('#details-items-amounts-delivery').text(data.result.amounts.delivery.formatMoney(2));
+				$('#details-items-amounts-bill').text(data.result.amounts.bill.formatMoney(2));
+				$('#details-items-amounts-supplier').text(data.result.amounts.supplier.formatMoney(2));
+				$('#details-items-amounts-margin').text(data.result.amounts.margin.formatMoney(2));
+				$('#details-items-amounts-postpay').html('<p><strong>' + data.result.amounts.postpay.formatMoney(2) + '</strong></p>');
+				$('#input-amounts-postpay').val(data.result.amounts.postpay);
+
+				
+			},
+			error: function(e) {
+				console.log('ERROR: ', e);
+				display(e);
+			},
+			done: function(e) {
+				console.log('DONE');
+			}
+		});
+	}
+	
+	
+	$('#btn-details-item-add').click(function() {
+		currentStatusIndex++;
+		console.log(currentStatusIndex);
+		
+		var s = $('#details-item-row-hidden').prop('outerHTML');
+		
+		s = s.replace('details-item-row-hidden', 'details-item-row-' + currentStatusIndex);
+		s = s.replace('btn-find-details-item-product-hidden', 'btn-find-details-item-product-' + currentStatusIndex);	
+		
+		s = s.replace('input-details-item-id-hidden', 'input-details-item-id-' + currentStatusIndex);
+		s = s.replace('input-details-item-no-hidden', 'input-details-item-no-' + currentStatusIndex);
+		s = s.replace('input-details-item-product-id-hidden', 'input-details-item-product-id-' + currentStatusIndex);
+		
+		s = s.replace('input-details-item-product-hidden', 'input-details-item-product-' + currentStatusIndex);
+		s = s.replaceAll('datalist-product-name-hidden', 'datalist-product-name-' + currentStatusIndex);
+
+		s = s.replace('input-details-item-quantity-hidden', 'input-details-item-quantity-' + currentStatusIndex);
+		s = s.replace('span-details-item-quantity-stock-info-hidden', 'span-details-item-quantity-stock-info-' + currentStatusIndex);
+		
+		s = s.replace('span-details-item-product-sku-info-hidden', 'span-details-item-product-sku-info-' + currentStatusIndex);
+		
+		s = s.replace('input-details-item-price-hidden', 'input-details-item-price-' + currentStatusIndex);
+		s = s.replace('input-details-item-discount-rate-hidden', 'input-details-item-discount-rate-' + currentStatusIndex);
+		s = s.replace('input-details-item-amount-hidden', 'input-details-item-amount-' + currentStatusIndex);
+		s = s.replace('input-details-item-supplier-amount-hidden', 'input-details-item-supplier-amount-' + currentStatusIndex);
+		
+		s = s.replace('btn-details-item-delete-hidden', 'btn-details-item-delete-' + currentStatusIndex);		
+		s = s.replaceAll('items[' + 7 + ']', 'items[' + currentStatusIndex + ']');
+		s = s.replaceAll('items' + 7, 'items' + currentStatusIndex);
+				
+		var html = $.parseHTML(s);
+		$('#details-item-row-hidden').before(html);
+		$('#input-details-item-id-' + currentStatusIndex).val(-1);
+		$('#input-details-item-product-id-' + currentStatusIndex).val(-1);
+		$('#input-details-item-no-' + currentStatusIndex).val(currentStatusIndex);
+		$('#details-item-row-' + currentStatusIndex).removeAttr('hidden');
+
+		$('#btn-find-details-item-product-' + currentStatusIndex).on('click', {selector: this}, btnDetailsItemProductOnClick);
+		$('#btn-details-item-delete-' + currentStatusIndex).on('click', {selector: this}, btnDetailsItemDeleteOnClick);
+		$('#input-details-item-price-' + currentStatusIndex).on('change', {selector: this}, inputItemPriceChange);
+		$('#input-details-item-quantity-' + currentStatusIndex).on('change', {selector: this}, inputItemPriceChange);
+		$('#input-details-item-discount-rate-' + currentStatusIndex).on('change', {selector: this}, inputItemPriceChange);
+		calcAmount(inputItemPriceChange);	
+		
+	});
+	
+
+	$('.btn-find-details-item-product').click(function() {
+		btnDetailsItemProductOnClick(this);		
+	});
+	
+	$('.btn-details-item-delete').click(function() {
+		btnDetailsItemDeleteOnClick(this);
+		
+	});
+	
+	
+	function calcAmount(indexItem) {
+		
+		if (typeof indexItem === 'object' || typeof indexItem === 'function') {
+			return;
+		}
+		
+		var quantity = $('#input-details-item-quantity-' + indexItem).val().toNumber();
+		var price = $('#input-details-item-price-' + indexItem).val().toNumber();
+		var discount = $('#input-details-item-discount-rate-' + indexItem).val().toNumber();
+	
+		var amount = quantity * price - (quantity * price) * discount/100;
+		$('#input-details-item-amount-' + indexItem).val(amount);
+		calcTotalAmounts(this);
+		
+	}
+	
+	function inputItemPriceChange() {
+		var indexItem;
+		if ($(this).hasClass('input-details-item-price')) {
+			indexItem = $(this).attr('id').substr('input-details-item-price'.length + 1, 2);			
+		} else if ($(this).hasClass('input-details-item-quantity')) {
+			indexItem = $(this).attr('id').substr('input-details-item-quantity'.length + 1, 2);	
+		}  else if ($(this).hasClass('input-details-item-discount-rate')) {
+			indexItem = $(this).attr('id').substr('input-details-item-discount-rate'.length + 1, 2);	
+		} else {
+			return;
+		}		
+		calcAmount(indexItem);		
+	}	
+
+	function btnSearchProductsDisabled(flag) {
+		$('.btn-find-details-item-product').prop('disabled', flag);
+	}
+	
+	function display(data) {
+		var json = '<h4>Ajax Response</h4><pre>'
+				+ JSON.stringify(data, null, 4) + '</pre>';
+		//$('#feedback').html(json);
+	}
+	
+	function displayProducts(data) {
+		var json = '<h4>Ajax Response</h4><pre>'
+				+ JSON.stringify(data, null, 4) + '</pre>';
+		//$('#feedback-product').html(json);
+	}
+	
+
+	(function() {
+	  'use strict';
+	  window.addEventListener('load', function() {
+	    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+	    var forms = document.getElementsByClassName('needs-validation');
+	    // Loop over them and prevent submission
+	    var validation = Array.prototype.filter.call(forms, function(form) {
+	      form.addEventListener('submit', function(event) {
+	        if (form.checkValidity() === false) {
+	          event.preventDefault();
+	          event.stopPropagation();
+	        }
+	        form.classList.add('was-validated');
+	      }, false);
+	    });
+	  }, false);
+	})();
+		
+	window.addEventListener("message", ozonRocketReceiveMessage, false);
+	function ozonRocketReceiveMessage(event) {
+		// don't listen alien enents
+		if (event.origin !== "https://rocket.ozon.ru" || typeof event.data !== "string")
+			return;
+		
+		var ozonRocketDeliveryVariantData = JSON.parse(event.data);		
+		if (ozonRocketDeliveryVariantData.messageType !== "OzonRocketWidgetSelectDeliveryVariant") {			
+		    return;			
+		} 
+		console.log(ozonRocketDeliveryVariantData.data);
+		
+		$('#input-ozon-rocket-delivery-variant-data').attr('data', ozonRocketDeliveryVariantData);		
+		$('#input-ozon-rocket-delivery-variant-id').val(ozonRocketDeliveryVariantData.id);
+		$('#input-delivery-address-carrierPvz-deviveryVariantId').val(ozonRocketDeliveryVariantData.id);		
+		$('#input-ozon-rocket-delivery-variant-address').val(ozonRocketDeliveryVariantData.address);
+		$('#input-delivery-address-carrierPvz-city').val(ozonRocketDeliveryVariantData.address);
+				
+		$('#button-modal-delivery-ozon-rocket-ok').click();
+				
+	}
+	
+</script>
+  </body>
+  
+<!-- Footer -->
+<footer class="page-footer font-small gray-dark pt-12">
+	<div class="container-fluid">			
+			<div class="row">
+				<label class="col-sm-2"></label>				
+				<div class="col-sm-5">© 2022 Copyright:<a target="blank" href="https://pribormaster.ru/">&nbsp;www.pribormaster.ru</a>&nbsp;|&nbsp;sir-richard-boss-web&nbsp;|&nbsp;4.3.0-SNAPSHOT</div>
+			</div>
+	</div>
+ </footer>
+</html>

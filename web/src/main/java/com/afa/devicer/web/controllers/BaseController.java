@@ -1,12 +1,33 @@
 package com.afa.devicer.web.controllers;
 
+import com.afa.devicer.core.model.types.OrderStatuses;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
+@Getter
 public abstract class BaseController {
 
+    @Autowired
+    private Environment environment;
+    @Autowired
+    private MessageSource messageSource;
+
     protected void populateDefaultModel(Model model) {
+        List<String> allViewStatuses = Arrays.stream(OrderStatuses.values())
+                .map(OrderStatuses::getAnnotation)
+                .collect(Collectors.toList());
+        model.addAttribute("allViewStatuses", allViewStatuses);
+        model.addAttribute("environment", environment);
+
 /*
         model.addAttribute("productCategories", wikiProductService.getCategories());
         model.addAttribute("customerTypes", CustomerTypes.values());
@@ -23,22 +44,7 @@ public abstract class BaseController {
         model.addAttribute("countries", Countries.values());
         model.addAttribute("suppliers", SupplierTypes.values());
 
-        List<String> allViewStatuses = new ArrayList<>();
-        allViewStatuses.add(OrderStatuses.BID.getAnnotation());
-        allViewStatuses.add(OrderStatuses.APPROVED.getAnnotation());
-        allViewStatuses.add(OrderStatuses.PAY_WAITING.getAnnotation());
-        allViewStatuses.add(OrderStatuses.PAY_ON.getAnnotation());
-        allViewStatuses.add(OrderStatuses.DELIVERING.getAnnotation());
-        allViewStatuses.add(OrderStatuses.READY_GIVE_AWAY.getAnnotation());
-        allViewStatuses.add(OrderStatuses.READY_GIVE_AWAY_TROUBLE.getAnnotation());
-        allViewStatuses.add(OrderStatuses.DELIVERED.getAnnotation());
-        allViewStatuses.add(OrderStatuses.DOC_NOT_EXIST.getAnnotation());
-        allViewStatuses.add(OrderStatuses.FINISHED.getAnnotation());
-        allViewStatuses.add(OrderStatuses.REDELIVERY.getAnnotation());
-        allViewStatuses.add(OrderStatuses.CANCELED.getAnnotation());
-        allViewStatuses.add(OrderStatuses.REDELIVERY_FINISHED.getAnnotation());
-        allViewStatuses.add(OrderStatuses.LOST.getAnnotation());
-        model.addAttribute("allViewStatuses", allViewStatuses);
+
 
         List<String> allViewOrderTypes = new ArrayList<>();
         allViewOrderTypes.add(OrderTypes.ORDER.getAnnotation());
@@ -120,5 +126,8 @@ public abstract class BaseController {
         allViewSuppliers.add(SupplierTypes.T4L.getAnnotation());
         model.addAttribute("allViewSuppliers", allViewSuppliers);
  */
+
+
+
     }
 }

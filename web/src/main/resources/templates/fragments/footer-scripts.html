@@ -52,20 +52,21 @@
               document.location.href = searchHref;
           }
           $(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-                $('[data-toggle="popover"]').popover();
 
-                $('.input-mask-time').mask('00:00');
-                //$('.input-mask-phone').mask('(000) 000-00-00');
-                $(".datepicker").datepicker({
-                    format: "dd.mm.yyyy",
-                    weekStart: 1,
-                    todayBtn: "linked",
-                    language: "ru",
-                    orientation: "auto",
-                    autoclose: true,
-                    todayHighlight: true
-                });
+              $('[data-toggle="tooltip"]').tooltip();
+              $('[data-toggle="popover"]').popover();
+
+              $('.input-mask-time').mask('00:00');
+
+              $(".datepicker").datepicker({
+                  format: "dd.mm.yyyy",
+                  weekStart: 1,
+                  todayBtn: "linked",
+                  language: "ru",
+                  orientation: "auto",
+                  autoclose: true,
+                  todayHighlight: true
+              });
             });
           $(".nav-menus-item").removeClass('active');
           $('.needs-validation').attr('novalidate', '');

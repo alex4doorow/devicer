@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header-head :: header-head((customPageTitle=#{order.form.new.header}))}"></head>
+<head th:replace="~{fragments/header-head :: header-head((customPageTitle=${orderHeader}))}"></head>
 <body>
 <nav th:replace="~{fragments/header-main-search :: header-main-search}"></nav>
 <div class="container-fluid">
@@ -10,12 +10,10 @@
 </div>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
     <div class="d-flex justify-content-start flex-wrap flex-md-nowrap align-items-start">
-        <h1 class="h4" th:text="#{order.form.new.headers.h1}"></h1>
+        <h1 class="h4" th:text="${orderHeader}"></h1>
     </div>
     <div class="d-flex justify-content-start flex-wrap flex-md-nowrap align-items-start border-bottom- mb-2">
-        <!--
-        <h2 class="h5" th:utext="${order.customer.viewLongNameWithContactInfo} + ' ' + '<span class=\'badge badge-secondary\'>' + ${order.customer.id} + '</span>'"></h2>
-        -->
+        <h2 class="h5" th:utext="${customerHeader}"></h2>
     </div>
     <div>
         <button id="btn-update-order" type="button" class="btn btn-primary" th:text="#{main.btn.updateData}"></button>
@@ -24,21 +22,26 @@
         <button id="btn-clone-order" type="button" class="btn btn-light" th:text="#{main.btn.cloneData}"></button>
     </div>
     <br/>
-    <form id="orderForm" class="needs-validation" th:action="@{/web/orders/add/save/}" th:object="${order}" method="post">
+    <form id="orderForm" class="needs-validation" th:action="@{/web/v1/orders/add/}" th:object="${order}" method="post">
         <input id="id" type="hidden" th:field="*{id}"/>
-        <input id="no" type="hidden" th:field="*{orderNo}"/>
-        <input id="orderDate" type="hidden" th:field="*{orderDate}"/>
-        <input id="delivery.address.id" type="hidden" th:field="*{delivery.address.id}"/>
-        <input id="delivery.address.courierInfo.deliveryDate" type="hidden" th:field="*{delivery.address.courierInfo.deliveryDate}"/>
-        <input id="customer.id" type="hidden" th:field="*{customer.id}"/>
-        <input id="customer.type" type="hidden" th:field="*{customer.type}"/>
-        <input id="customer.phoneNumber" th:field="*{customer.viewPhoneNumber}" type="hidden"/>
-        <input id="customer.email" th:field="*{customer.viewEmail}" type="hidden"/>
-        <input id="customer.shortName" th:field="*{customer.viewShortName}" type="hidden"/>
-        <input id="customer.longName" th:field="*{customer.viewLongName}" type="hidden"/>
-        <input id="customer.inn" th:field="*{customer.viewInn}" type="hidden"/>
-        <input id="customer.address.id" th:field="*{customer.address.id}" type="hidden"/>
 
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label for="input-order-num" th:text="#{order.form.fields.no}"></label>
+                <input id="input-order-num" th:field="*{orderNum}" th:placeholder="#{order.form.fields.placeholder.no}" type="text" class="form-control form-control-sm form-control-required" />
+            </div>
+            <div class="form-group col-md-2">
+                <label for="input-order-orderDate" th:text="#{order.form.fields.orderDate}"></label>
+                <div class="input-group">
+                    <input id="input-order-orderDate" th:field="*{orderDate}" th:placeholder="#{order.form.fields.placeholder.orderDate}" type="text" class="form-control form-control-sm form-control-required datepicker" maxlength="10"/>
+                    <div class="input-group-append">
+                        <button class="btn btn-sm btn-light btn-outline-secondary" onclick="$('#input-order-orderDate').datepicker('show');" type="button">
+                            <i class="bi bi-calendar2-date text-dark"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <hr class="mb-4">
         <button id="btn-submit-order" type="submit" class="btn btn-primary" th:text="#{main.btn.save}"></button>
     </form>
