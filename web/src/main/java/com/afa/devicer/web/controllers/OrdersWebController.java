@@ -19,6 +19,8 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/web/v1/orders")
@@ -54,6 +56,24 @@ public class OrdersWebController extends BaseController {
         serviceDispatcherUrl = environment.getProperty("url.service.dispatcher");
     }
 
+    @GetMapping("/demo/orders/add")
+    public String showForm(Model model) {
+        DtoOrder order = new DtoOrder();
+
+        model.addAttribute("order", order);
+
+        List<String> listProfession = Arrays.asList("Developer", "Tester", "Architect");
+        model.addAttribute("listProfession", listProfession);
+
+        return "demo/order_demo";
+    }
+
+    @PostMapping("/demo/orders/add")
+    public String submitForm(@ModelAttribute("order") DtoOrder order) {
+        System.out.println(order);
+        return "demo/index";
+    }
+
     @GetMapping("/{id}/{listType}")
     public String findById(@PathVariable("id") Long id, @PathVariable("listType") String listType, Model model) {
         /*
@@ -80,12 +100,11 @@ public class OrdersWebController extends BaseController {
         dtoOrder.setOrderDate(LocalDate.now());
         //dtoOrder.setProductCategory(wikiProductService.getCategoryById(0L));
         dtoOrder.getItems().add(new DtoOrderItem());
-        model.addAttribute("order", dtoOrder);
-        model.addAttribute("listType", listType);
-
         */
+        model.addAttribute("order", orderForm);
+        model.addAttribute("listType", listType);
         model.addAttribute("orderForm", orderForm);
-        return "orders/edit";
+        return "orders/edit-test";
     }
 
     @PostMapping("/add")
@@ -93,21 +112,23 @@ public class OrdersWebController extends BaseController {
         log.info("[START] {} request", "SAVE_ADD");
 
         try {
-            DtoOrderMessage orderMessage = DtoOrderMessage.builder().order(orderForm).build();
+            DtoOrderMessage request = DtoOrderMessage.builder().order(orderForm).build();
+            /*
             DtoOrderMessage responseOrderMessage = webClient.post()
                     .uri(new URI(serviceDispatcherUrl + "/v1/orders/add"))
                     //.header(HttpHeaders.AUTHORIZATION, access.getSecret())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .bodyValue(orderMessage)
+                    .bodyValue(request)
                     .retrieve()
                     .bodyToMono(DtoOrderMessage.class)
                     .log()
                     .block();
             log.debug("result: {}", responseOrderMessage);
+            */
         } catch (Exception e) {
             log.error("result:", e);
         }
-        return "orders/edit-test";
+        return "orders/list";
     }
 
     @GetMapping("/{id}/change-status/{listType}")

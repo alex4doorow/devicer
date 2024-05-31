@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Order add Success</title>
+    <style type="text/css">
+        span {
+            display: inline-block;
+            width: 200px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<div align="center">
+    <h2>Order add Succeeded!</h2>
+    <span>Order number:</span><span th:text="${order.orderNum}"></span><br/>
+    <span>Order date:</span><span th:text="${order.orderDate}"></span><br/>
+</div>
+</body>
+</html>

@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class DtoResponseOrderMessage {
     private Long offset;
     DtoOrderMessage request;
+    DtoOrder response;
 }
