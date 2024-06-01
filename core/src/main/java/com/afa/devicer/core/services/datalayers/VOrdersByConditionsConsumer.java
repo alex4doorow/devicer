@@ -10,37 +10,30 @@ import com.afa.devicer.core.model.types.ENFormat;
 import com.afa.devicer.core.rest.dto.view.DtoOrdersByConditionsRequestModel;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class VOrdersByConditionsConsumer implements Consumer {
 
-  @Autowired
-  private OrderRepository orderRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
+    @Override
+    public void consume(Payload payload) throws CoreException {
+        DtoOrdersByConditionsRequestModel request = (DtoOrdersByConditionsRequestModel) payload.msgIn.getBody();
 
-  @Override
-  public void consume(Payload payload) throws CoreException {
-    DtoOrdersByConditionsRequestModel request = (DtoOrdersByConditionsRequestModel) payload.msgIn.getBody();
+        List<SEOrder> seOrders = loadByConditions(request);
 
+        payload.msgOut = new Msg<>(ENFormat.JSON,
+                VOrdersByConditionsProducer.outType,
+                payload.msgIn.getRequestId(),
+                payload.msgIn.getReciever(),
+                payload.msgIn.getSender(),
+                null,
+                seOrders);
+    }
 
+    private List<SEOrder> loadByConditions(DtoOrdersByConditionsRequestModel request) {
 
-
-
-
-    /*
-    List<SEDocument> seDocuments = docBL.findDocumentsByParams(request.getParams().getStDtm(), request.getParams().getEndDtm(),
-        request.getParams().getDocTrn());
-
-     */
-    List<SEOrder> seOrders = orderRepository.findAll();
-
-    payload.msgOut = new Msg<>(ENFormat.JSON,
-        VOrdersByConditionsProducer.outType,
-        payload.msgIn.getRequestId(),
-        payload.msgIn.getReciever(),
-        payload.msgIn.getSender(),
-        null,
-        seOrders);
-  }
+        return orderRepository.findAll();
+    }
 }

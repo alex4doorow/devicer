@@ -10,7 +10,7 @@
     </div>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <div class="d-flex justify-content-start flex-wrap flex-md-nowrap align-items-start">
-            <h1 class="h4" th:text="#{order.show.headers.h1( ${order.viewNo}, ${T(com.sir.richard.boss.utils.DateTimeUtils).defaultFormatLocalDate(order.orderDate)})}"></h1>
+            <h1 class="h4" th:text="#{order.show.headers.h1( ${order.viewNo}, ${T(com.afa.devicer.core.utils.DateTimeUtils).defaultFormatLocalDate(order.orderDate)})}"></h1>
         </div>
         <div class="d-flex justify-content-start flex-wrap flex-md-nowrap align-items-start border-bottom- mb-2">
             <h2 class="h5" th:utext="${order.customer.viewLongNameWithContactInfo} + ' ' + '<span class=\'badge badge-secondary\'>' + ${order.customer.id} + '</span>'"></h2>
@@ -60,7 +60,7 @@
                     <div class="row">
                         <label class="col-sm-3" th:text="#{order.show.fields.orderDate}"></label>
                         <div class="col-sm-9">
-                            <strong th:text="${T(com.sir.richard.boss.utils.DateTimeUtils).defaultFormatLocalDate(order.orderDate)}"></strong>
+                            <strong th:text="${T(com.afa.devicer.core.utils.DateTimeUtils).defaultFormatLocalDate(order.orderDate)}"></strong>
                         </div>
                     </div>
                     <div class="row">
@@ -100,7 +100,7 @@
                     <div class="row">
                         <label class="col-sm-3" th:text="#{order.show.fields.addedDate}"></label>
                         <div class="col-sm-9"
-                             th:text="${T(com.sir.richard.boss.utils.DateTimeUtils).formatLocalDateTime(order.addedDate, T(com.sir.richard.boss.utils.DateTimeUtils).DATE_FORMAT_UTC)}">
+                             th:text="${T(com.afa.devicer.core.utils.DateTimeUtils).formatLocalDateTime(order.addedDate, T(com.afa.devicer.core.utils.DateTimeUtils).DATE_FORMAT_UTC)}">
                         </div>
                     </div>
                     <br />
@@ -184,7 +184,7 @@
                                     <td th:text="${statusItem.status.annotation}"></td>
                                     <td th:text="${statusItem.crmStatus}"></td>
                                     <td th:text="${statusItem.crmSubStatus}"></td>
-                                    <td th:text="${T(com.sir.richard.boss.utils.DateTimeUtils).formatLocalDateTime(statusItem.addedDate, T(com.sir.richard.boss.utils.DateTimeUtils).DATE_FORMAT_UTC)}"></td>
+                                    <td th:text="${T(com.afa.devicer.core.utils.DateTimeUtils).formatLocalDateTime(statusItem.addedDate, T(com.afa.devicer.core.utils.DateTimeUtils).DATE_FORMAT_UTC)}"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -330,7 +330,7 @@
                     <div class="row">
                         <label class="col-sm-3" th:text="#{order.show.delivery.fields.deliveryDate}"></label>
                         <div class="col-sm-9" th:if="${order.delivery.deliveryDate != null}">
-                            <strong th:text="${T(com.sir.richard.boss.utils.DateTimeUtils).formatLocalDate(order.delivery.deliveryDate, T(com.sir.richard.boss.utils.DateTimeUtils).DATE_FORMAT_HH_mm_EEE)}"></strong>
+                            <strong th:text="${T(com.afa.devicer.core.utils.DateTimeUtils).formatLocalDate(order.delivery.deliveryDate, T(com.afa.devicer.core.utils.DateTimeUtils).DATE_FORMAT_HH_mm_EEE)}"></strong>
                         </div>
                     </div>
                     <div class="row">

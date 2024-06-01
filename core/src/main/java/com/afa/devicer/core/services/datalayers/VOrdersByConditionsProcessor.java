@@ -12,10 +12,7 @@ import com.afa.devicer.core.services.JsonMapper;
 import com.afa.devicer.core.services.converters.out.OutDtoOrdersConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class VOrdersByConditionsProcessor implements Processor {
 
@@ -36,11 +33,9 @@ public class VOrdersByConditionsProcessor implements Processor {
         payload.msgIn.getRequestId(),
         payload.msgIn.getReciever(),
         payload.msgIn.getSender(),
-        null,
+        payload.msgIn.getSignature(),
         jsonResponse);
   }
-
-
 
   private DtoOrdersByConditionsResponseModel convertSEOrdersToResponseModel(Collection<SEOrder> seOrders) {
 

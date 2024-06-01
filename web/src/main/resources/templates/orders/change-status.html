@@ -10,7 +10,7 @@
     </div>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <div class="d-flex justify-content-start flex-wrap flex-md-nowrap align-items-start">
-            <h1 class="h4" th:text="#{order.form.changeStatus.headers.h1( ${order.viewNo}, ${T(com.sir.richard.boss.utils.DateTimeUtils).defaultFormatLocalDate(order.orderDate)})}"></h1>
+            <h1 class="h4" th:text="#{order.form.changeStatus.headers.h1( ${order.viewNo}, ${T(com.afa.devicer.core.utils.DateTimeUtils).defaultFormatLocalDate(order.orderDate)})}"></h1>
         </div>
         <div class="d-flex justify-content-start flex-wrap flex-md-nowrap align-items-start border-bottom- mb-2">
             <h2 class="h5" th:utext="${order.customer.viewLongNameWithContactInfo} + ' ' + '<span class=\'badge badge-secondary\'>' + ${order.customer.id} + '</span>'"></h2>

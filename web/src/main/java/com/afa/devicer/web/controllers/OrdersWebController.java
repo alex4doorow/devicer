@@ -5,22 +5,30 @@ import com.afa.devicer.core.model.types.ENOrderAmountTypes;
 import com.afa.devicer.core.model.types.ENReportPeriodTypes;
 import com.afa.devicer.core.rest.dto.DtoOrder;
 import com.afa.devicer.core.rest.dto.DtoOrderMessage;
+import com.afa.devicer.core.rest.dto.view.DtoOrdersByConditionsParams;
+import com.afa.devicer.core.rest.dto.view.DtoOrdersByConditionsRequestModel;
+import com.afa.devicer.core.rest.dto.view.DtoOrdersByConditionsResponseModel;
 import com.afa.devicer.core.services.JsonMapper;
+import com.afa.devicer.core.utils.Defaults;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -58,7 +66,15 @@ public class OrdersWebController extends BaseWebController {
 
     @GetMapping("/")
     public String findOrdersByRequest(Model model) {
-        log.info("[START] {} request", "FIND_ORDERS_BY_REQUEST");
+        DtoOrdersByConditionsRequestModel request = DtoOrdersByConditionsRequestModel.builder()
+                .params(DtoOrdersByConditionsParams
+                        .builder()
+                        .stDtm(LocalDateTime.now())
+                        .endDtm(LocalDateTime.now())
+                        .build())
+                .build();
+        log.info("[START] {} request: {}", "FIND_ORDERS_BY_REQUEST", request);
+
 /*
         OrderConditions orderConditions = configService.loadOrderConditions(getCurrentUser());
 
@@ -69,6 +85,22 @@ public class OrdersWebController extends BaseWebController {
                 orderConditions.getPeriod());
 
  */
+        DtoOrdersByConditionsResponseModel responseModel = null;
+        try {
+            responseModel = webClient.post()
+                    .uri(new URI(serviceDispatcherUrl + "/rest/v1/orders/by-conditions"))
+                    .header(Defaults.X_Request_ID, UUID.randomUUID().toString())
+                    .header(Defaults.X_Client_ID, "user")
+                    .header(Defaults.X_Token, "token")
+                    .body(BodyInserters.fromValue(request))
+                    .retrieve()
+                    .bodyToMono(DtoOrdersByConditionsResponseModel.class)
+                    .block();
+            log.debug("result: {}", responseModel);
+        } catch (Exception e) {
+            log.error("result:", e);
+        }
+
         BigDecimal billAmount = BigDecimal.ZERO;
         BigDecimal supplierAmount = BigDecimal.ZERO;
         BigDecimal marginWithoutAdvertAmount = BigDecimal.ZERO;
@@ -81,7 +113,9 @@ public class OrdersWebController extends BaseWebController {
         totalAmounts.put(ENOrderAmountTypes.POSTPAY, BigDecimal.ZERO);
         totalAmounts.put(ENOrderAmountTypes.COUNT_REAL_ORDERS, BigDecimal.ZERO);
 
-        List<DtoOrder> dtoOrders = new ArrayList<>();
+        Collection<DtoOrder> dtoOrders = responseModel.getOrders();
+        //List<DtoOrder> dtoOrders = new ArrayList<>();
+
 
         populateDefaultModel(model);
         model.addAttribute("orders", dtoOrders);
@@ -163,26 +197,6 @@ public class OrdersWebController extends BaseWebController {
     @Override
     protected void populateDefaultModel(Model model) {
         super.populateDefaultModel(model);
-    }
-
-
-
-    @GetMapping("/demo/orders/add")
-    public String showForm(Model model) {
-        DtoOrder order = new DtoOrder();
-
-        model.addAttribute("order", order);
-
-        List<String> listProfession = Arrays.asList("Developer", "Tester", "Architect");
-        model.addAttribute("listProfession", listProfession);
-
-        return "demo/order_demo";
-    }
-
-    @PostMapping("/demo/orders/add")
-    public String submitForm(@ModelAttribute("order") DtoOrder order) {
-        System.out.println(order);
-        return "demo/index";
     }
 
     @GetMapping("/{id}/{listType}")

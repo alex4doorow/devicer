@@ -1,5 +1,6 @@
 package com.afa.devicer.core.utils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -23,4 +24,9 @@ public class DateTimeUtils {
         }
         return date.format(DateTimeFormatter.ofPattern(dateFormatString));
     }
+
+    public static String formatLocalDate(LocalDate localDate, String dateFormatString) {
+        return localDate.format(DateTimeFormatter.ofPattern(dateFormatString));
+    }
+
 }
