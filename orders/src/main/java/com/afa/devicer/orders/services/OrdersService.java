@@ -7,7 +7,7 @@ import com.afa.devicer.core.errors.CoreException;
 import com.afa.devicer.core.model.types.ENMessageStatuses;
 import com.afa.devicer.core.rest.dto.DtoOrderMessage;
 import com.afa.devicer.core.services.JsonMapper;
-import com.afa.devicer.core.services.converters.in.InDtoOrderConverter;
+import com.afa.devicer.core.services.converters.in.InDtoOrdersConverter;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class OrdersService {
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
-    private InDtoOrderConverter orderConverter;
+    private InDtoOrdersConverter orderConverter;
     @Autowired
     private JsonMapper jsonMapper;
 

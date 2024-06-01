@@ -1,7 +1,6 @@
 package com.afa.devicer.core.rest.controllers;
 
 import com.afa.devicer.core.errors.CoreException;
-import com.afa.devicer.core.errors.ErrorResponse;
 import com.afa.devicer.core.integration.Msg;
 import com.afa.devicer.core.integration.Producer;
 import com.afa.devicer.core.model.types.ENFormat;

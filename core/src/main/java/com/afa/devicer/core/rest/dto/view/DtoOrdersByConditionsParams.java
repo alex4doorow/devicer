@@ -17,9 +17,9 @@ import java.time.LocalDate;
 public class DtoOrdersByConditionsParams {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATE_FORMAT_yyyy_MM_dd)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATETIME_NS)
     private LocalDate stDtm;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATE_FORMAT_yyyy_MM_dd)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATETIME_NS)
     private LocalDate endDtm;
 }

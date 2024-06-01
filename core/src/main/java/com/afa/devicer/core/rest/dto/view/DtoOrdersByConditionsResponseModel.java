@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -20,5 +21,5 @@ public class DtoOrdersByConditionsResponseModel {
     private String description;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String info;
-    private List<DtoOrder> orders;
+    private Collection<DtoOrder> orders;
 }

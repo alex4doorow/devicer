@@ -15,6 +15,7 @@ public class DateTimeUtils {
     public static final String DATE_FORMAT_CDEK = "yyyy-MM-dd'T'HH:mm:ssZ"; // "2022-11-21T09:05:06+0000"
     public static final String DATE_FORMAT_yyyy_MM_dd = "yyyy-MM-dd";
     public static final String DATE_FMT_ISO8601 = "yyyy-MM-dd'T'HH:mm:ssXXX";
+    public static final String DATETIME_NS = "yyyy-MM-dd'T'HH:mm";
 
     public static String formatLocalDateTime(LocalDateTime date, String dateFormatString) {
         if (date == null) {

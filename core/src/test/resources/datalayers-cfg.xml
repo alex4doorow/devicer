@@ -1,0 +1,23 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/jms
+       https://www.springframework.org/schema/jms/spring-jms.xsd">
+
+	<bean id="vOrdersByConditionsProducer" class="com.afa.devicer.core.services.datalayers.VOrdersByConditionsProducer">
+		<property name="consumer" ref="vOrdersByConditionsConsumer"></property>
+		<property name="postProcessorsList">
+			<list>
+				<ref bean="vOrdersByConditionsProcessor"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="vOrdersByConditionsProcessor" class="com.afa.devicer.core.services.datalayers.VOrdersByConditionsProcessor"></bean>
+	<bean id="vOrdersByConditionsConsumer" class="com.afa.devicer.core.services.datalayers.VOrdersByConditionsConsumer"></bean>
+
+</beans>

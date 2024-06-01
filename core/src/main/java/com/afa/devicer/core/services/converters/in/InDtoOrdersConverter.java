@@ -7,7 +7,7 @@ import com.afa.devicer.core.services.converters.IOConverter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class InDtoOrderConverter implements IOConverter<DtoOrder, SEOrder> {
+public class InDtoOrdersConverter implements IOConverter<DtoOrder, SEOrder> {
 
     @Override
     public SEOrder convertTo(DtoOrder dtoOrder) {

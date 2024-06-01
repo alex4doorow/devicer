@@ -6,17 +6,23 @@ import com.afa.devicer.core.integration.Msg;
 import com.afa.devicer.core.integration.Payload;
 import com.afa.devicer.core.integration.Processor;
 import com.afa.devicer.core.model.types.ENFormat;
+import com.afa.devicer.core.rest.dto.DtoOrder;
 import com.afa.devicer.core.rest.dto.view.DtoOrdersByConditionsResponseModel;
 import com.afa.devicer.core.services.JsonMapper;
+import com.afa.devicer.core.services.converters.out.OutDtoOrdersConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class VOrdersByConditionsProcessor implements Processor {
 
   @Autowired
   private JsonMapper jsonMapper;
+  @Autowired
+  private OutDtoOrdersConverter outDtoOrdersConverter;
 
   @Override
   public void process(Payload payload) throws CoreException {
@@ -37,42 +43,10 @@ public class VOrdersByConditionsProcessor implements Processor {
 
 
   private DtoOrdersByConditionsResponseModel convertSEOrdersToResponseModel(Collection<SEOrder> seOrders) {
-    /*
-    List<Document> documents = new ArrayList<>();
-    for (SEDocument seDocument : seDocuments) {
-      documents.add(convertSEDocumentToDocument(seDocument));
-    }
-    VDocumentsResponseModel result = new VDocumentsResponseModel();
-    result.setDocuments(documents);
-    return result;
 
-    */
+    Collection<DtoOrder> dtoOrders = outDtoOrdersConverter.convertTo(seOrders);
     DtoOrdersByConditionsResponseModel result = new DtoOrdersByConditionsResponseModel();
-    result.setOrders(new ArrayList<>());
+    result.setOrders(dtoOrders);
     return result;
   }
-
-  /*
-
-  private Document convertSEDocumentToDocument(SEDocument seDocument) {
-    Document document = new Document();
-    document.setId(seDocument.getId());
-    document.setTrn(seDocument.getTrn());
-    document.setCorrelationId(seDocument.getCorrelationId());
-    document.setDocTypeId(seDocument.getDocumentType().getId());
-    document.setDocTypeCode(seDocument.getDocumentType().getCode());
-    document.setStepCode(seDocument.getDocStep());
-    document.setStep(monitoringMessageService.findDocStep(seDocument.getDocStep()));
-    document.setResultId(seDocument.getResult() == null ? null : seDocument.getResult().getId());
-    document.setResultCode(seDocument.getResult() == null ? null : seDocument.getResult().getCode());
-    document.setResultInfo(seDocument.getResultInfo());
-    document.setSenderUserId(seDocument.getSenderUser().getId());
-    document.setSenderUserCode(seDocument.getSenderUser().getCode());
-    document.setPreparationDate(seDocument.getPreparationDate());
-    document.setCrDt(seDocument.getCrDt());
-    document.setUpdDt(seDocument.getUpdDt());
-    return document;
-  }
-
-  */
 }
