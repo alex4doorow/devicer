@@ -1,8 +1,8 @@
 package com.afa.devicer.web.controllers;
 
 import com.afa.devicer.core.errors.CoreException;
-import com.afa.devicer.core.model.types.OrderAmountTypes;
-import com.afa.devicer.core.model.types.ReportPeriodTypes;
+import com.afa.devicer.core.model.types.ENOrderAmountTypes;
+import com.afa.devicer.core.model.types.ENReportPeriodTypes;
 import com.afa.devicer.core.rest.dto.DtoOrder;
 import com.afa.devicer.core.rest.dto.DtoOrderMessage;
 import com.afa.devicer.core.services.JsonMapper;
@@ -73,20 +73,20 @@ public class OrdersWebController extends BaseWebController {
         BigDecimal supplierAmount = BigDecimal.ZERO;
         BigDecimal marginWithoutAdvertAmount = BigDecimal.ZERO;
 
-        Map<OrderAmountTypes, BigDecimal> totalAmounts = new HashMap<>();
-        totalAmounts.put(OrderAmountTypes.BILL, billAmount);
-        totalAmounts.put(OrderAmountTypes.SUPPLIER, supplierAmount);
-        totalAmounts.put(OrderAmountTypes.ADVERT_BUDGET, BigDecimal.ZERO);
-        totalAmounts.put(OrderAmountTypes.MARGIN, marginWithoutAdvertAmount);
-        totalAmounts.put(OrderAmountTypes.POSTPAY, BigDecimal.ZERO);
-        totalAmounts.put(OrderAmountTypes.COUNT_REAL_ORDERS, BigDecimal.ZERO);
+        Map<ENOrderAmountTypes, BigDecimal> totalAmounts = new HashMap<>();
+        totalAmounts.put(ENOrderAmountTypes.BILL, billAmount);
+        totalAmounts.put(ENOrderAmountTypes.SUPPLIER, supplierAmount);
+        totalAmounts.put(ENOrderAmountTypes.ADVERT_BUDGET, BigDecimal.ZERO);
+        totalAmounts.put(ENOrderAmountTypes.MARGIN, marginWithoutAdvertAmount);
+        totalAmounts.put(ENOrderAmountTypes.POSTPAY, BigDecimal.ZERO);
+        totalAmounts.put(ENOrderAmountTypes.COUNT_REAL_ORDERS, BigDecimal.ZERO);
 
         List<DtoOrder> dtoOrders = new ArrayList<>();
 
         populateDefaultModel(model);
         model.addAttribute("orders", dtoOrders);
         model.addAttribute("totalAmounts", totalAmounts);
-        model.addAttribute("reportPeriodType", ReportPeriodTypes.CURRENT_MONTH);
+        model.addAttribute("reportPeriodType", ENReportPeriodTypes.CURRENT_MONTH);
         model.addAttribute("listType", "orders");
         return "orders/list";
     }

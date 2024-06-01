@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum OrderAmountTypes {
+public enum ENOrderAmountTypes {
 
     UNKNOWN(0, "не определена"),
     TOTAL_WITH_DELIVERY(1, "итоговая сумма к оплате клиенту (равна итоговой детализации + стоимости доставки)"),
@@ -41,59 +41,59 @@ public enum OrderAmountTypes {
     private int id;
     private String annotation;
 
-    public static OrderAmountTypes getValueById(int value) {
+    public static ENOrderAmountTypes getValueById(int value) {
         if (value == 1) {
-            return OrderAmountTypes.TOTAL_WITH_DELIVERY;
+            return ENOrderAmountTypes.TOTAL_WITH_DELIVERY;
         } else if (value == 2) {
-            return OrderAmountTypes.BILL;
+            return ENOrderAmountTypes.BILL;
         } else if (value == 3) {
-            return OrderAmountTypes.SUPPLIER;
+            return ENOrderAmountTypes.SUPPLIER;
         } else if (value == 4) {
-            return OrderAmountTypes.MARGIN;
+            return ENOrderAmountTypes.MARGIN;
         } else if (value == 5) {
-            return OrderAmountTypes.POSTPAY;
+            return ENOrderAmountTypes.POSTPAY;
         } else if (value == 6) {
-            return OrderAmountTypes.TOTAL;
+            return ENOrderAmountTypes.TOTAL;
         } else if (value == 7) {
-            return OrderAmountTypes.DELIVERY;
+            return ENOrderAmountTypes.DELIVERY;
         } else if (value == 8) {
-            return OrderAmountTypes.CASH_ON_DELIVERY;
+            return ENOrderAmountTypes.CASH_ON_DELIVERY;
         } else if (value == 101) {
-            return OrderAmountTypes.ADVERT_BUDGET;
+            return ENOrderAmountTypes.ADVERT_BUDGET;
         } else if (value == 132) {
-            return OrderAmountTypes.ADVERT_WEEK_BUDGET;
+            return ENOrderAmountTypes.ADVERT_WEEK_BUDGET;
         } else if (value == 102) {
-            return OrderAmountTypes.COUNT_VISITS;
+            return ENOrderAmountTypes.COUNT_VISITS;
         } else if (value == 107) {
-            return OrderAmountTypes.COUNT_UNIQUE_VISITORS;
+            return ENOrderAmountTypes.COUNT_UNIQUE_VISITORS;
         } else if (value == 111) {
-            return OrderAmountTypes.COUNT_NEW_VISITORS;
+            return ENOrderAmountTypes.COUNT_NEW_VISITORS;
         } else if (value == 106) {
-            return OrderAmountTypes.COUNT_REAL_ORDERS;
+            return ENOrderAmountTypes.COUNT_REAL_ORDERS;
         } else if (value == 127) {
-            return OrderAmountTypes.CONVERSION_APPROVED;
+            return ENOrderAmountTypes.CONVERSION_APPROVED;
         } else if (value == 128) {
-            return OrderAmountTypes.CONVERSION_BID;
+            return ENOrderAmountTypes.CONVERSION_BID;
         } else if (value == 108) {
-            return OrderAmountTypes.POSTPAY_SDEK;
+            return ENOrderAmountTypes.POSTPAY_SDEK;
         } else if (value == 109) {
-            return OrderAmountTypes.POSTPAY_POST;
+            return ENOrderAmountTypes.POSTPAY_POST;
         } else if (value == 110) {
-            return OrderAmountTypes.POSTPAY_COMPANY;
+            return ENOrderAmountTypes.POSTPAY_COMPANY;
         } else if (value == 131) {
-            return OrderAmountTypes.POSTPAY_YANDEX_MARKET;
+            return ENOrderAmountTypes.POSTPAY_YANDEX_MARKET;
         } else if (value == 112) {
-            return OrderAmountTypes.POSTPAY_OZON_MARKET;
+            return ENOrderAmountTypes.POSTPAY_OZON_MARKET;
         } else if (value == 113) {
-            return OrderAmountTypes.POSTPAY_OZON_ROCKET;
+            return ENOrderAmountTypes.POSTPAY_OZON_ROCKET;
         } else if (value == 114) {
-            return OrderAmountTypes.POSTPAY_YANDEX_GO;
+            return ENOrderAmountTypes.POSTPAY_YANDEX_GO;
         } else if (value == 121) {
-            return OrderAmountTypes.TOTAL_SUPPLIER;
+            return ENOrderAmountTypes.TOTAL_SUPPLIER;
         } else if (value == 122) {
-            return OrderAmountTypes.TOTAL_BILL;
+            return ENOrderAmountTypes.TOTAL_BILL;
         } else {
-            return OrderAmountTypes.UNKNOWN;
+            return ENOrderAmountTypes.UNKNOWN;
         }
     }
 }

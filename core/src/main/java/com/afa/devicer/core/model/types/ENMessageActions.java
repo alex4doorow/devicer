@@ -5,9 +5,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum MessageStatuses {
+public enum ENMessageActions {
     UNKNOWN,
-    CREATED,
-    SUSPEND,
-    PENDING;
+    CREATE,
+    UPDATE,
+    VALIDATE,
+    DELETE;
 }

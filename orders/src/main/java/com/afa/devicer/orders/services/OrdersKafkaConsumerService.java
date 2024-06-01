@@ -1,8 +1,7 @@
 package com.afa.devicer.orders.services;
 
 import com.afa.devicer.core.errors.CoreException;
-import com.afa.devicer.core.model.types.MessageActions;
-import com.afa.devicer.core.rest.dto.DtoOrderMessage;
+import com.afa.devicer.core.model.types.ENMessageActions;
 import com.afa.devicer.core.rest.dto.DtoResponseOrderMessage;
 import com.afa.devicer.core.services.JsonMapper;
 import com.afa.devicer.core.services.UserService;
@@ -36,7 +35,7 @@ public class OrdersKafkaConsumerService {
         try {
             DtoResponseOrderMessage dtoOrderMessage = jsonMapper.fromJSON(message, DtoResponseOrderMessage.class);
             dtoOrderMessage.setOffset(offset);
-            if (dtoOrderMessage.getRequest().getState().getAction() == MessageActions.CREATE) {
+            if (dtoOrderMessage.getRequest().getState().getAction() == ENMessageActions.CREATE) {
                 Long orderId = ordersService.add(dtoOrderMessage.getRequest(), userService.getCurrentUser());
                 dtoOrderMessage.getRequest().getOrder().setId(orderId);
                 log.info("dtoOrderMessage ORDER CREATE: {}", jsonMapper.toJSON(dtoOrderMessage, CoreException.THROWS));

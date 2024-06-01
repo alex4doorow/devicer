@@ -1,6 +1,6 @@
 package com.afa.devicer.web.controllers;
 
-import com.afa.devicer.core.model.types.OrderStatuses;
+import com.afa.devicer.core.model.types.ENOrderStatuses;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
@@ -23,8 +23,8 @@ public abstract class BaseWebController {
     protected MessageSource messageSource;
 
     protected void populateDefaultModel(Model model) {
-        List<String> allViewStatuses = Arrays.stream(OrderStatuses.values())
-                .map(OrderStatuses::getAnnotation)
+        List<String> allViewStatuses = Arrays.stream(ENOrderStatuses.values())
+                .map(ENOrderStatuses::getAnnotation)
                 .collect(Collectors.toList());
         model.addAttribute("allViewStatuses", allViewStatuses);
         model.addAttribute("environment", environment);

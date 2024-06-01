@@ -4,7 +4,7 @@ import com.afa.devicer.core.bl.entities.SEOrder;
 import com.afa.devicer.core.bl.entities.SEUser;
 import com.afa.devicer.core.bl.repositories.OrderRepository;
 import com.afa.devicer.core.errors.CoreException;
-import com.afa.devicer.core.model.types.MessageStatuses;
+import com.afa.devicer.core.model.types.ENMessageStatuses;
 import com.afa.devicer.core.rest.dto.DtoOrderMessage;
 import com.afa.devicer.core.services.JsonMapper;
 import com.afa.devicer.core.services.converters.in.InDtoOrderConverter;
@@ -45,7 +45,7 @@ public class OrdersService {
         try {
             SEOrder resultOrder = orderRepository.save(order);
             dtoOrderMessage.getOrder().setId(resultOrder.getId());
-            dtoOrderMessage.getState().setStatus(MessageStatuses.CREATED);
+            dtoOrderMessage.getState().setStatus(ENMessageStatuses.CREATED);
 
             jsonMapper.toJSON(dtoOrderMessage, CoreException.THROWS);
 

@@ -20,7 +20,7 @@ select * from oc_order_status where language_id = 2
 */
 @Getter
 @AllArgsConstructor
-public enum OrderStatuses {
+public enum ENOrderStatuses {
 	
 	UNKNOWN(0, "неопределен", ""), 	
 	BID(1, "заявка", "info"), // margin = 0, postpay = 0	
@@ -44,90 +44,90 @@ public enum OrderStatuses {
 	private String annotation;
 	private String view;
 
-	public static OrderStatuses getValueById(long value) {
+	public static ENOrderStatuses getValueById(long value) {
 	
 		if (value == 1) {
-			return OrderStatuses.BID;
+			return ENOrderStatuses.BID;
 		} else if (value == 2) {
-			return OrderStatuses.APPROVED;
+			return ENOrderStatuses.APPROVED;
 		} else if (value == 3) {
-			return OrderStatuses.PAY_WAITING;
+			return ENOrderStatuses.PAY_WAITING;
 		} else if (value == 4) {
-			return OrderStatuses.PAY_ON;
+			return ENOrderStatuses.PAY_ON;
 		} else if (value == 5) {
-			return OrderStatuses.DELIVERING;
+			return ENOrderStatuses.DELIVERING;
 		} else if (value == 7) {
-			return OrderStatuses.READY_GIVE_AWAY;
+			return ENOrderStatuses.READY_GIVE_AWAY;
 		} else if (value == 12) {
-			return OrderStatuses.READY_GIVE_AWAY_TROUBLE;
+			return ENOrderStatuses.READY_GIVE_AWAY_TROUBLE;
 		} else if (value == 8) {
-			return OrderStatuses.FINISHED;
+			return ENOrderStatuses.FINISHED;
 		} else if (value == 9) {
-			return OrderStatuses.REDELIVERY;
+			return ENOrderStatuses.REDELIVERY;
 		} else if (value == 10) {
-			return OrderStatuses.DELIVERED;
+			return ENOrderStatuses.DELIVERED;
 		} else if (value == 11) {
-			return OrderStatuses.DOC_NOT_EXIST;
+			return ENOrderStatuses.DOC_NOT_EXIST;
 		} else if (value == 13) {
-			return OrderStatuses.CANCELED;
+			return ENOrderStatuses.CANCELED;
 		} else if (value == 15) {
-			return OrderStatuses.REDELIVERY_FINISHED;
+			return ENOrderStatuses.REDELIVERY_FINISHED;
 		} else if (value == 16) {
-			return OrderStatuses.LOST;
+			return ENOrderStatuses.LOST;
 		} /*else if (value == 21) {
 			return OrderStatuses.PROCESSING;
 		} else if (value == 22) {
 			return OrderStatuses.UNPAID;
 		} */else {
-			return OrderStatuses.UNKNOWN;
+			return ENOrderStatuses.UNKNOWN;
 		}		
 	}
 	
-	public static OrderStatuses getValueByAnnotation(String value) {
-		if (value.equals(OrderStatuses.BID.getAnnotation())) {
-			return OrderStatuses.BID;
+	public static ENOrderStatuses getValueByAnnotation(String value) {
+		if (value.equals(ENOrderStatuses.BID.getAnnotation())) {
+			return ENOrderStatuses.BID;
 		} /*else if (value.equals(OrderStatuses.PROCESSING.getAnnotation())) {
 			return OrderStatuses.PROCESSING;
 		} else if (value.equals(OrderStatuses.UNPAID.getAnnotation())) {
 			return OrderStatuses.UNPAID;
-		} */else if (value.equals(OrderStatuses.APPROVED.getAnnotation())) {
-			return OrderStatuses.APPROVED;
-		} else if (value.equals(OrderStatuses.PAY_WAITING.getAnnotation())) {
-			return OrderStatuses.PAY_WAITING;
-		} else if (value.equals(OrderStatuses.PAY_ON.getAnnotation())) {
-			return OrderStatuses.PAY_ON;
-		} else if (value.equals(OrderStatuses.DELIVERING.getAnnotation())) {
-			return OrderStatuses.DELIVERING;
-		} else if (value.equals(OrderStatuses.READY_GIVE_AWAY.getAnnotation())) {
-			return OrderStatuses.READY_GIVE_AWAY;
-		} else if (value.equals(OrderStatuses.READY_GIVE_AWAY_TROUBLE.getAnnotation())) {
-			return OrderStatuses.READY_GIVE_AWAY_TROUBLE;
-		} else if (value.equals(OrderStatuses.DELIVERED.getAnnotation())) {
-			return OrderStatuses.DELIVERED;
-		} else if (value.equals(OrderStatuses.FINISHED.getAnnotation())) {
-			return OrderStatuses.FINISHED;
-		} else if (value.equals(OrderStatuses.DOC_NOT_EXIST.getAnnotation())) {
-			return OrderStatuses.DOC_NOT_EXIST;
-		} else if (value.equals(OrderStatuses.REDELIVERY.getAnnotation())) {
-			return OrderStatuses.REDELIVERY;
-		} else if (value.equals(OrderStatuses.CANCELED.getAnnotation())) {
-			return OrderStatuses.CANCELED;
-		} else if (value.equals(OrderStatuses.REDELIVERY_FINISHED.getAnnotation())) {
-			return OrderStatuses.REDELIVERY_FINISHED;
-		} else if (value.equals(OrderStatuses.LOST.getAnnotation())) {
-			return OrderStatuses.LOST;
+		} */else if (value.equals(ENOrderStatuses.APPROVED.getAnnotation())) {
+			return ENOrderStatuses.APPROVED;
+		} else if (value.equals(ENOrderStatuses.PAY_WAITING.getAnnotation())) {
+			return ENOrderStatuses.PAY_WAITING;
+		} else if (value.equals(ENOrderStatuses.PAY_ON.getAnnotation())) {
+			return ENOrderStatuses.PAY_ON;
+		} else if (value.equals(ENOrderStatuses.DELIVERING.getAnnotation())) {
+			return ENOrderStatuses.DELIVERING;
+		} else if (value.equals(ENOrderStatuses.READY_GIVE_AWAY.getAnnotation())) {
+			return ENOrderStatuses.READY_GIVE_AWAY;
+		} else if (value.equals(ENOrderStatuses.READY_GIVE_AWAY_TROUBLE.getAnnotation())) {
+			return ENOrderStatuses.READY_GIVE_AWAY_TROUBLE;
+		} else if (value.equals(ENOrderStatuses.DELIVERED.getAnnotation())) {
+			return ENOrderStatuses.DELIVERED;
+		} else if (value.equals(ENOrderStatuses.FINISHED.getAnnotation())) {
+			return ENOrderStatuses.FINISHED;
+		} else if (value.equals(ENOrderStatuses.DOC_NOT_EXIST.getAnnotation())) {
+			return ENOrderStatuses.DOC_NOT_EXIST;
+		} else if (value.equals(ENOrderStatuses.REDELIVERY.getAnnotation())) {
+			return ENOrderStatuses.REDELIVERY;
+		} else if (value.equals(ENOrderStatuses.CANCELED.getAnnotation())) {
+			return ENOrderStatuses.CANCELED;
+		} else if (value.equals(ENOrderStatuses.REDELIVERY_FINISHED.getAnnotation())) {
+			return ENOrderStatuses.REDELIVERY_FINISHED;
+		} else if (value.equals(ENOrderStatuses.LOST.getAnnotation())) {
+			return ENOrderStatuses.LOST;
 		} else {
-			return OrderStatuses.UNKNOWN;
+			return ENOrderStatuses.UNKNOWN;
 		}		
 	}
 	
-	public static String convertValuesToSplitedString(OrderStatuses... values) {		
+	public static String convertValuesToSplitedString(ENOrderStatuses... values) {
 		
 		if (values == null || values.length == 0) {
 			return "";
 		}
 		String result = "";
-		for (OrderStatuses value : values) {
+		for (ENOrderStatuses value : values) {
 			result += String.valueOf(value.getId()) + ",";			
 		}
 		result = result.substring(0, result.length() - 1).trim();
