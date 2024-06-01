@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row">
             <label class="col-sm-2"></label>
-            <div class="col-sm-5" th:utext="#{app.footer.copyright('https://pribormaster.ru/', 'devicer.web', ${@environment.getProperty('application.name')}, ${@environment.getProperty('application.version')})}">
+            <div class="col-sm-5" th:utext="#{app.footer.copyright(${brandSite}, ${@environment.getProperty('application.name')}, ${@environment.getProperty('application.version')}, ${@environment.getProperty('java.version')})}">
             </div>
         </div>
     </div>

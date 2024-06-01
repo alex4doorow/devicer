@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/dispatcher/v1")
+@RequestMapping("/rest/v1")
 @RestController
 @Slf4j
 public class DispatcherRestController extends BaseRestController implements OrdersRestApi {

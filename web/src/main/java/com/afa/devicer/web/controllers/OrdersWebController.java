@@ -10,13 +10,10 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.core.env.Environment;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
@@ -29,12 +26,10 @@ import java.util.*;
 @Controller
 @RequestMapping("/web/v1/orders")
 @Slf4j
-public class OrdersWebController extends BaseController {
+public class OrdersWebController extends BaseWebController {
 
     @Autowired
     private JsonMapper jsonMapper;
-    @Autowired
-    private Environment environment;
     private String serviceDispatcherUrl;
 
     private WebClient webClient;
@@ -46,8 +41,9 @@ public class OrdersWebController extends BaseController {
         final ExchangeStrategies strategies = ExchangeStrategies.builder()
                 .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(size))
                 .build();
+        serviceDispatcherUrl = environment.getProperty("url.service.dispatcher");
         webClient = WebClient.builder()
-                .baseUrl("http://localhost:9192")
+                .baseUrl(serviceDispatcherUrl)
                 .exchangeStrategies(strategies)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
@@ -57,7 +53,7 @@ public class OrdersWebController extends BaseController {
                 //.defaultHeader(HttpHeaders.CONNECTION, "keep-alive")
                 //.defaultHeader(HttpHeaders.USER_AGENT, "PostmanRuntime/7.29.2")
                 .build();
-        serviceDispatcherUrl = environment.getProperty("url.service.dispatcher");
+
     }
 
     @GetMapping("/")
@@ -133,7 +129,7 @@ public class OrdersWebController extends BaseController {
             DtoOrderMessage request = DtoOrderMessage.builder().order(dtoOrder).build();
             /*
             DtoOrderMessage responseOrderMessage = webClient.post()
-                    .uri(new URI(serviceDispatcherUrl + "/v1/orders/add"))
+                    .uri(new URI(serviceDispatcherUrl + "/rest/v1/orders/add"))
                     //.header(HttpHeaders.AUTHORIZATION, access.getSecret())
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)

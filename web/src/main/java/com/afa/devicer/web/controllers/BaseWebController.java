@@ -4,6 +4,7 @@ import com.afa.devicer.core.model.types.OrderStatuses;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -14,12 +15,12 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Getter
-public abstract class BaseController {
+public abstract class BaseWebController {
 
     @Autowired
-    private Environment environment;
+    protected Environment environment;
     @Autowired
-    private MessageSource messageSource;
+    protected MessageSource messageSource;
 
     protected void populateDefaultModel(Model model) {
         List<String> allViewStatuses = Arrays.stream(OrderStatuses.values())
@@ -27,6 +28,10 @@ public abstract class BaseController {
                 .collect(Collectors.toList());
         model.addAttribute("allViewStatuses", allViewStatuses);
         model.addAttribute("environment", environment);
+
+        String brandSite = getMessageSource().getMessage("app.brand.site", null, LocaleContextHolder.getLocale());
+        model.addAttribute("brandSite", brandSite);
+
 
 /*
         model.addAttribute("productCategories", wikiProductService.getCategories());
