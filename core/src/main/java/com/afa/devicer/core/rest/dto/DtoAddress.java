@@ -3,11 +3,15 @@ package com.afa.devicer.core.rest.dto;
 import com.afa.devicer.core.model.types.ENAddressTypes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class DtoAddress {
     private Long id;
     private ENAddressTypes type;

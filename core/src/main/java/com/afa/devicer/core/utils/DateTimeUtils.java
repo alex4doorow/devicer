@@ -2,6 +2,8 @@ package com.afa.devicer.core.utils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 public class DateTimeUtils {
@@ -29,4 +31,11 @@ public class DateTimeUtils {
         return localDate.format(DateTimeFormatter.ofPattern(dateFormatString));
     }
 
+    public static OffsetDateTime toOffsetDateTime(LocalDateTime localDateTime) {
+        if (localDateTime == null) {
+            return null;
+        }
+        ZoneId zoneId = ZoneId.systemDefault();
+        return localDateTime.atZone(zoneId).toOffsetDateTime();
+    }
 }

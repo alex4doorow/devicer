@@ -4,10 +4,14 @@ import com.afa.devicer.core.model.types.ENCustomerTypes;
 import com.afa.devicer.core.utils.helpers.CustomerHelper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class DtoCustomer {
 

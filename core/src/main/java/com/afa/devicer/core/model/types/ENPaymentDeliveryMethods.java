@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum PaymentDeliveryMethods {
+public enum ENPaymentDeliveryMethods {
 	
 	/*
 	условия jan (на сдэк)
@@ -31,15 +31,15 @@ public enum PaymentDeliveryMethods {
 	private int id;	
 	private String annotation;
 
-	public static PaymentDeliveryMethods getValueById(int value) {
+	public static ENPaymentDeliveryMethods getValueById(int value) {
 		if (value == 101) {
-			return PaymentDeliveryMethods.FULL;
+			return ENPaymentDeliveryMethods.FULL;
 		} else if (value == 102) { 
-			return PaymentDeliveryMethods.CURRENT;
+			return ENPaymentDeliveryMethods.CURRENT;
 		} else if (value == 103) { 
-			return PaymentDeliveryMethods.PVZ_FREE;
+			return ENPaymentDeliveryMethods.PVZ_FREE;
 		} else {
-			return PaymentDeliveryMethods.NONE;
+			return ENPaymentDeliveryMethods.NONE;
 		}
 	}
 }

@@ -49,7 +49,7 @@ public class OrdersWebController extends BaseWebController {
         final ExchangeStrategies strategies = ExchangeStrategies.builder()
                 .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(size))
                 .build();
-        serviceDispatcherUrl = environment.getProperty("url.service.dispatcher");
+        serviceDispatcherUrl = environment.getProperty("url.service.dispatcher") + "/rest/v1/";
         webClient = WebClient.builder()
                 .baseUrl(serviceDispatcherUrl)
                 .exchangeStrategies(strategies)
@@ -85,10 +85,10 @@ public class OrdersWebController extends BaseWebController {
                 orderConditions.getPeriod());
 
  */
-        DtoOrdersByConditionsResponseModel responseModel = null;
+        DtoOrdersByConditionsResponseModel responseModel;
         try {
             responseModel = webClient.post()
-                    .uri(new URI(serviceDispatcherUrl + "/rest/v1/orders/by-conditions"))
+                    .uri(new URI(serviceDispatcherUrl + "orders/by-conditions"))
                     .header(Defaults.X_Request_ID, UUID.randomUUID().toString())
                     .header(Defaults.X_Client_ID, "user")
                     .header(Defaults.X_Token, "token")
@@ -99,8 +99,10 @@ public class OrdersWebController extends BaseWebController {
             log.debug("result: {}", responseModel);
         } catch (Exception e) {
             log.error("result:", e);
+            responseModel = DtoOrdersByConditionsResponseModel.builder()
+                    .orders(new ArrayList<>())
+                    .build();
         }
-
         BigDecimal billAmount = BigDecimal.ZERO;
         BigDecimal supplierAmount = BigDecimal.ZERO;
         BigDecimal marginWithoutAdvertAmount = BigDecimal.ZERO;
@@ -113,13 +115,26 @@ public class OrdersWebController extends BaseWebController {
         totalAmounts.put(ENOrderAmountTypes.POSTPAY, BigDecimal.ZERO);
         totalAmounts.put(ENOrderAmountTypes.COUNT_REAL_ORDERS, BigDecimal.ZERO);
 
-        Collection<DtoOrder> dtoOrders = responseModel.getOrders();
-        //List<DtoOrder> dtoOrders = new ArrayList<>();
+        totalAmounts.put(ENOrderAmountTypes.POSTPAY_COMPANY, BigDecimal.ZERO);
+        totalAmounts.put(ENOrderAmountTypes.POSTPAY_CDEK, BigDecimal.ZERO);
+        totalAmounts.put(ENOrderAmountTypes.POSTPAY_POST, BigDecimal.ZERO);
+        totalAmounts.put(ENOrderAmountTypes.POSTPAY_OZON_MARKET, BigDecimal.ZERO);
+        totalAmounts.put(ENOrderAmountTypes.POSTPAY_YANDEX_MARKET, BigDecimal.ZERO);
+        totalAmounts.put(ENOrderAmountTypes.POSTPAY_YANDEX_GO, BigDecimal.ZERO);
 
+        assert responseModel != null;
+        Collection<DtoOrder> dtoOrders = responseModel.getOrders();
 
         populateDefaultModel(model);
         model.addAttribute("orders", dtoOrders);
         model.addAttribute("totalAmounts", totalAmounts);
+        model.addAttribute("totalAmountPostpayCompany", totalAmounts.get(ENOrderAmountTypes.POSTPAY_COMPANY));
+        model.addAttribute("totalAmountPostpayCdek", totalAmounts.get(ENOrderAmountTypes.POSTPAY_CDEK));
+        model.addAttribute("totalAmountPostpayPost", totalAmounts.get(ENOrderAmountTypes.POSTPAY_POST));
+        model.addAttribute("totalAmountPostpayOzonMarket", totalAmounts.get(ENOrderAmountTypes.POSTPAY_OZON_MARKET));
+        model.addAttribute("totalAmountPostpayYandexMarket", totalAmounts.get(ENOrderAmountTypes.POSTPAY_YANDEX_MARKET));
+        model.addAttribute("totalAmountPostpayYandexGo", totalAmounts.get(ENOrderAmountTypes.POSTPAY_YANDEX_GO));
+
         model.addAttribute("reportPeriodType", ENReportPeriodTypes.CURRENT_MONTH);
         model.addAttribute("listType", "orders");
         return "orders/list";
@@ -163,7 +178,7 @@ public class OrdersWebController extends BaseWebController {
             DtoOrderMessage request = DtoOrderMessage.builder().order(dtoOrder).build();
             /*
             DtoOrderMessage responseOrderMessage = webClient.post()
-                    .uri(new URI(serviceDispatcherUrl + "/rest/v1/orders/add"))
+                    .uri(new URI(serviceDispatcherUrl + "orders/add"))
                     //.header(HttpHeaders.AUTHORIZATION, access.getSecret())
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(request)

@@ -4,7 +4,6 @@ import com.afa.devicer.core.model.types.ENOrderStatuses;
 import com.afa.devicer.core.model.types.ENOrderTypes;
 import com.afa.devicer.core.model.types.ENPaymentTypes;
 
-
 public class OrderHelper {
 
     public static boolean isBillAmount(ENOrderTypes orderType,

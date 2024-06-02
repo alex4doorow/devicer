@@ -25,7 +25,7 @@ public enum ENOrderAmountTypes {
     COUNT_REAL_ORDERS(106, "число реальных заказов за период"),
     CONVERSION_APPROVED(127, "конверсия (заказы/сеансы)"),
     CONVERSION_BID(128, "конверсия (заявки/сеансы)"),
-    POSTPAY_SDEK(108, "стоимость постоплаты СДЭК"),
+    POSTPAY_CDEK(108, "стоимость постоплаты СДЭК"),
     POSTPAY_POST(109, "стоимость постоплаты почта"),
     POSTPAY_COMPANY(110, "стоимость постоплаты организаций"),
     POSTPAY_YANDEX_MARKET(131, "стоимость постоплаты \"Яндекс.Маркет\""),
@@ -75,7 +75,7 @@ public enum ENOrderAmountTypes {
         } else if (value == 128) {
             return ENOrderAmountTypes.CONVERSION_BID;
         } else if (value == 108) {
-            return ENOrderAmountTypes.POSTPAY_SDEK;
+            return ENOrderAmountTypes.POSTPAY_CDEK;
         } else if (value == 109) {
             return ENOrderAmountTypes.POSTPAY_POST;
         } else if (value == 110) {

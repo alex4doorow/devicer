@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum PaymentDeliveryTypes {
+public enum ENPaymentDeliveryTypes {
 		
 	CUSTOMER(1, "покупатель"),
 	SELLER(2, "продавец");
@@ -13,13 +13,13 @@ public enum PaymentDeliveryTypes {
 	private final int id;
 	private final String annotation;
 
-	public static PaymentDeliveryTypes getValueById(int value) {
+	public static ENPaymentDeliveryTypes getValueById(int value) {
 		if (value == 1) {
-			return PaymentDeliveryTypes.CUSTOMER;
+			return ENPaymentDeliveryTypes.CUSTOMER;
 		} else if (value == 2) { 
-			return PaymentDeliveryTypes.SELLER;
+			return ENPaymentDeliveryTypes.SELLER;
 		} else {
-			return PaymentDeliveryTypes.CUSTOMER;
+			return ENPaymentDeliveryTypes.CUSTOMER;
 		}
 	}
 }

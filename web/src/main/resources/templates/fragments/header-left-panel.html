@@ -5,14 +5,14 @@
               <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                   <li class="nav-item">
-                    <a id="nav-link-home" class="nav-menus-item nav-link active" th:href="@{/web/v1/}">
+                    <a id="nav-link-home" class="nav-menus-item nav-link active" th:href="@{(${urlHome})}">
                       <i class="bi bi-house-door text-dark"></i>
                       <span th:text="#{main.menus.left.home}"></span>
                       <span class="sr-only"></span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a id="nav-link-orders" class="nav-menus-item nav-link" th:href="@{/web/v1/orders/}">
+                    <a id="nav-link-orders" class="nav-menus-item nav-link" th:href="@{(${urlOrders})}">
                       <i class="bi bi-files text-dark"></i>
                       <span th:text="#{main.menus.left.orders}"></span>
                     </a>

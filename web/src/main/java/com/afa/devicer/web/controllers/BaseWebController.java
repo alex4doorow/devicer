@@ -31,6 +31,8 @@ public abstract class BaseWebController {
 
         String brandSite = getMessageSource().getMessage("app.brand.site", null, LocaleContextHolder.getLocale());
         model.addAttribute("brandSite", brandSite);
+        model.addAttribute("urlHome", "/web/");
+        model.addAttribute("urlOrders", "/web/v1/orders/");
 
 
 /*

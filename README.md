@@ -29,11 +29,22 @@ kafka
 rest swagger
 
 TODO
-web thymeleaf orders -> list -> add -> show -> list
+web thymeleaf 
+
+    orders -> list -> add -> show -> list
+    com.afa.devicer.web.model.dto
+        DtoOrder -> WebOrder
+
 spring security
+
 grpc
+
 websockets
+
 ehcache
+
 secrets
-promethium graham 
+
+promethium graham
+
 

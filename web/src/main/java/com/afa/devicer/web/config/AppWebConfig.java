@@ -23,7 +23,7 @@ public class AppWebConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/welcome").setViewName("welcome");
+        registry.addViewController("/index").setViewName("index");
     }
 
     @Bean

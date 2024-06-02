@@ -1,20 +1,19 @@
 package com.afa.devicer.core.rest.dto;
 
-import com.afa.devicer.core.model.types.DeliveryPrices;
-import com.afa.devicer.core.model.types.DeliveryTypes;
-import com.afa.devicer.core.model.types.PaymentDeliveryTypes;
+import com.afa.devicer.core.model.types.ENDeliveryPrices;
+import com.afa.devicer.core.model.types.ENDeliveryTypes;
+import com.afa.devicer.core.model.types.ENPaymentDeliveryTypes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
+@Builder
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
 public class DtoOrderDelivery {
 
     @JsonIgnore
@@ -25,11 +24,11 @@ public class DtoOrderDelivery {
     private BigDecimal factCustomerPrice;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private BigDecimal factSellerPrice;
-    private DeliveryTypes type;
+    private ENDeliveryTypes type;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private DeliveryPrices deliveryPrice;
-    private PaymentDeliveryTypes paymentDeliveryType;
-    private DtoAddress address = new DtoAddress();
+    private ENDeliveryPrices deliveryPrice;
+    private ENPaymentDeliveryTypes paymentDeliveryType;
+    private DtoAddress address;
     private String trackCode;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String annotation;
