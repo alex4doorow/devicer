@@ -1,14 +1,30 @@
 # devicer
 
-пример микросервисной архитектуры. 
+пример микросервисной архитектуры.
+взят проект pribormaster (монолит) и распилен на несколько сервисов
+https://github.com/alex4doorow/pribormaster
 
-start 15/05/2024 
+core - библиотека моделей, утилит, сервисов
 
-spring boot 3.2.5 java 17 
+dispatcher - оркестратор взаимодействия между модулями
 
-postgres jpa liquibase 
+orders - создание, вычитка ордеров
 
-kafka 
+stokers - создание, вичитка товаров, их учет
+
+web - интерфейс для администратора системы
+
+updater - обновление бд
+
+база у всех сервисов общая
+
+start 15/05/2024
+
+spring boot 3.2.5 java 17
+
+postgres jpa liquibase
+
+kafka
 
 rest swagger
 
@@ -20,3 +36,4 @@ websockets
 ehcache
 secrets
 promethium graham 
+
