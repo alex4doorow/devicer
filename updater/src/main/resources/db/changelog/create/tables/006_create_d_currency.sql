@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset Aleksey Fedorov:1000000000056-1 splitStatements:false
+--changeset Aleksey Fedorov:1000000000006-1 splitStatements:false
 CREATE TABLE IF NOT EXISTS D_CURRENCY (
   ID BIGINT PRIMARY KEY NOT NULL,
   CODE VARCHAR(16) NOT NULL,

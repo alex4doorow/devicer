@@ -9,8 +9,26 @@
     <include file="db/changelog/create/sequences/001_create_d_sequence.sql" relativeToChangelogFile="false"/>
 
     <include file="db/changelog/create/tables/002_create_d_sys_user.sql" relativeToChangelogFile="false"/>
-    <include file="db/changelog/create/tables/021_create_bp_order.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/006_create_d_contact_type.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/009_create_d_order_type.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/016_create_d_customer_type.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/017_create_d_address_type.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/018_create_d_country.sql" relativeToChangelogFile="false"/>
 
-<!--    <include file="db/changelog/data/001_insert_d_currencies.sql" relativeToChangelogFile="false"/>-->
+    <include file="db/changelog/create/tables/020_create_bp_person.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/021_create_bp_address.sql" relativeToChangelogFile="false"/>
+
+    <include file="db/changelog/create/tables/022_create_bp_customer.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/023_create_bp_customer_address.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/024_create_bp_customer_company.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/025_create_bp_customer_contact.sql" relativeToChangelogFile="false"/>
+
+    <include file="db/changelog/create/tables/041_create_bp_order.sql" relativeToChangelogFile="false"/>
+
     <include file="db/changelog/data/002_insert_d_sys_user.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/data/006_insert_d_contact_type.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/data/009_insert_d_order_type.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/data/016_insert_d_customer_type.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/data/017_insert_d_address_type.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/data/018_insert_d_country.sql" relativeToChangelogFile="false"/>
 </databaseChangeLog>

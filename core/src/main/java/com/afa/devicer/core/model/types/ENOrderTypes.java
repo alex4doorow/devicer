@@ -5,48 +5,34 @@ import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
 @AllArgsConstructor
 public enum ENOrderTypes {
 		
-	UNKNOWN(0, "неопределен"), 	
-	ORDER(1, "заказ"),
-	BILL(2, "счет на оплату"),
-	KP(3, "коммерческое предложение"),
-	CONSULTATION(4, "консультация"),	
-	CHANGE(11, "замена"),
-	REFUND(12, "возврат"),
-	GIFT(13, "подарок"),
-	TEST_DIVE(14, "тест-драйв"),
-	REPAIR(15, "ремонт");
+	UNKNOWN(0L, "неопределен"),
+	ORDER(1L, "заказ"),
+	BILL(2L, "счет на оплату"),
+	KP(3L, "коммерческое предложение"),
+	CONSULTATION(4L, "консультация"),
+	CHANGE(11L, "замена"),
+	REFUND(12L, "возврат"),
+	GIFT(13L, "подарок"),
+	TEST_DIVE(14L, "тест-драйв"),
+	REPAIR(15L, "ремонт");
 
-	private int id;
-	private String annotation;
+	private final Long id;
+	private final String annotation;
 
 	public static ENOrderTypes getValueById(Long value) {
-		if (value == 1) {
-			return ENOrderTypes.ORDER;
-		} else if (value == 2) {
-			return ENOrderTypes.BILL;
-		} else if (value == 3) {
-			return ENOrderTypes.KP;
-		} else if (value == 4) {
-			return ENOrderTypes.CONSULTATION;
-		} else if (value == 11) {
-			return ENOrderTypes.CHANGE;
-		} else if (value == 12) {
-			return ENOrderTypes.REFUND;
-		} else if (value == 13) {
-			return ENOrderTypes.GIFT;
-		} else if (value == 14) {
-			return ENOrderTypes.TEST_DIVE;
-		} else if (value == 15) {
-			return ENOrderTypes.REPAIR;
-		} else  {
-			return ENOrderTypes.UNKNOWN;
+		for (ENOrderTypes type : values()) {
+			if (Objects.equals(value, type.getId())) {
+				return type;
+			}
 		}
+		return null;
 	}
 	
 	/**
@@ -75,14 +61,14 @@ public enum ENOrderTypes {
 		final String spliter = ",";
 		String result = "";
 		for (ENOrderTypes status : statuses) {
-			result += String.valueOf(status.getId()) + spliter;			
+			result += String.valueOf(status.getId()) + spliter;
 		}		
 		result = result.trim();
 		String spliter1 = result.substring(result.length() - 1, result.length()).trim();
 		if (spliter1.equals(spliter)) {
 			result = result.substring(0,  result.length() - 1);
 		}		
-		return result.trim();		
+		return result.trim();
 	}
 	
 	public static ENOrderTypes getValueByAnnotation(String value) {

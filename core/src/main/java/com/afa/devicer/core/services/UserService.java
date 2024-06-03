@@ -1,7 +1,7 @@
 package com.afa.devicer.core.services;
 
-import com.afa.devicer.core.bl.entities.SEUser;
-import com.afa.devicer.core.bl.repositories.UserRepository;
+import com.afa.devicer.core.bl.entities.sys.SEUser;
+import com.afa.devicer.core.bl.repositories.sys.UserRepository;
 import com.afa.devicer.core.errors.CoreException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

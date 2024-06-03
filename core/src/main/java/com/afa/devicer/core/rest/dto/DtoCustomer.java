@@ -80,10 +80,10 @@ public class DtoCustomer {
         if (type.isPerson()) {
             return person.getPhoneNumber();
         } else if (type.isCompany()) {
-            if (!company.getContacts().isEmpty()) {
-                return company.getContacts().get(0).getPhoneNumber();
-            } else {
+            if (company.getContacts() == null || company.getContacts().isEmpty()) {
                 return "(000) 000-00-00";
+            } else {
+                return company.getContacts().get(0).getPhoneNumber();
             }
         } else {
             return "(000) 000-00-00";
@@ -95,10 +95,10 @@ public class DtoCustomer {
         if (type.isPerson()) {
             return person.getEmail();
         } else if (type.isCompany()) {
-            if (!company.getContacts().isEmpty()) {
-                return company.getContacts().get(0).getEmail();
-            } else {
+            if (company.getContacts() == null || company.getContacts().isEmpty()) {
                 return "unknown@gmail.com";
+            } else {
+                return company.getContacts().get(0).getEmail();
             }
         } else {
             return "unknown@gmail.com";

@@ -1,7 +1,7 @@
 package com.afa.devicer.orders.services;
 
 import com.afa.devicer.core.bl.entities.SEOrder;
-import com.afa.devicer.core.bl.entities.SEUser;
+import com.afa.devicer.core.bl.entities.sys.SEUser;
 import com.afa.devicer.core.bl.repositories.OrderRepository;
 import com.afa.devicer.core.errors.CoreException;
 import com.afa.devicer.core.model.types.ENMessageStatuses;

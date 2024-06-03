@@ -1,5 +1,6 @@
-package com.afa.devicer.core.bl.entities;
+package com.afa.devicer.core.bl.entities.sys;
 
+import com.afa.devicer.core.bl.entities.BaseEntity;
 import com.afa.devicer.core.utils.DateTimeUtils;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;

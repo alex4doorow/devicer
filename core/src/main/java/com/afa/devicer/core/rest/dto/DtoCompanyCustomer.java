@@ -2,14 +2,14 @@ package com.afa.devicer.core.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
 @Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class DtoCompanyCustomer {
@@ -32,7 +32,7 @@ public class DtoCompanyCustomer {
 
     @JsonIgnore
     public DtoPerson getMainContact() {
-        if (contacts.size() == 0) {
+        if (contacts == null || contacts.isEmpty()) {
             return DtoPerson.createEmpty();
         } else {
             return contacts.get(0);

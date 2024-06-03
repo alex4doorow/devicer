@@ -1,50 +1,36 @@
-package com.afa.devicer.core.bl.entities;
+package com.afa.devicer.core.bl.entities.dictionaries;
 
-import com.afa.devicer.core.bl.entities.dictionaries.SEOrderType;
+import com.afa.devicer.core.bl.entities.BaseEntity;
 import com.afa.devicer.core.bl.entities.sys.SEUser;
 import com.afa.devicer.core.utils.DateTimeUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@NoArgsConstructor
-@Table(name = "BP_ORDER")
+@Table(name = "D_ORDER_TYPE")
 @Setter
 @Getter
-@EqualsAndHashCode(of ="id")
-@ToString
-public class SEOrder implements BaseEntity<Long>, Serializable {
+@NoArgsConstructor
+public class SEOrderType implements BaseEntity<Long>, Serializable {
 
     @Serial
-    private static final long serialVersionUID = 4719683008350692198L;
+    private static final long serialVersionUID = 5548233397732313424L;
 
     @Id
-    @SequenceGenerator(name = "D_SEQUENCE", sequenceName = "D_SEQUENCE", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "D_SEQUENCE")
     @Column(name = "ID", updatable = false)
     private Long id;
 
-    @Column(name = "ORDER_NUM", nullable = false)
-    private Long orderNum;
-
-    @Column(name = "ORDER_DATE", nullable = false)
-    private LocalDate orderDate;
-
-    @ManyToOne
-    @JoinColumn(name = "ORDER_TYPE_ID", referencedColumnName = "ID")
-    private SEOrderType type;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "ID")
-    private SECustomer customer;
+    @Column(name = "ANNOTATION")
+    private String annotation;
 
     @Column(name = "REC_STATUS", nullable = false)
     private Character recStatus;
@@ -64,5 +50,4 @@ public class SEOrder implements BaseEntity<Long>, Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATE_FMT_ISO8601)
     private LocalDateTime dateModified;
-
 }

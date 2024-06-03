@@ -9,7 +9,6 @@ public class Msg<T> extends LinkedHashMap<String, Object> {
 
     public static final String _type = "type";
     public static final String _requestId = "requestId";
-    public static final String _correlationId = "correlationId";
 
     public static final String _sender = "sender";
     public static final String _reciever = "reciever";
@@ -23,12 +22,6 @@ public class Msg<T> extends LinkedHashMap<String, Object> {
     private final ENFormat format;
     private T body;
     private Msg<?> originalMsg;
-
-    public Msg(ENFormat format, T body) {
-        super();
-        this.format = format;
-        this.body = body;
-    }
 
     public Msg(ENFormat format, String type, String requestId, String sender, String reciever, String signature,
                T body) {
@@ -60,14 +53,6 @@ public class Msg<T> extends LinkedHashMap<String, Object> {
         put(_type, type);
         put(_code, code);
         put(_desc, desc);
-    }
-
-    public Msg(Msg<?> originalMsg, ENFormat convFormat, T convBody) {
-        super();
-        putAll(originalMsg);
-        this.format = convFormat;
-        this.body = convBody;
-        this.originalMsg = originalMsg;
     }
 
     public ENFormat getFormat() {
@@ -123,30 +108,4 @@ public class Msg<T> extends LinkedHashMap<String, Object> {
         this.originalMsg = originalMsg;
     }
 
-    public String trace() {
-        StringBuilder sb = new StringBuilder("Msg[");
-        sb.append("c:").append(getBody().getClass()).append(", f:").append(getFormat()).append(", t:").append(getTypeAsString()).append(", id:").append(getRequestId()).append(", sender:").append(getSender()).append(", reciever:").append(getReciever()).append("]");
-
-        return sb.toString();
-    }
-
-    public String traceResult() {
-        String bodyStr = getBody() != null ? getBody().toString() : "null";
-        if (bodyStr.length() > 512) bodyStr = bodyStr.substring(0, 512);
-
-        StringBuilder sb = new StringBuilder("Msg[");
-        sb.append("c:").append(getBody() != null ? getBody().getClass() : "null").append(", f:").append(getFormat()).append(", r:").append(getTypeAsString()).append(", code:").append(getCode()).append(", desc:").append(getDesc()).append("]\n").append(bodyStr);
-
-        return sb.toString();
-    }
-
-    public boolean isErrorResponse() {
-        if (getType() instanceof ENResult) {
-            ENResult result = (ENResult) getType();
-
-            return result != ENResult.ACK;
-        }
-
-        return false;
-    }
 }

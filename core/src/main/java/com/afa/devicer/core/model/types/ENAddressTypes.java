@@ -3,24 +3,25 @@ package com.afa.devicer.core.model.types;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Objects;
+
 @Getter
 @AllArgsConstructor
 public enum ENAddressTypes {
 		
-	MAIN(1, "основной"),
-	ADDITIONAL(2, "дополнительный"),
-	UNKNOWN(3, "неизвестный");
+	MAIN(1L, "основной"),
+	ADDITIONAL(2L, "дополнительный"),
+	UNKNOWN(3L, "неизвестный");
 
-	private final int id;
+	private final Long id;
     private final String annotation;
 
 	public static ENAddressTypes getValueById(long value) {
-		if (value == 1) {
-			return ENAddressTypes.MAIN;
-		} else if (value == 2) {
-			return ENAddressTypes.ADDITIONAL;
-		} else {
-			return ENAddressTypes.UNKNOWN;
+		for (ENAddressTypes type : values()) {
+			if (Objects.equals(value, type.getId())) {
+				return type;
+			}
 		}
+		return null;
 	}
 }
