@@ -1,9 +1,10 @@
 --liquibase formatted sql
 
---changeset Aleksey Fedorov:1000000000001-1 splitStatements:false
+--changeset Aleksey Fedorov:1000000000002-1 splitStatements:false
 CREATE TABLE IF NOT EXISTS D_SYS_ROLE (
     ID BIGINT PRIMARY KEY NOT NULL,
-    NAME VARCHAR(50) NOT NULL
+    NAME VARCHAR(50) NOT NULL,
+    CONSTRAINT D_SYS_ROLE_UQ UNIQUE (NAME)
 );
 
 COMMENT ON TABLE D_SYS_ROLE IS 'Roles';

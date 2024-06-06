@@ -8,9 +8,10 @@
 
     <include file="db/changelog/create/sequences/001_create_d_sequence.sql" relativeToChangelogFile="false"/>
 
+    <include file="db/changelog/create/tables/000_create_d_sys_config.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/create/tables/00A_create_d_sys_store.sql" relativeToChangelogFile="false"/>
-    <include file="db/changelog/create/tables/001_create_d_sys_role.sql" relativeToChangelogFile="false"/>
-    <include file="db/changelog/create/tables/002_create_d_sys_user.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/001_create_d_sys_user.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/002_create_d_sys_role.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/create/tables/006_create_d_contact_type.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/create/tables/007_create_d_order_advert.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/create/tables/008_create_d_order_source.sql" relativeToChangelogFile="false"/>
@@ -34,8 +35,11 @@
 
     <include file="db/changelog/create/tables/041_create_bp_order.sql" relativeToChangelogFile="false"/>
 
+    <include file="db/changelog/data/000_insert_d_sys_config.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/data/00A_insert_d_sys_store.sql" relativeToChangelogFile="false"/>
-    <include file="db/changelog/data/002_insert_d_sys_user.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/data/001_insert_d_sys_user.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/data/002_insert_d_sys_role.sql" relativeToChangelogFile="false"/>
+
     <include file="db/changelog/data/006_insert_d_contact_type.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/data/007_insert_d_order_advert.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/data/008_insert_d_order_source.sql" relativeToChangelogFile="false"/>

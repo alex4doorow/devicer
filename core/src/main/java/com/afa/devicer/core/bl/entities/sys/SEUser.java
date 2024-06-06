@@ -47,7 +47,7 @@ public class SEUser implements BaseEntity<Long>, Serializable {
 
     @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "SR_SYS_USER_ROLES",
+            name = "D_SYS_USER_ROLE",
             joinColumns = { @JoinColumn(name = "USER_ID") },
             inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
     private Set<SERole> roles = new HashSet<>();
