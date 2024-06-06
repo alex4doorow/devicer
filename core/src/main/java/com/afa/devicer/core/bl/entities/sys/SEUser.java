@@ -3,7 +3,6 @@ package com.afa.devicer.core.bl.entities.sys;
 import com.afa.devicer.core.bl.entities.BaseEntity;
 import com.afa.devicer.core.utils.DateTimeUtils;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,13 +10,15 @@ import lombok.Setter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @Table(name = "D_SYS_USER")
 @Setter
 @Getter
-@EqualsAndHashCode(of ="id")
 public class SEUser implements BaseEntity<Long>, Serializable {
 
     @Serial
@@ -44,25 +45,41 @@ public class SEUser implements BaseEntity<Long>, Serializable {
     @Column(name = "LAST_LOGIN")
     private LocalDateTime lastLogin;
 
-/*
     @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "D_SYS_USER_ROLES",
+            name = "SR_SYS_USER_ROLES",
             joinColumns = { @JoinColumn(name = "USER_ID") },
             inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
-    private Set<TeRole> roles = new HashSet<>();
-*/
+    private Set<SERole> roles = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SEUser seUser = (SEUser) o;
+        return Objects.equals(id, seUser.id) &&
+                Objects.equals(username, seUser.username) &&
+                Objects.equals(password, seUser.password) &&
+                Objects.equals(passwordConfirm, seUser.passwordConfirm) &&
+                Objects.equals(email, seUser.email) &&
+                Objects.equals(lastLogin, seUser.lastLogin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, passwordConfirm, email, lastLogin);
+    }
 
     @Override
     public String toString() {
 
-        return "user: {" +
+        return "SEUser: {" +
                 "id=" + id +
                 ", name='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", lastLogin=" + DateTimeUtils.formatLocalDateTime(lastLogin, DateTimeUtils.DATE_FORMAT_UTC) +
-//                ", roles=" + roles.stream().map(TeRole::getName).toList() +
+                ", roles=" + roles.stream().map(SERole::getName).toList() +
                 "}";
     }
 }

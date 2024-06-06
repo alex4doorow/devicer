@@ -9,6 +9,7 @@
     <include file="db/changelog/create/sequences/001_create_d_sequence.sql" relativeToChangelogFile="false"/>
 
     <include file="db/changelog/create/tables/00A_create_d_sys_store.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/001_create_d_sys_role.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/create/tables/002_create_d_sys_user.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/create/tables/006_create_d_contact_type.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/create/tables/007_create_d_order_advert.sql" relativeToChangelogFile="false"/>
