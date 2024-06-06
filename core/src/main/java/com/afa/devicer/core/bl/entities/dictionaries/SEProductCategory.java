@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @NoArgsConstructor
-public class SECategoryProduct implements BaseEntity<Long>, Serializable {
+public class SEProductCategory implements BaseEntity<Long>, Serializable {
 
     @Serial
     private static final long serialVersionUID = 5548233397732313424L;

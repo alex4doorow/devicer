@@ -94,7 +94,7 @@ public class OrderRepositoryTest {
         store.setUserAdded(user);
         store = storeRepository.save(store);
 
-        SECategoryProduct categoryProduct = new SECategoryProduct();
+        SEProductCategory categoryProduct = new SEProductCategory();
         categoryProduct.setId(101L);
         categoryProduct.setGroup("отпугиватели");
         categoryProduct.setAnnotation("отпугиватели кротов");
@@ -199,7 +199,7 @@ public class OrderRepositoryTest {
         order.setOrderNum(777L);
         order.setOrderDate(LocalDate.of(2024, 5, 15));
         order.setStore(store);
-        order.setCategoryProduct(categoryProduct);
+        order.setProductCategory(categoryProduct);
         order.setType(orderType);
         order.setSourceType(orderSourceType);
         order.setAdvertType(orderAdvertType);

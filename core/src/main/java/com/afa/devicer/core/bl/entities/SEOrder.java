@@ -62,7 +62,7 @@ public class SEOrder implements BaseEntity<Long>, Serializable {
 
     @ManyToOne
     @JoinColumn(name = "CATEGORY_PRODUCT_ID", referencedColumnName = "ID")
-    private SECategoryProduct categoryProduct;
+    private SEProductCategory productCategory;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "ID")

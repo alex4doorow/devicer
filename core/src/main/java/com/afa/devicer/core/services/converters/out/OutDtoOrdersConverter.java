@@ -4,6 +4,7 @@ import com.afa.devicer.core.bl.entities.SEAddress;
 import com.afa.devicer.core.bl.entities.SECustomerCompany;
 import com.afa.devicer.core.bl.entities.SEOrder;
 import com.afa.devicer.core.bl.entities.SEPerson;
+import com.afa.devicer.core.bl.entities.dictionaries.SEProductCategory;
 import com.afa.devicer.core.model.types.*;
 import com.afa.devicer.core.rest.dto.*;
 import com.afa.devicer.core.services.converters.IOConverter;
@@ -29,7 +30,7 @@ public class OutDtoOrdersConverter implements IOConverter<SEOrder, DtoOrder>, IO
     public DtoOrder convertTo(SEOrder seOrder) {
         final Map<ENOrderAmountTypes, BigDecimal> amounts = new HashMap<>();
 
-        //amounts.put(ENOrderAmountTypes.TOTAL, seOrder.getAmounts().getValue(ENOrderAmountTypes.TOTAL));
+
 //        dtoOrder.getAmounts().put(OrderAmountTypes.TOTAL_WITH_DELIVERY, order.getAmounts().getValue(OrderAmountTypes.TOTAL_WITH_DELIVERY));
 //        dtoOrder.getAmounts().put(OrderAmountTypes.BILL, order.getAmounts().getValue(OrderAmountTypes.BILL));
 //        dtoOrder.getAmounts().put(OrderAmountTypes.SUPPLIER, order.getAmounts().getValue(OrderAmountTypes.SUPPLIER));
@@ -41,7 +42,7 @@ public class OutDtoOrdersConverter implements IOConverter<SEOrder, DtoOrder>, IO
         amounts.put(ENOrderAmountTypes.MARGIN, BigDecimal.ZERO);
         amounts.put(ENOrderAmountTypes.POSTPAY, BigDecimal.ZERO);
         amounts.put(ENOrderAmountTypes.DELIVERY, BigDecimal.ZERO);
-        amounts.put(ENOrderAmountTypes.TOTAL, BigDecimal.ZERO);
+        amounts.put(ENOrderAmountTypes.TOTAL, seOrder.getAmountTotal());
         amounts.put(ENOrderAmountTypes.TOTAL_WITH_DELIVERY, BigDecimal.ZERO);
 
         ENCustomerTypes customerType = ENCustomerTypes.getValueById(seOrder.getCustomer().getType().getId());
@@ -103,20 +104,29 @@ public class OutDtoOrdersConverter implements IOConverter<SEOrder, DtoOrder>, IO
                     .build();
         }
 
+
+        SEProductCategory seProductCategory = seOrder.getProductCategory();
+        DtoProductCategory productCategory = DtoProductCategory.builder()
+                .id(seProductCategory.getId())
+                .name(seProductCategory.getAnnotation())
+                .group(seProductCategory.getGroup())
+                .build();
+
         DtoOrder dtoOrder = DtoOrder.builder()
                 .id(seOrder.getId())
                 .orderNum(seOrder.getOrderNum())
                 .orderDate(seOrder.getOrderDate())
+                .store(ENStores.getValueById(seOrder.getStore().getId()))
                 .type(ENOrderTypes.getValueById(seOrder.getType().getId()))
+                .source(ENOrderSourceTypes.getValueById(seOrder.getSourceType().getId()))
+                .advert(ENOrderAdvertTypes.getValueById(seOrder.getAdvertType().getId()))
+                .payment(ENPaymentTypes.getValueById(seOrder.getPaymentType().getId()))
+                .productCategory(productCategory)
                 .customer(customer)
-                .status(ENOrderStatuses.APPROVED)
-                .payment(ENPaymentTypes.POSTPAY)
+                .status(ENOrderStatuses.getValueById(seOrder.getStatus().getId()))
+                .emailStatus(ENOrderEmailStatuses.getValueById(seOrder.getEmailStatus().getId()))
+                .payment(ENPaymentTypes.getValueById(seOrder.getPaymentType().getId()))
                 .amounts(amounts)
-                .productCategory(DtoProductCategory.builder()
-                        .id(301L)
-                        .name("алкотестеры")
-                        .group("для дома")
-                        .build())
                 .dateAdded(DateTimeUtils.toOffsetDateTime(seOrder.getDateAdded()))
                 .dateModified(DateTimeUtils.toOffsetDateTime(seOrder.getDateModified()))
                 .build();

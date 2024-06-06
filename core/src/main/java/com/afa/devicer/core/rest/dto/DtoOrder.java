@@ -30,8 +30,13 @@ public class DtoOrder {
     private DtoCustomer customer;
 
     private ENOrderTypes type;
-    private ENOrderStatuses status;
+    private ENOrderSourceTypes source;
+    private ENOrderAdvertTypes advert;
     private ENPaymentTypes payment;
+    private ENStores store;
+
+    private ENOrderEmailStatuses emailStatus;
+    private ENOrderStatuses status;
 
     private DtoProductCategory productCategory;
 
@@ -93,22 +98,22 @@ public class DtoOrder {
     @Override
     @JsonIgnore
     public String toString() {
-        return "DtoOrder {" +
+        return "DtoOrder{" +
                 "id=" + id +
                 ", orderNum=" + orderNum +
                 ", orderDate=" + orderDate +
                 ", type=" + type +
-                // ", customer=" + customer +
+                ", customer=" + customer +
                 ", productCategory=" + productCategory +
-//                ", source=" + source +
-//                ", advert=" + advert +
-//                ", payment=" + payment +
-//                ", store=" + store +
+                ", source=" + source +
+                ", advert=" + advert +
+                ", payment=" + payment +
+                ", store=" + store +
                 ", status=" + status +
-//                ", emailStatus=" + emailStatus +
+                ", emailStatus=" + emailStatus +
                 // ", delivery=" + delivery +
 //                ", externalCrms=" + externalCrms +
-//                ", amounts=" + amounts +
+                ", amounts=" + amounts +
 //                ", items=" + items +
 //                ", statuses=" + statuses +
                 ", dateAdded=" + dateAdded +
