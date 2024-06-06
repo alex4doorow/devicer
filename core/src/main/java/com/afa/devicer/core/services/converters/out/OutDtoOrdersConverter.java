@@ -131,13 +131,17 @@ public class OutDtoOrdersConverter implements IOConverter<SEOrder, DtoOrder>, IO
                 .dateModified(DateTimeUtils.toOffsetDateTime(seOrder.getDateModified()))
                 .build();
 
-        dtoOrder.setDelivery(DtoOrderDelivery.builder()
-                .parent(dtoOrder).address(DtoAddress.builder()
-                        .address("Moscow, Green street 43, 34")
-                        .build())
+        DtoAddress deliveryAddress = DtoAddress.builder()
+                .address("Moscow, Green street 43, 34")
+                .build();
+        DtoOrderDelivery dtoOrderDelivery = DtoOrderDelivery.builder()
+                .parent(dtoOrder)
+                .address(deliveryAddress)
                 .type(ENDeliveryTypes.CDEK_PVZ_TYPICAL)
-                .trackCode("")
-                .build());
+                .trackCode("1234567890")
+                .build();
+
+        dtoOrder.setDelivery(dtoOrderDelivery);
 
         return dtoOrder;
     }

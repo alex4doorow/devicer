@@ -79,15 +79,7 @@ public enum ENDeliveryTypes {
 			return ENDeliveryTypes.UNKNOWN;
 		}	
 	}
-	
-	public boolean isOzonRocket() {
-		if (this == ENDeliveryTypes.OZON_ROCKET_COURIER || this == ENDeliveryTypes.OZON_ROCKET_PICKPOINT || this == ENDeliveryTypes.OZON_ROCKET_POSTAMAT) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
+
 	public boolean isCdek() {
 		if (this == ENDeliveryTypes.PICKUP || this == ENDeliveryTypes.CDEK_PVZ_TYPICAL || this == ENDeliveryTypes.CDEK_PVZ_ECONOMY || this == ENDeliveryTypes.CDEK_COURIER || this == ENDeliveryTypes.CDEK_COURIER_ECONOMY) {
 			return true;

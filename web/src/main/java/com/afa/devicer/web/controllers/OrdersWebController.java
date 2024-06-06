@@ -10,6 +10,8 @@ import com.afa.devicer.core.rest.dto.view.DtoOrdersByConditionsRequestModel;
 import com.afa.devicer.core.rest.dto.view.DtoOrdersByConditionsResponseModel;
 import com.afa.devicer.core.services.JsonMapper;
 import com.afa.devicer.core.utils.Defaults;
+import com.afa.devicer.web.dto.DtoWebOrder;
+import com.afa.devicer.web.services.converters.out.OutDtoWebOrdersConverter;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +27,13 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/web/v1/orders")
@@ -38,6 +42,9 @@ public class OrdersWebController extends BaseWebController {
 
     @Autowired
     private JsonMapper jsonMapper;
+    @Autowired
+    private OutDtoWebOrdersConverter webDtoOrdersConverter;
+
     private String serviceDispatcherUrl;
 
     private WebClient webClient;
@@ -123,10 +130,11 @@ public class OrdersWebController extends BaseWebController {
         totalAmounts.put(ENOrderAmountTypes.POSTPAY_YANDEX_GO, BigDecimal.ZERO);
 
         assert responseModel != null;
-        Collection<DtoOrder> dtoOrders = responseModel.getOrders();
+
+        Collection<DtoWebOrder> dtoWebOrders = webDtoOrdersConverter.convertTo(responseModel.getOrders());
 
         populateDefaultModel(model);
-        model.addAttribute("orders", dtoOrders);
+        model.addAttribute("orders", dtoWebOrders);
         model.addAttribute("totalAmounts", totalAmounts);
         model.addAttribute("totalAmountPostpayCompany", totalAmounts.get(ENOrderAmountTypes.POSTPAY_COMPANY));
         model.addAttribute("totalAmountPostpayCdek", totalAmounts.get(ENOrderAmountTypes.POSTPAY_CDEK));

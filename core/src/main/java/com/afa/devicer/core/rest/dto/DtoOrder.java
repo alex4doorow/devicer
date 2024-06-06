@@ -1,7 +1,6 @@
 package com.afa.devicer.core.rest.dto;
 
 import com.afa.devicer.core.model.types.*;
-import com.afa.devicer.core.rest.dto.view.DtoViewOrderStatus;
 import com.afa.devicer.core.utils.DateTimeUtils;
 import com.afa.devicer.core.utils.helpers.OrderHelper;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -11,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,7 +21,8 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DtoOrder {
+@Slf4j
+public class DtoOrder implements Cloneable {
     private Long id;
     private Long orderNum;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATE_FORMAT_yyyy_MM_dd)
@@ -51,24 +52,6 @@ public class DtoOrder {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATE_FMT_ISO8601)
     private OffsetDateTime dateModified;
 
-    @JsonIgnore
-    public DtoViewOrderStatus getViewStatus() {
-        return DtoViewOrderStatus.createViewOrderStatus(this);
-    }
-
-    @JsonIgnore
-    public String getViewDateInfo() {
-        String result = this.getType().getAnnotation() + ", " + this.getStatus().getAnnotation();
-        return result;
-        /*
-        String expiredDate = this.getExpiredDate();
-        if (StringUtils.isEmpty(expiredDate)) {
-            return result;
-        } else {
-            return result + ", " + expiredDate;
-        }
-        */
-    }
 
     @JsonIgnore
     public boolean isPrepayment() {
@@ -93,6 +76,19 @@ public class DtoOrder {
     @JsonIgnore
     public BigDecimal getAmountPostpay() {
         return amounts.get(ENOrderAmountTypes.POSTPAY);
+    }
+
+    @JsonIgnore
+    public String getExpiredDate() {
+        return "";
+        /*
+        if (this.getOffer().getCountDay() <= 0) {
+            return result;
+        }
+        if ((this.getOrderType() == OrderTypes.BILL || this.getOrderType() == OrderTypes.KP) && this.getStatus() == OrderStatuses.BID) {
+            result = DateTimeUtils.defaultFormatDate(this.getOffer().getExpiredDate());
+        }
+        */
     }
 
     @Override
@@ -120,5 +116,32 @@ public class DtoOrder {
                 ", dateModified=" + dateModified +
                 ", annotation='" + annotation + '\'' +
                 '}';
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Object obj = super.clone();
+
+        DtoOrder result = (DtoOrder) obj;
+        result.setId(this.getId());
+        result.setOrderNum(this.getOrderNum());
+        result.setOrderDate(this.getOrderDate());
+        result.setCustomer(this.getCustomer());
+        result.setType(this.getType());
+        result.setSource(this.getSource());
+        result.setAdvert(this.getAdvert());
+        result.setPayment(this.getPayment());
+        result.setStore(this.getStore());
+        result.setEmailStatus(this.getEmailStatus());
+        result.setStatus(this.getStatus());
+        result.setProductCategory(this.getProductCategory());
+        result.setDelivery(this.getDelivery());
+        result.setAmounts(this.getAmounts());
+        result.setAnnotation(this.getAnnotation());
+        result.setDateAdded(this.getDateAdded());
+        result.setDateModified(this.getDateModified());
+
+        return result;
+
     }
 }

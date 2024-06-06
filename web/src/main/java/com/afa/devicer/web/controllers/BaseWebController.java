@@ -39,7 +39,7 @@ public abstract class BaseWebController {
         model.addAttribute("productCategories", wikiProductService.getCategories());
         model.addAttribute("customerTypes", CustomerTypes.values());
         model.addAttribute("orderStatuses", OrderStatuses.values());
-        model.addAttribute("orderTypes", OrderTypes.values());
+        model.addAttribute("orderTypes", ENOrderTypes.values());
         model.addAttribute("sourceTypes", OrderSourceTypes.values());
         model.addAttribute("advertTypes", OrderAdvertTypes.values());
         model.addAttribute("paymentTypes", PaymentTypes.values());
