@@ -17,7 +17,6 @@ public class ConfigService {
     @Autowired
     private ConfigRepository configRepository;
 
-//    @Cacheable(value = "seConfigCache", key = "#code")
     @Cacheable("seConfigCache")
     public List<SEConfig> getAll() {
         return configRepository.findByRecStatus(BaseEntity.ACTIVE);

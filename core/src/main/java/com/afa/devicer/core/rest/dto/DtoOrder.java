@@ -52,7 +52,6 @@ public class DtoOrder implements Cloneable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATE_FMT_ISO8601)
     private OffsetDateTime dateModified;
 
-
     @JsonIgnore
     public boolean isPrepayment() {
         return OrderHelper.isPrepayment(payment);

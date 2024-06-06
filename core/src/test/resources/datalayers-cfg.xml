@@ -9,6 +9,8 @@
        http://www.springframework.org/schema/jms
        https://www.springframework.org/schema/jms/spring-jms.xsd">
 
+	<bean id="ordersBL" class="com.afa.devicer.core.bl.OrdersBLImpl"/>
+
 	<bean id="vOrdersByConditionsProducer" class="com.afa.devicer.core.services.datalayers.VOrdersByConditionsProducer">
 		<property name="consumer" ref="vOrdersByConditionsConsumer"></property>
 		<property name="postProcessorsList">
