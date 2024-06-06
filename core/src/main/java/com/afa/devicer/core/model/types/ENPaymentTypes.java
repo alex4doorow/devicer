@@ -3,39 +3,31 @@ package com.afa.devicer.core.model.types;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Objects;
+
 @Getter
 @AllArgsConstructor
 public enum ENPaymentTypes {
 		
-	PREPAYMENT(1, "предоплата"),
-	POSTPAY(2, "постоплата"),
-	PAYMENT_COURIER(5, "наличными курьеру"),	
-	YANDEX_PAY(6, "банковской картой"),
-	APPLE_PAY(7, "Apple Pay"),
-	GOOGLE_PAY(8, "Google Pay"),
-	CREDIT(9, "в кредит");
+	PREPAYMENT(1L, "предоплата"),
+	POSTPAY(2L, "постоплата"),
+	PAYMENT_COURIER(5L, "наличными курьеру"),
+	YANDEX_PAY(6L, "банковской картой"),
+	APPLE_PAY(7L, "Apple Pay"),
+	GOOGLE_PAY(8L, "Google Pay"),
+	CREDIT(9L, "в кредит");
 	
-	private int id;
-	private String annotation;
+	private final Long id;
+	private final String annotation;
 
 	public static ENPaymentTypes getValueById(long value) {
-		if (value == 1) {
-			return ENPaymentTypes.PREPAYMENT;
-		} else if (value == 2) {
-			return ENPaymentTypes.POSTPAY;
-		} else if (value == 5) {
-			return ENPaymentTypes.PAYMENT_COURIER;
-		} else if (value == 6) {
-			return ENPaymentTypes.YANDEX_PAY;
-		} else if (value == 7) {
-			return ENPaymentTypes.APPLE_PAY;
-		} else if (value == 8) {
-			return ENPaymentTypes.GOOGLE_PAY;
-		} else if (value == 9) {
-			return ENPaymentTypes.CREDIT;
-		} else {
-			return ENPaymentTypes.POSTPAY;
+
+		for (ENPaymentTypes type : values()) {
+			if (Objects.equals(value, type.getId())) {
+				return type;
+			}
 		}
+		return null;
 	}
 		
 	public static ENPaymentTypes getValueByAnnotation(String value) {

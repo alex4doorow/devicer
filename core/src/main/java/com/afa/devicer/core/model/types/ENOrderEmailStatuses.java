@@ -7,16 +7,17 @@ import java.util.Objects;
 
 @Getter
 @AllArgsConstructor
-public enum ENPaymentDeliveryTypes {
+public enum ENOrderEmailStatuses {
+	
+	UNKNOWN(0L, "неопределен"),
+	FEEDBACK(1L, "запрос отзыва"),
+	TERM_EXPAIRED(2L, "запрос на актуальность");
 		
-	CUSTOMER(1, "покупатель"),
-	SELLER(2, "продавец");
-
 	private final long id;
 	private final String annotation;
-
-	public static ENPaymentDeliveryTypes getValueById(int value) {
-		for (ENPaymentDeliveryTypes type : values()) {
+	
+	public static ENOrderEmailStatuses getValueById(long value) {
+		for (ENOrderEmailStatuses type : values()) {
 			if (Objects.equals(value, type.getId())) {
 				return type;
 			}

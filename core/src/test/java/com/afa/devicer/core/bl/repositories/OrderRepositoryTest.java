@@ -1,18 +1,14 @@
 package com.afa.devicer.core.bl.repositories;
 
 import com.afa.devicer.core.bl.entities.*;
-import com.afa.devicer.core.bl.entities.dictionaries.SEAddressType;
-import com.afa.devicer.core.bl.entities.dictionaries.SECustomerType;
-import com.afa.devicer.core.bl.entities.dictionaries.SEOrderType;
+import com.afa.devicer.core.bl.entities.dictionaries.*;
+import com.afa.devicer.core.bl.entities.sys.SEStore;
 import com.afa.devicer.core.bl.entities.sys.SEUser;
-import com.afa.devicer.core.bl.repositories.dictionaries.AddressTypeRepository;
-import com.afa.devicer.core.bl.repositories.dictionaries.CustomerTypeRepository;
-import com.afa.devicer.core.bl.repositories.dictionaries.OrderTypeRepository;
+import com.afa.devicer.core.bl.repositories.dictionaries.*;
+import com.afa.devicer.core.bl.repositories.sys.StoreRepository;
 import com.afa.devicer.core.bl.repositories.sys.UserRepository;
 import com.afa.devicer.core.errors.CoreException;
-import com.afa.devicer.core.model.types.ENAddressTypes;
-import com.afa.devicer.core.model.types.ENCustomerTypes;
-import com.afa.devicer.core.model.types.ENOrderTypes;
+import com.afa.devicer.core.model.types.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -34,6 +31,11 @@ public class OrderRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
+
+    @Autowired
+    private StoreRepository storeRepository;
+    @Autowired
+    private CategoryProductRepository categoryProductRepository;
     @Autowired
     private PersonRepository personRepository;
     @Autowired
@@ -44,6 +46,18 @@ public class OrderRepositoryTest {
     private AddressTypeRepository addressTypeRepository;
     @Autowired
     private OrderTypeRepository orderTypeRepository;
+    @Autowired
+    private OrderSourceTypeRepository orderSourceTypeRepository;
+    @Autowired
+    private OrderAdvertTypeRepository orderAdvertTypeRepository;
+    @Autowired
+    private OrderEmailStatusTypeRepository orderEmailStatusTypeRepository;
+    @Autowired
+    private OrderStatusTypeRepository orderStatusTypeRepository;
+    @Autowired
+    private OrderPaymentTypeRepository orderPaymentTypeRepository;
+    @Autowired
+    private OrderPaymentDeliveryTypeRepository orderPaymentDeliveryTypeRepository;
     @Autowired
     private AddressRepository addressRepository;
     @Autowired
@@ -71,6 +85,23 @@ public class OrderRepositoryTest {
                     .findById(1L)
                     .orElseThrow(() -> new CoreException("USER", "user not found", CoreException.THROWS));
         }
+
+        SEStore store = new SEStore();
+        store.setId(ENStores.PM.getId());
+        store.setCode(ENStores.PM.getPrefix());
+        store.setAnnotation(ENStores.PM.getAnnotation());
+        store.setUrl(ENStores.PM.getSite());
+        store.setRecStatus(BaseEntity.ACTIVE);
+        store.setUserAdded(user);
+        store = storeRepository.save(store);
+
+        SECategoryProduct categoryProduct = new SECategoryProduct();
+        categoryProduct.setId(101L);
+        categoryProduct.setGroup("отпугиватели");
+        categoryProduct.setAnnotation("отпугиватели кротов");
+        categoryProduct.setRecStatus(BaseEntity.ACTIVE);
+        categoryProduct.setUserAdded(user);
+        categoryProduct = categoryProductRepository.save(categoryProduct);
 
         SEPerson person = new SEPerson();
         person.setId(1L);
@@ -123,11 +154,62 @@ public class OrderRepositoryTest {
         orderType.setUserAdded(user);
         orderType = orderTypeRepository.save(orderType);
 
+        SEOrderAdvertType orderAdvertType = new SEOrderAdvertType();
+        orderAdvertType.setId(ENOrderAdvertTypes.ADVERT.getId());
+        orderAdvertType.setAnnotation(ENOrderAdvertTypes.ADVERT.getAnnotation());
+        orderAdvertType.setRecStatus(BaseEntity.ACTIVE);
+        orderAdvertType.setUserAdded(user);
+        orderAdvertType = orderAdvertTypeRepository.save(orderAdvertType);
+
+        SEOrderSourceType orderSourceType = new SEOrderSourceType();
+        orderSourceType.setId(ENOrderSourceTypes.LID.getId());
+        orderSourceType.setAnnotation(ENOrderSourceTypes.LID.getAnnotation());
+        orderSourceType.setRecStatus(BaseEntity.ACTIVE);
+        orderSourceType.setUserAdded(user);
+        orderSourceType = orderSourceTypeRepository.save(orderSourceType);
+
+        SEOrderEmailStatusType orderEmailStatusType = new SEOrderEmailStatusType();
+        orderEmailStatusType.setId(ENOrderEmailStatuses.UNKNOWN.getId());
+        orderEmailStatusType.setAnnotation(ENOrderEmailStatuses.UNKNOWN.getAnnotation());
+        orderEmailStatusType.setRecStatus(BaseEntity.ACTIVE);
+        orderEmailStatusType.setUserAdded(user);
+        orderEmailStatusType = orderEmailStatusTypeRepository.save(orderEmailStatusType);
+
+        SEOrderStatusType orderStatusType = new SEOrderStatusType();
+        orderStatusType.setId(ENOrderStatuses.BID.getId());
+        orderStatusType.setAnnotation(ENOrderStatuses.BID.getAnnotation());
+        orderStatusType.setRecStatus(BaseEntity.ACTIVE);
+        orderStatusType.setUserAdded(user);
+        orderStatusType = orderStatusTypeRepository.save(orderStatusType);
+
+        SEOrderPaymentDeliveryType orderPaymentDeliveryType = new SEOrderPaymentDeliveryType();
+        orderPaymentDeliveryType.setId(ENPaymentDeliveryTypes.CUSTOMER.getId());
+        orderPaymentDeliveryType.setAnnotation(ENPaymentDeliveryTypes.CUSTOMER.getAnnotation());
+        orderPaymentDeliveryType.setRecStatus(BaseEntity.ACTIVE);
+        orderPaymentDeliveryType.setUserAdded(user);
+        orderPaymentDeliveryType = orderPaymentDeliveryTypeRepository.save(orderPaymentDeliveryType);
+
+        SEOrderPaymentType orderPaymentType = new SEOrderPaymentType();
+        orderPaymentType.setId(ENPaymentTypes.PREPAYMENT.getId());
+        orderPaymentType.setAnnotation(ENPaymentTypes.PREPAYMENT.getAnnotation());
+        orderPaymentType.setRecStatus(BaseEntity.ACTIVE);
+        orderPaymentType.setUserAdded(user);
+        orderPaymentType = orderPaymentTypeRepository.save(orderPaymentType);
+
         SEOrder order = new SEOrder();
         order.setOrderNum(777L);
-        order.setType(orderType);
         order.setOrderDate(LocalDate.of(2024, 5, 15));
+        order.setStore(store);
+        order.setCategoryProduct(categoryProduct);
+        order.setType(orderType);
+        order.setSourceType(orderSourceType);
+        order.setAdvertType(orderAdvertType);
+        order.setPaymentType(orderPaymentType);
+        order.setStatus(orderStatusType);
+        order.setEmailStatus(orderEmailStatusType);
         order.setCustomer(customer);
+        order.setAmountTotal(BigDecimal.ZERO);
+        order.setOfferCountDay(0L);
         order.setDateAdded(LocalDateTime.now());
         order.setDateModified(LocalDateTime.now());
         order.setRecStatus(BaseEntity.ACTIVE);

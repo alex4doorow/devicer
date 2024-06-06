@@ -8,9 +8,17 @@
 
     <include file="db/changelog/create/sequences/001_create_d_sequence.sql" relativeToChangelogFile="false"/>
 
+    <include file="db/changelog/create/tables/00A_create_d_sys_store.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/create/tables/002_create_d_sys_user.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/create/tables/006_create_d_contact_type.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/007_create_d_order_advert.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/008_create_d_order_source.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/create/tables/009_create_d_order_type.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/010_create_d_order_payment.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/011_create_d_order_payment_delivery.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/012_create_d_order_email_status.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/013_create_d_order_status.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/create/tables/014_create_d_category_product.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/create/tables/016_create_d_customer_type.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/create/tables/017_create_d_address_type.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/create/tables/018_create_d_country.sql" relativeToChangelogFile="false"/>
@@ -25,9 +33,17 @@
 
     <include file="db/changelog/create/tables/041_create_bp_order.sql" relativeToChangelogFile="false"/>
 
+    <include file="db/changelog/data/00A_insert_d_sys_store.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/data/002_insert_d_sys_user.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/data/006_insert_d_contact_type.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/data/007_insert_d_order_advert.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/data/008_insert_d_order_source.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/data/009_insert_d_order_type.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/data/010_insert_d_order_payment.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/data/011_insert_d_order_payment_delivery.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/data/012_insert_d_order_email_status.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/data/013_insert_d_order_status.sql" relativeToChangelogFile="false"/>
+    <include file="db/changelog/data/014_insert_d_category_product.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/data/016_insert_d_customer_type.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/data/017_insert_d_address_type.sql" relativeToChangelogFile="false"/>
     <include file="db/changelog/data/018_insert_d_country.sql" relativeToChangelogFile="false"/>
