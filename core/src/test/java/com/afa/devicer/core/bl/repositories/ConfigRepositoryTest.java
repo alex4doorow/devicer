@@ -6,13 +6,13 @@ import com.afa.devicer.core.bl.entities.sys.SEUser;
 import com.afa.devicer.core.bl.repositories.sys.ConfigRepository;
 import com.afa.devicer.core.bl.repositories.sys.UserRepository;
 import com.afa.devicer.core.errors.CoreException;
+import com.afa.devicer.core.services.ConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
@@ -30,13 +30,14 @@ public class ConfigRepositoryTest {
     private UserRepository userRepository;
     @Autowired
     private ConfigRepository configRepository;
+    @Autowired
+    private ConfigService configService;
 
     private void setUp() throws Exception {
 
     }
 
     @Test
-    @CacheEvict(value = "seConfigCache", allEntries = true)
     public void testConfig() throws CoreException {
         Optional<SEUser> optionalUser = userRepository.findById(1L);
         SEUser user;
@@ -56,19 +57,32 @@ public class ConfigRepositoryTest {
                     .orElseThrow(() -> new CoreException("USER", "user not found", CoreException.THROWS));
         }
 
-        SEConfig config = new SEConfig();
-        config.setId(1L);
-        config.setCode("code_j_name");
-        config.setValue("Apple ltd");
-        config.setAnnotation("company short name");
-        config.setRecStatus(BaseEntity.ACTIVE);
-        config.setUserAdded(user);
-        config = configRepository.save(config);
+        SEConfig configOne = new SEConfig();
+        configOne.setCode("code_j_name");
+        configOne.setValue("Apple ltd");
+        configOne.setAnnotation("company short name");
+        configOne.setRecStatus(BaseEntity.ACTIVE);
+        configOne.setUserAdded(user);
+        configOne.setDateAdded(LocalDateTime.now());
+        configOne = configRepository.saveAndFlush(configOne);
 
-        //List<SEConfig> configValues = configRepository.findByRecStatus(BaseEntity.ACTIVE);
-        List<SEConfig> configValues = configRepository.findAll();
-        log.info("configValues: {}", configValues);
+        SEConfig configTwo = new SEConfig();
+        configTwo.setCode("code_j_inn");
+        configTwo.setValue("1234567890");
+        configTwo.setAnnotation("company inn");
+        configTwo.setRecStatus(BaseEntity.ACTIVE);
+        configTwo.setUserAdded(user);
+        configTwo.setDateAdded(LocalDateTime.now());
+        configTwo = configRepository.saveAndFlush(configTwo);
 
+        List<SEConfig> configValues = configService.getAll();
+
+        String code = "code_j_name";
+        log.info("config value: {}, {}", code, configService.getValueByCode(code).getValue());
+        log.info("config value: {}, {}", code, configService.getValueByCode(code).getValue());
+
+        code = "code_j_inn";
+        log.info("config value: {}, {}", code, configService.getValueByCode(code).getValue());
+        log.info("config value: {}, {}", code, configService.getValueByCode(code).getValue());
     }
-
 }

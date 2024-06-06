@@ -73,7 +73,7 @@ public class SEUser implements BaseEntity<Long>, Serializable {
     @Override
     public String toString() {
 
-        return "SEUser: {" +
+        return "SEUser{" +
                 "id=" + id +
                 ", name='" + username + '\'' +
                 ", password='" + password + '\'' +

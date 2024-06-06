@@ -72,13 +72,12 @@ public class OrderRepositoryTest {
         SEUser user;
         if (optionalUser.isEmpty()) {
             user = new SEUser();
-            user.setId(1L);
             user.setUsername("test");
             user.setPassword("test");
             user.setEmail("test@test.com");
             user.setLastLogin(LocalDateTime.now());
-            userRepository.save(user);
-            user = userRepository.findById(1L)
+            user = userRepository.saveAndFlush(user);
+            user = userRepository.findByUsername("test")
                     .orElseThrow(() -> new CoreException("USER", "user not found", CoreException.THROWS));
         } else {
             user = userRepository

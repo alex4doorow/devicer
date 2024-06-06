@@ -13,6 +13,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
@@ -57,4 +58,25 @@ public class SEConfig implements BaseEntity<Long>, Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATE_FMT_ISO8601)
     private LocalDateTime dateModified;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SEConfig config = (SEConfig) o;
+        return Objects.equals(code, config.code);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(code);
+    }
+
+    @Override
+    public String toString() {
+        return "SEConfig{" +
+                ", code='" + code + '\'' +
+                ", value='" + value + '\'' +
+                '}';
+    }
 }

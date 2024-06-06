@@ -51,7 +51,7 @@ public class SERole implements BaseEntity<Long>, Serializable {
 
     @Override
     public String toString() {
-        return "SERole {" +
+        return "SERole{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
