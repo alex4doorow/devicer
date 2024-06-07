@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class SEContactType implements BaseEntity<Long>, Serializable {
 
     @Serial
-    private static final long serialVersionUID = 5548233397732313424L;
+    private static final long serialVersionUID = -4416373490397176631L;
 
     @Id
     @Column(name = "ID", updatable = false)

@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class SECustomerType implements BaseEntity<Long>, Serializable {
 
     @Serial
-    private static final long serialVersionUID = 5548233397732313424L;
+    private static final long serialVersionUID = 3313648920601711857L;
 
     @Id
     @Column(name = "ID", updatable = false)

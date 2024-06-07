@@ -10,6 +10,7 @@
        https://www.springframework.org/schema/jms/spring-jms.xsd">
 
 	<bean id="ordersBL" class="com.afa.devicer.core.bl.OrdersBLImpl"/>
+	<bean id="usersQueryBL" class="com.afa.devicer.core.bl.UsersQueryBLImpl"/>
 
 	<bean id="vOrdersByConditionsProducer" class="com.afa.devicer.core.services.datalayers.VOrdersByConditionsProducer">
 		<property name="consumer" ref="vOrdersByConditionsConsumer"></property>

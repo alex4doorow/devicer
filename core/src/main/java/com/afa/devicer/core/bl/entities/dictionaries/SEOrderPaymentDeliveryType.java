@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class SEOrderPaymentDeliveryType implements BaseEntity<Long>, Serializable {
 
     @Serial
-    private static final long serialVersionUID = 5548233397732313424L;
+    private static final long serialVersionUID = 1979835942824756426L;
 
     @Id
     @Column(name = "ID", updatable = false)

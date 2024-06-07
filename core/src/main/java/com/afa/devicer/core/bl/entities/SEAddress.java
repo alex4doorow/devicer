@@ -24,7 +24,7 @@ import java.util.Objects;
 public class SEAddress implements BaseEntity<Long>, Serializable {
 
     @Serial
-    private static final long serialVersionUID = 518746571848990438L;
+    private static final long serialVersionUID = 2798664852510165477L;
 
     @Id
     @SequenceGenerator(name = "D_SEQUENCE", sequenceName = "D_SEQUENCE", allocationSize = 1)

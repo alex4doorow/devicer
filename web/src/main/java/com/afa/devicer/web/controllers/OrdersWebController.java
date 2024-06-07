@@ -1,8 +1,10 @@
 package com.afa.devicer.web.controllers;
 
+import com.afa.devicer.core.bl.entities.sys.SEUser;
 import com.afa.devicer.core.errors.CoreException;
+import com.afa.devicer.core.model.conditions.OrderConditions;
 import com.afa.devicer.core.model.types.ENOrderAmountTypes;
-import com.afa.devicer.core.model.types.ENReportPeriodTypes;
+import com.afa.devicer.core.model.types.ENPeriodTypes;
 import com.afa.devicer.core.rest.dto.DtoOrder;
 import com.afa.devicer.core.rest.dto.DtoOrderMessage;
 import com.afa.devicer.core.rest.dto.view.DtoOrdersByConditionsParams;
@@ -18,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -27,13 +28,11 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/web/v1/orders")
@@ -73,11 +72,12 @@ public class OrdersWebController extends BaseWebController {
 
     @GetMapping("/")
     public String findOrdersByRequest(Model model) {
+
         DtoOrdersByConditionsRequestModel request = DtoOrdersByConditionsRequestModel.builder()
-                .params(DtoOrdersByConditionsParams
-                        .builder()
+                .params(DtoOrdersByConditionsParams.builder()
                         .stDtm(LocalDateTime.now())
                         .endDtm(LocalDateTime.now())
+                        .periodType(ENPeriodTypes.CURRENT_MONTH)
                         .build())
                 .build();
         log.info("[START] {} request: {}", "FIND_ORDERS_BY_REQUEST", request);
@@ -143,7 +143,7 @@ public class OrdersWebController extends BaseWebController {
         model.addAttribute("totalAmountPostpayYandexMarket", totalAmounts.get(ENOrderAmountTypes.POSTPAY_YANDEX_MARKET));
         model.addAttribute("totalAmountPostpayYandexGo", totalAmounts.get(ENOrderAmountTypes.POSTPAY_YANDEX_GO));
 
-        model.addAttribute("reportPeriodType", ENReportPeriodTypes.CURRENT_MONTH);
+        model.addAttribute("reportPeriodType", ENPeriodTypes.CURRENT_MONTH);
         model.addAttribute("listType", "orders");
         return "orders/list";
     }

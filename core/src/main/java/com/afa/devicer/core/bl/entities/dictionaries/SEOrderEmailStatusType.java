@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class SEOrderEmailStatusType implements BaseEntity<Long>, Serializable {
 
     @Serial
-    private static final long serialVersionUID = 5548233397732313424L;
+    private static final long serialVersionUID = -5830382175530938230L;
 
     @Id
     @Column(name = "ID", updatable = false)

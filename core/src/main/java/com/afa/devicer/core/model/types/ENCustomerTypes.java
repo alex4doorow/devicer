@@ -28,7 +28,7 @@ public enum ENCustomerTypes {
 		return this == COMPANY || this == BUSINESSMAN || this == FOREIGNER_COMPANY;
 	}
 
-	public static ENCustomerTypes getValueById(Long value) {
+	public static ENCustomerTypes getValueById(long value) {
 		for (ENCustomerTypes type : values()) {
 			if (Objects.equals(value, type.getId())) {
 				return type;

@@ -1,5 +1,6 @@
 package com.afa.devicer.core.rest.dto.view;
 
+import com.afa.devicer.core.model.types.ENPeriodTypes;
 import com.afa.devicer.core.utils.DateTimeUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -23,4 +24,6 @@ public class DtoOrdersByConditionsParams {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtils.DATETIME_NS)
     private LocalDateTime endDtm;
+
+    private ENPeriodTypes periodType;
 }

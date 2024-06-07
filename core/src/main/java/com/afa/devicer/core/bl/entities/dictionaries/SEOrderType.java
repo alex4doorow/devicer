@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class SEOrderType implements BaseEntity<Long>, Serializable {
 
     @Serial
-    private static final long serialVersionUID = 5548233397732313424L;
+    private static final long serialVersionUID = 9158348447480709781L;
 
     @Id
     @Column(name = "ID", updatable = false)

@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class SEOrderAdvertType implements BaseEntity<Long>, Serializable {
 
     @Serial
-    private static final long serialVersionUID = 5548233397732313424L;
+    private static final long serialVersionUID = -7986348278018389687L;
 
     @Id
     @Column(name = "ID", updatable = false)
