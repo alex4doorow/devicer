@@ -84,10 +84,78 @@ public class DtoOrder implements Cloneable {
         if (this.getOffer().getCountDay() <= 0) {
             return result;
         }
-        if ((this.getOrderType() == OrderTypes.BILL || this.getOrderType() == OrderTypes.KP) && this.getStatus() == OrderStatuses.BID) {
+        if ((this.getOrderType() == OrderTypes.BILL || this.getOrderType() == OrderTypes.KP) && this.getStatus() == ENOrderStatuses.BID) {
             result = DateTimeUtils.defaultFormatDate(this.getOffer().getExpiredDate());
         }
         */
+    }
+
+    public boolean isBillAmount() {
+        if (this.getType() == ENOrderTypes.ORDER) {
+            if (this.getStatus() == ENOrderStatuses.APPROVED) {
+                return true;
+            } else if (this.getStatus() == ENOrderStatuses.PAY_WAITING) {
+                return true;
+            } else if (this.getStatus() == ENOrderStatuses.PAY_ON) {
+                return true;
+            } else if (this.getStatus() == ENOrderStatuses.DELIVERING) {
+                return true;
+            } else if (this.getStatus() == ENOrderStatuses.READY_GIVE_AWAY) {
+                return true;
+            } else if (this.getStatus() == ENOrderStatuses.READY_GIVE_AWAY_TROUBLE) {
+                return true;
+            } else if (this.getStatus() == ENOrderStatuses.DELIVERED) {
+                return true;
+            } else if (this.getStatus() == ENOrderStatuses.FINISHED) {
+                return true;
+            } else if (this.getStatus() == ENOrderStatuses.DOC_NOT_EXIST) {
+                return true;
+            }
+        } else if (this.getType() == ENOrderTypes.BILL) {
+            if (this.isPrepayment()) {
+                if (this.getStatus() == ENOrderStatuses.APPROVED) {
+                    return false;
+                } else if (this.getStatus() == ENOrderStatuses.PAY_WAITING) {
+                    return false;
+                } else if (this.getStatus() == ENOrderStatuses.PAY_ON) {
+                    return true;
+                } else if (this.getStatus() == ENOrderStatuses.DELIVERING) {
+                    return true;
+                } else if (this.getStatus() == ENOrderStatuses.READY_GIVE_AWAY) {
+                    return true;
+                } else if (this.getStatus() == ENOrderStatuses.READY_GIVE_AWAY_TROUBLE) {
+                    return true;
+                } else if (this.getStatus() == ENOrderStatuses.DELIVERED) {
+                    return true;
+                } else if (this.getStatus() == ENOrderStatuses.FINISHED) {
+                    return true;
+                } else if (this.getStatus() == ENOrderStatuses.DOC_NOT_EXIST) {
+                    return true;
+                }
+            } else if (this.getPayment() == ENPaymentTypes.POSTPAY) {
+
+                if (this.getStatus() == ENOrderStatuses.APPROVED) {
+                    return true;
+                } else if (this.getStatus() == ENOrderStatuses.PAY_WAITING) {
+                    return true;
+                } else if (this.getStatus() == ENOrderStatuses.PAY_ON) {
+                    return true;
+                } else if (this.getStatus() == ENOrderStatuses.DELIVERING) {
+                    return true;
+                } else if (this.getStatus() == ENOrderStatuses.READY_GIVE_AWAY) {
+                    return true;
+                } else if (this.getStatus() == ENOrderStatuses.READY_GIVE_AWAY_TROUBLE) {
+                    return true;
+                } else if (this.getStatus() == ENOrderStatuses.DELIVERED) {
+                    return true;
+                } else if (this.getStatus() == ENOrderStatuses.FINISHED) {
+                    return true;
+                } else if (this.getStatus() == ENOrderStatuses.DOC_NOT_EXIST) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override

@@ -5,14 +5,17 @@ import com.afa.devicer.core.errors.CoreException;
 import com.afa.devicer.core.model.conditions.OrderConditions;
 import com.afa.devicer.core.model.types.ENOrderAmountTypes;
 import com.afa.devicer.core.model.types.ENPeriodTypes;
+import com.afa.devicer.core.model.types.ENReportOrdersType;
 import com.afa.devicer.core.rest.dto.DtoOrder;
 import com.afa.devicer.core.rest.dto.DtoOrderMessage;
 import com.afa.devicer.core.rest.dto.view.DtoOrdersByConditionsParams;
 import com.afa.devicer.core.rest.dto.view.DtoOrdersByConditionsRequestModel;
 import com.afa.devicer.core.rest.dto.view.DtoOrdersByConditionsResponseModel;
 import com.afa.devicer.core.services.JsonMapper;
+import com.afa.devicer.core.utils.DateTimeUtils;
 import com.afa.devicer.core.utils.Defaults;
 import com.afa.devicer.web.dto.DtoWebOrder;
+import com.afa.devicer.web.dto.view.DtoWebOrdersFilter;
 import com.afa.devicer.web.services.converters.out.OutDtoWebOrdersConverter;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.net.URI;
@@ -71,27 +75,49 @@ public class OrdersWebController extends BaseWebController {
     }
 
     @GetMapping("/")
-    public String findOrdersByRequest(Model model) {
+    public String findOrdersByCurrentRequest(Model model) {
+
+        log.debug("showAllOrders()");
 
         DtoOrdersByConditionsRequestModel request = DtoOrdersByConditionsRequestModel.builder()
                 .params(DtoOrdersByConditionsParams.builder()
-                        .stDtm(LocalDateTime.now())
-                        .endDtm(LocalDateTime.now())
-                        .periodType(ENPeriodTypes.CURRENT_MONTH)
+                        .reportOrdersType(ENReportOrdersType.BY_CURRENT_FILTER)
                         .build())
                 .build();
-        log.info("[START] {} request: {}", "FIND_ORDERS_BY_REQUEST", request);
+        log.info("[START] {} request: {}", "FIND_ORDERS_BY_CURRENT_FILTER_REQUEST", request);
 
-/*
-        OrderConditions orderConditions = configService.loadOrderConditions(getCurrentUser());
+        DtoOrdersByConditionsResponseModel responseModel = ordersByRequest(request);
 
-        Collection<Order> orders = orderService.findAll(orderConditions);
-        Collection<DtoOrder> dtoOrders = outDtoOrderConverter.convertTo(orders);
+        assert responseModel != null;
 
-        Map<OrderAmountTypes, BigDecimal> totalAmounts = orderService.calcTotalOrdersAmountsByConditions(orders,
-                orderConditions.getPeriod());
+        Collection<DtoWebOrder> dtoWebOrders = webDtoOrdersConverter.convertTo(responseModel.getOrders());
+        Map<ENOrderAmountTypes, BigDecimal> totalAmounts = responseModel.getTotalAmounts();
 
- */
+        populateDefaultModel(model);
+        populateDefaultModelForOrders(model, dtoWebOrders, totalAmounts, ENPeriodTypes.CURRENT_MONTH, "orders");
+        return "orders/list";
+    }
+
+    protected void populateDefaultModelForOrders(Model model,
+                                                 Collection<DtoWebOrder> dtoWebOrders,
+                                                 Map<ENOrderAmountTypes, BigDecimal> totalAmounts,
+                                                 ENPeriodTypes reportPeriodType,
+                                                 String listType) {
+        model.addAttribute("orders", dtoWebOrders);
+        model.addAttribute("totalAmounts", totalAmounts);
+        model.addAttribute("totalAmountPostpayCompany", totalAmounts.get(ENOrderAmountTypes.POSTPAY_COMPANY));
+        model.addAttribute("totalAmountPostpayCdek", totalAmounts.get(ENOrderAmountTypes.POSTPAY_CDEK));
+        model.addAttribute("totalAmountPostpayPost", totalAmounts.get(ENOrderAmountTypes.POSTPAY_POST));
+        model.addAttribute("totalAmountPostpayOzonMarket", totalAmounts.get(ENOrderAmountTypes.POSTPAY_OZON_MARKET));
+        model.addAttribute("totalAmountPostpayYandexMarket", totalAmounts.get(ENOrderAmountTypes.POSTPAY_YANDEX_MARKET));
+        model.addAttribute("totalAmountPostpayYandexGo", totalAmounts.get(ENOrderAmountTypes.POSTPAY_YANDEX_GO));
+
+        model.addAttribute("reportPeriodType", reportPeriodType);
+        model.addAttribute("listType", listType);
+    }
+
+    private DtoOrdersByConditionsResponseModel ordersByRequest(DtoOrdersByConditionsRequestModel request) {
+
         DtoOrdersByConditionsResponseModel responseModel;
         try {
             responseModel = webClient.post()
@@ -110,48 +136,115 @@ public class OrdersWebController extends BaseWebController {
                     .orders(new ArrayList<>())
                     .build();
         }
-        BigDecimal billAmount = BigDecimal.ZERO;
-        BigDecimal supplierAmount = BigDecimal.ZERO;
-        BigDecimal marginWithoutAdvertAmount = BigDecimal.ZERO;
+        return responseModel;
+    }
 
-        Map<ENOrderAmountTypes, BigDecimal> totalAmounts = new HashMap<>();
-        totalAmounts.put(ENOrderAmountTypes.BILL, billAmount);
-        totalAmounts.put(ENOrderAmountTypes.SUPPLIER, supplierAmount);
-        totalAmounts.put(ENOrderAmountTypes.ADVERT_BUDGET, BigDecimal.ZERO);
-        totalAmounts.put(ENOrderAmountTypes.MARGIN, marginWithoutAdvertAmount);
-        totalAmounts.put(ENOrderAmountTypes.POSTPAY, BigDecimal.ZERO);
-        totalAmounts.put(ENOrderAmountTypes.COUNT_REAL_ORDERS, BigDecimal.ZERO);
+    @GetMapping(value = "/orders/trouble-load")
+    public String findTroubleOrders(Model model) {
 
-        totalAmounts.put(ENOrderAmountTypes.POSTPAY_COMPANY, BigDecimal.ZERO);
-        totalAmounts.put(ENOrderAmountTypes.POSTPAY_CDEK, BigDecimal.ZERO);
-        totalAmounts.put(ENOrderAmountTypes.POSTPAY_POST, BigDecimal.ZERO);
-        totalAmounts.put(ENOrderAmountTypes.POSTPAY_OZON_MARKET, BigDecimal.ZERO);
-        totalAmounts.put(ENOrderAmountTypes.POSTPAY_YANDEX_MARKET, BigDecimal.ZERO);
-        totalAmounts.put(ENOrderAmountTypes.POSTPAY_YANDEX_GO, BigDecimal.ZERO);
+        log.debug("showTroubleOrders()");
+        DtoOrdersByConditionsRequestModel request = DtoOrdersByConditionsRequestModel.builder()
+                .params(DtoOrdersByConditionsParams.builder()
+                        .reportOrdersType(ENReportOrdersType.TROUBLE)
+                        .build())
+                .build();
+        log.info("[START] {} request: {}", "FIND_TROUBLE_ORDERS_REQUEST", request);
+
+        DtoOrdersByConditionsResponseModel responseModel = ordersByRequest(request);
 
         assert responseModel != null;
 
         Collection<DtoWebOrder> dtoWebOrders = webDtoOrdersConverter.convertTo(responseModel.getOrders());
+        Map<ENOrderAmountTypes, BigDecimal> totalAmounts = responseModel.getTotalAmounts();
 
         populateDefaultModel(model);
-        model.addAttribute("orders", dtoWebOrders);
-        model.addAttribute("totalAmounts", totalAmounts);
-        model.addAttribute("totalAmountPostpayCompany", totalAmounts.get(ENOrderAmountTypes.POSTPAY_COMPANY));
-        model.addAttribute("totalAmountPostpayCdek", totalAmounts.get(ENOrderAmountTypes.POSTPAY_CDEK));
-        model.addAttribute("totalAmountPostpayPost", totalAmounts.get(ENOrderAmountTypes.POSTPAY_POST));
-        model.addAttribute("totalAmountPostpayOzonMarket", totalAmounts.get(ENOrderAmountTypes.POSTPAY_OZON_MARKET));
-        model.addAttribute("totalAmountPostpayYandexMarket", totalAmounts.get(ENOrderAmountTypes.POSTPAY_YANDEX_MARKET));
-        model.addAttribute("totalAmountPostpayYandexGo", totalAmounts.get(ENOrderAmountTypes.POSTPAY_YANDEX_GO));
+        populateDefaultModelForOrders(model, dtoWebOrders, totalAmounts, ENPeriodTypes.CURRENT_MONTH, "trouble-load");
 
-        model.addAttribute("reportPeriodType", ENPeriodTypes.CURRENT_MONTH);
-        model.addAttribute("listType", "orders");
+        return "orders/list";
+    }
+
+    @GetMapping(value = "/conditions/period/{period}")
+    public String findOrdersByPeriod(@PathVariable("period") String period, Model model) {
+
+        log.debug("showOrdersByPeriod()");
+        DtoOrdersByConditionsRequestModel request = DtoOrdersByConditionsRequestModel.builder()
+                .params(DtoOrdersByConditionsParams.builder()
+                        .reportOrdersType(ENReportOrdersType.BY_PERIOD)
+                        .build())
+                .build();
+        log.info("[START] {} request: {}", "FIND_ORDERS_BY_PERIOD_REQUEST", request);
+
+        ENPeriodTypes reportPeriodType = ENPeriodTypes.getValueByCode(period);
+
+        DtoOrdersByConditionsResponseModel responseModel = ordersByRequest(request);
+
+        assert responseModel != null;
+
+        Collection<DtoWebOrder> dtoWebOrders = webDtoOrdersConverter.convertTo(responseModel.getOrders());
+        Map<ENOrderAmountTypes, BigDecimal> totalAmounts = responseModel.getTotalAmounts();
+
+        populateDefaultModel(model);
+        populateDefaultModelForOrders(model, dtoWebOrders, totalAmounts, reportPeriodType, "orders");
+
+        return "orders/list";
+    }
+
+    @GetMapping("/conditions/filter")
+    public String findOrdersByConditionsRequest(Model model) {
+
+        log.debug("showOrdersByConditions()");
+        DtoOrdersByConditionsRequestModel request = DtoOrdersByConditionsRequestModel.builder()
+                .params(DtoOrdersByConditionsParams.builder()
+                        .reportOrdersType(ENReportOrdersType.BY_CUSTOM_FILTER)
+                        .build())
+                .build();
+        log.info("[START] {} request: {}", "FIND_ORDERS_BY_CUSTOM_FILTER_REQUEST", request);
+/*
+        DtoOrdersByConditionsResponseModel responseModel = ordersByRequest(request);
+
+        assert responseModel != null;
+
+        Collection<DtoWebOrder> dtoWebOrders = webDtoOrdersConverter.convertTo(responseModel.getOrders());
+        Map<ENOrderAmountTypes, BigDecimal> totalAmounts = responseModel.getTotalAmounts();
+*/
+        populateDefaultModel(model);
+//        populateDefaultModelForOrders(model, dtoWebOrders, totalAmounts, ENPeriodTypes.CURRENT_MONTH, "orders");
+//        OrderConditions orderConditionsForm = wikiService.getConfig().loadOrderConditions(getUserIdByPrincipal());
+        //        model.addAttribute("orderConditionsForm", orderConditionsForm);
+        model.addAttribute("reportPeriodTypes", ENPeriodTypes.getListOrderValues());
+        model.addAttribute("reportPeriodMonths", DateTimeUtils.getMonths());
+
+        return "orders/order-conditions-form";
+    }
+
+    @PostMapping(value = "/conditions/filter/exec")
+    public String execOrdersByConditions(@ModelAttribute("orderConditionsForm") DtoWebOrdersFilter orderConditionsForm,
+                                         Model model, final RedirectAttributes redirectAttributes) {
+
+        log.debug("execOrdersByConditions():{}", orderConditionsForm);
+        DtoOrdersByConditionsRequestModel request = DtoOrdersByConditionsRequestModel.builder()
+                .params(DtoOrdersByConditionsParams.builder()
+                        .reportOrdersType(ENReportOrdersType.BY_CUSTOM_FILTER)
+                        .build())
+                .build();
+        log.info("[START] {} request: {}", "FIND_ORDERS_BY_CUSTOM_FILTER_REQUEST", request);
+
+        DtoOrdersByConditionsResponseModel responseModel = ordersByRequest(request);
+
+        assert responseModel != null;
+
+        Collection<DtoWebOrder> dtoWebOrders = webDtoOrdersConverter.convertTo(responseModel.getOrders());
+        Map<ENOrderAmountTypes, BigDecimal> totalAmounts = responseModel.getTotalAmounts();
+
+        populateDefaultModel(model);
+        populateDefaultModelForOrders(model, dtoWebOrders, totalAmounts, ENPeriodTypes.CURRENT_MONTH, "orders");
+
         return "orders/list";
     }
 
     @GetMapping("/add/{listType}")
     public String addOrder(@PathVariable("listType") String listType, Model model) throws CoreException {
         log.info("[START] {} request", "ORDER_ADD");
-
 
 
         DtoOrder dtoOrder = new DtoOrder();

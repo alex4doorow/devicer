@@ -6,8 +6,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 // todo unit tests
 
@@ -179,6 +183,18 @@ public class DateTimeUtils {
 
     public static LocalDate defaultFormatStringToLocalDate(String inputString) {
         return stringToLocalDate(inputString, DATE_FORMAT_dd_MM_yyyy);
+    }
+
+    public static Map<Integer, String> getMonths() {
+        Map<Integer, String> months = new HashMap<>();
+        for (int i = 1; i <= 12; i++) {
+            Month monthNumber = Month.of(i);
+            Locale locale = Locale.forLanguageTag("ru");
+            Locale currentLocale = Locale.getDefault();
+            String monthText = monthNumber.getDisplayName(TextStyle.FULL_STANDALONE, locale);
+            months.put(i, monthText);
+        }
+        return months;
     }
 
 

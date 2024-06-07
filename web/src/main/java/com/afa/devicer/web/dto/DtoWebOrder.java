@@ -1,7 +1,7 @@
 package com.afa.devicer.web.dto;
 
 import com.afa.devicer.core.rest.dto.DtoOrder;
-import com.afa.devicer.web.dto.view.DtoWebViewOrderStatus;
+import com.afa.devicer.web.dto.view.DtoWebOrderStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -56,8 +56,8 @@ public class DtoWebOrder extends DtoOrder {
     }
 
     @JsonIgnore
-    public DtoWebViewOrderStatus getViewStatus() {
-        return DtoWebViewOrderStatus.createViewOrderStatus(this);
+    public DtoWebOrderStatus getViewStatus() {
+        return DtoWebOrderStatus.createViewOrderStatus(this);
     }
 
     @JsonIgnore

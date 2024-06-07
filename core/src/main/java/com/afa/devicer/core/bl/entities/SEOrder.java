@@ -3,6 +3,7 @@ package com.afa.devicer.core.bl.entities;
 import com.afa.devicer.core.bl.entities.dictionaries.*;
 import com.afa.devicer.core.bl.entities.sys.SEStore;
 import com.afa.devicer.core.bl.entities.sys.SEUser;
+import com.afa.devicer.core.model.types.ENOrderTypes;
 import com.afa.devicer.core.utils.DateTimeUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -15,6 +16,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
