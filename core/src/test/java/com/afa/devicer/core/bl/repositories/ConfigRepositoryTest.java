@@ -22,7 +22,7 @@ import java.util.Optional;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @Slf4j
-public class ConfigRepositoryTest {
+class ConfigRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
@@ -33,12 +33,12 @@ public class ConfigRepositoryTest {
     @Autowired
     private ConfigService configService;
 
-    private void setUp() throws Exception {
+    void setUp() throws Exception {
 
     }
 
     @Test
-    public void testConfig() throws CoreException {
+    void testConfig() throws CoreException {
         Optional<SEUser> optionalUser = userRepository.findById(1L);
         SEUser user;
         if (optionalUser.isEmpty()) {

@@ -27,7 +27,7 @@ import java.util.Set;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @Slf4j
-public class OrderRepositoryTest {
+class OrderRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
@@ -66,7 +66,7 @@ public class OrderRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    public void testOrder() throws CoreException {
+    void testOrder() throws CoreException {
 
         Optional<SEUser> optionalUser = userRepository.findById(1L);
         SEUser user;

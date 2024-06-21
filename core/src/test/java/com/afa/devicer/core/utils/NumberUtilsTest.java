@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 
 @Slf4j
-public class NumberUtilsTest {
+class NumberUtilsTest {
 
     @Test
-    public void testNumberFormat() {
+    void testNumberFormat() {
         String s;
         s = NumberUtils.defaultFormatNumber(new BigDecimal("123456.78"));
         log.info(s);
